@@ -145,7 +145,7 @@ pipeline: # pipeline to run the end to end flow.
 1. Register it in `EVALUATOR_FACTORIES` eval_factory_config.py
    for example - to add similarity evaluator SimilarityEvaluator
    ```
-   from azure.ai.evaluation import RelevanceEvaluator, **SimilarityEvaluator**
+   from azure.ai.evaluation import RelevanceEvaluator, **SimilarityEvaluator**  <!-- MARKER -->
    from .evaluator.evaluator_repo.evaluate_agent_invoked import EvaluateAgentsInvoked
 
    class EvaluatorFactory:

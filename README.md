@@ -7,7 +7,7 @@ This repository provides a reproducible, config-driven evaluation pipeline tailo
 
 
 ### Evaluation Pipeline Diagram
-![Evaluation Pipeline](../evaluations/offline/assets/eval_pipeline.png)
+![Evaluation Pipeline](./assets/eval_pipeline.png)
 
 
 ## Repository Structure

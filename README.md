@@ -85,25 +85,21 @@ az login
 
 ### 4. Azure AI Foundry set up: 
 
-```
 Prerequisite set up steps for Azure AI Foundry projects
 If this is your first time running evaluations and logging it to your Azure AI Foundry project, you might need to do a few additional setup steps:
 
-Create and connect your storage account to your Azure AI Foundry project at the resource level. This bicep template provisions and connects a storage account to your Foundry project with key authentication.
-
-Make sure the connected storage account has access to all projects.
-
-If you connected your storage account with Microsoft Entra ID, make sure to give MSI (Microsoft Identity) permissions for Storage Blob Data Owner to both your account and Foundry project resource in Azure portal.
+1. Create and connect your storage account to your Azure AI Foundry project at the resource level. This bicep template provisions and connects a storage account to your Foundry project with key authentication.
+2. Make sure the connected storage account has access to all projects.
+3. If you connected your storage account with Microsoft Entra ID, make sure to give MSI (Microsoft Identity) permissions for Storage Blob Data Owner to both your account and Foundry project resource in Azure portal.
 
 Reference: https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk#evaluate-on-test-dataset-using-evaluate
-```
+
 
 ### 5. Run the Evaluations (as is with sample files provided):
 To run agent_end_response_evaluation
 ```bash
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/agentic_evaluation/experiment.yaml
 ```
-
 
 
 ## Running the Pipeline

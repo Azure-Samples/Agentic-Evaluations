@@ -1,9 +1,13 @@
 # Evaluation Framework using Azure AI Foundry
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![Azure](https://img.shields.io/badge/Azure-AI%20Foundry-blue.svg)](https://azure.microsoft.com/en-us/products/ai-foundry)
+
 This project provides a comprehensive framework for evaluating **agentic systems** or **LLM/SLM** leveraging Azure AI Foundry. It focuses on evaluating the inner mechanics of agent-based systems, such as tool invocation, agent selection, and final responses, using both built-in and custom evaluation metrics. The framework also includes visualization of bench mark and detailed analysis through AI Foundry Evaluation dashboard.
 
 ## Overview
-This repository provides a reproducible, config-driven evaluation pipeline tailored for SLM fine‑tuning and agentic systems. Azure AI Foundry built‑in evaluators for standardized scoring, and project‑specific custom evaluators for agent‑level metrics like fuzzy match etc. The flow is organized into modular stages (data_loading, data_preprocessing, evaluation, reporting) driven by experiment YAMLs so you can swap datasets, models (e.g., GPT‑4o mini fine-tune), or evaluators without changing code. Inputs/outputs use JSONL/golden dataset formats, and results can be uploaded to blob storage and visualized via the AI Foundry Evaluation dashboard for comparison across runs.
+This repository provides a reproducible, config-driven evaluation pipeline tailored for gen ai and agentic systems. Azure AI Foundry built‑in evaluators for standardized scoring, and project‑specific custom evaluators for agent‑level metrics.   The flow is organized into modular stages (data_loading, data_preprocessing, evaluation, reporting) driven by experiment YAMLs so you can swap datasets, models, or evaluators without changing code. Inputs/outputs use JSONL/golden dataset formats, and results can be uploaded to blob storage and visualized via the AI Foundry Evaluation dashboard for comparison across runs.
 
 
 ### Evaluation Pipeline Diagram
@@ -201,3 +205,15 @@ pipeline: # pipeline to run the end to end flow.
 - [Azure AI Foundry Documentation](https://learn.microsoft.com/en-us/azure/ai-foundry/what-is-ai-foundry)
 - [Agentic Evaluation in Azure](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/agent-evaluate-sdk)
 - [Built-in Evaluator Reference](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+
+When you submit a pull request, a CLA bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

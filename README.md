@@ -52,6 +52,15 @@ src/
 - Azure AI Foundry project and GPT-4o deployment
 - Python 3.11+
 - Git
+- Prerequisite set up steps for Azure AI Foundry projects
+      If this is your first time running evaluations and logging it to your Azure AI Foundry project, you might need to do a few additional setup steps:
+
+      1. Create and connect your storage account to your Azure AI Foundry project at the resource level. This bicep template provisions and connects a storage account to your Foundry project with key authentication.
+      2. Make sure the connected storage account has access to all projects.
+      3. If you connected your storage account with Microsoft Entra ID, make sure to give MSI (Microsoft Identity) permissions for Storage Blob Data Owner to both your account and Foundry project resource in Azure portal.
+
+      Reference: https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk#evaluate-on-test-dataset-using-evaluate
+
 
 ## Azure Services Used
 
@@ -83,16 +92,7 @@ source venv/bin/activate       # Linux/macOS
 az login
 ```
 
-### 4. Azure AI Foundry set up: 
-
-Prerequisite set up steps for Azure AI Foundry projects
-If this is your first time running evaluations and logging it to your Azure AI Foundry project, you might need to do a few additional setup steps:
-
-1. Create and connect your storage account to your Azure AI Foundry project at the resource level. This bicep template provisions and connects a storage account to your Foundry project with key authentication.
-2. Make sure the connected storage account has access to all projects.
-3. If you connected your storage account with Microsoft Entra ID, make sure to give MSI (Microsoft Identity) permissions for Storage Blob Data Owner to both your account and Foundry project resource in Azure portal.
-
-Reference: https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk#evaluate-on-test-dataset-using-evaluate
+### 4. create env file based on Azure AI Foundry set up (refer to env_template)
 
 
 ### 5. Run the Evaluations (as is with sample files provided):

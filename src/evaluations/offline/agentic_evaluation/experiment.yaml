@@ -20,8 +20,6 @@ evaluation:
       column_mapping:
         expected_agents_to_invoke: "${data.expected_agents_to_invoke}"
         predicted_agents_to_invoke: "${data.selected_agents}"
-        turn_number: "${data.turn_number}"
-        turn_type: "${data.turn_type}"  
 
 pipeline:
   - base_path: evaluator

@@ -1,9 +1,5 @@
-# from azure.ai.evaluation import GroundednessEvaluator, FluencyEvaluator, RelevanceEvaluator, CoherenceEvaluator, SimilarityEvaluator, BleuScoreEvaluator
 from azure.ai.evaluation import RelevanceEvaluator
-# from src.evaluations.offline.bill_item_eval.evaluator.evaluator_repo.evaluate_bill_items import EvaluateBillItemsMatch
-from src.evaluations.offline.agentic_evaluation.evaluator.evaluator_repo.evaluate_agent_invoked import EvaluateAgentsInvoked
-# from src.evaluations.offline.bill_item_eval.evaluator.evaluator_repo.evaluate_bill_items import EvaluateBillItemsMatch
-# from src.evaluations.offline.e2e_eval.evaluator.evaluator_repo.coherence import CoherenceEvaluatorCustom
+from .evaluator.evaluator_repo.evaluate_agent_invoked import EvaluateAgentsInvoked
 
 import os
 import logging
@@ -19,11 +15,6 @@ class EvaluatorFactory:
 
     EVALUATOR_FACTORIES = {
         "relevance_evaluator": RelevanceEvaluator,
-        # "fluency_evaluator": FluencyEvaluator,
-        # "coherance_evaluator": CoherenceEvaluator,
-        # "groundedness_evaluator": GroundednessEvaluator,
-        # "similarity_evaluator": SimilarityEvaluator,
-        # "bleu_score_evaluator": BleuScoreEvaluator,
         "custom_agents_invoked_evaluator": EvaluateAgentsInvoked,    
     }
 

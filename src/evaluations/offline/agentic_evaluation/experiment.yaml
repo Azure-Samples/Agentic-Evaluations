@@ -1,0 +1,29 @@
+app_name: Agentic-Evals
+version: 1.0.0
+experiment_name: Agentic_Evaluation_Experiment
+evaluation:
+  run_local: False
+  input_path: src/evaluations/offline/agentic_evaluation/datasets/
+  input_file: agent_response_sample_data.jsonl
+  output_path: src/evaluations/offline/agentic_evaluation/report/
+  column_mapping:
+    user_id: "${data.conversation_id}"
+  evaluators:
+    relevance_score: "relevance_evaluator"
+    agents_invoked_eval: "custom_agents_invoked_evaluator"
+  evaluator_config:
+    relevance_score:
+      column_mapping:
+        query: "${data.user_query}"
+        response: "${data.gt_agent_response}" 
+    agents_invoked_eval:
+      column_mapping:
+        expected_agents_to_invoke: "${data.expected_agents_to_invoke}"
+        predicted_agents_to_invoke: "${data.selected_agents}"
+        turn_number: "${data.turn_number}"
+        turn_type: "${data.turn_type}"  
+
+pipeline:
+  - base_path: evaluator
+    module: eval_main.eval_main
+    config_key: evaluation

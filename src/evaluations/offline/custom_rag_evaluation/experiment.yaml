@@ -1,0 +1,47 @@
+app_name: RAG-Evals
+version: 1.0.0
+experiment_name: Rag_Evaluation_Experiment
+evaluation:
+  run_local: False
+  input_path: src/evaluations/offline/custom_rag_evaluation/datasets/
+  input_file: rag_sample.jsonl
+  output_path: src/evaluations/offline/custom_rag_evaluation/report/
+  column_mapping:
+    user_id: "${data.query}"
+  evaluators:
+    relevance_score: "relevance_evaluator"
+    coherence_score: "coherence_evaluator"
+    custom_coherence_score: "custom_coherence_evaluator"
+    custom_relevance_score: "custom_relevance_evaluator"
+    custom_fluency_score: "custom_fluency_evaluator"
+    custom_similarity_score: "custom_similarity_evaluator"
+
+  evaluator_config:
+    relevance_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.response}"
+    coherence_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.response}"
+    custom_coherence_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.response}"
+    custom_relevance_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.response}"
+    custom_fluency_score:
+      column_mapping:
+        response: "${data.response}"
+    custom_similarity_score:
+      column_mapping:
+        query: "${data.query}"
+        ground_truth: "${data.ground_truth}"
+        response: "${data.response}"
+pipeline:
+  - base_path: evaluator
+    module: eval_main.eval_main
+    config_key: evaluation

@@ -1,0 +1,108 @@
+---
+name: Similarity
+description: Evaluates similarity score between response and ground truth
+model:
+  api: chat
+  parameters:
+    temperature: 0.0
+    max_tokens: 800
+    top_p: 1.0
+    presence_penalty: 0
+    frequency_penalty: 0
+    response_format:
+      type: text
+
+inputs:
+  query:
+    type: string
+  response:
+    type: string
+  ground_truth:
+    type: string
+
+---
+system:
+# Instruction
+## Goal
+### You are an expert in evaluating semantic similarity between text responses. Your goal is to assess how closely a response matches the ground truth answer in terms of meaning, content, and accuracy.
+- **Definition**: You are given a definition of similarity to help guide your assessment.
+- **Data**: Your input data includes a QUERY, a RESPONSE, and the GROUND_TRUTH answer.
+- **Tasks**: Evaluate the similarity between the response and ground truth according to the provided criteria.
+
+user:
+# Definition
+**Similarity** refers to the semantic closeness between the response and the ground truth answer. It measures how well the response captures the same meaning, information, and accuracy as the expected answer, regardless of exact wording.
+
+# Ratings
+## [Similarity: 1] (No Similarity)
+**Definition:** The response has no meaningful similarity to the ground truth. It provides completely different information or addresses an entirely different topic.
+
+**Examples:**
+  **Query:** What is the capital of France?
+  **Ground Truth:** The capital of France is Paris.
+  **Response:** Pizza is a popular Italian food made with dough and cheese.
+
+  **Query:** How does photosynthesis work?
+  **Ground Truth:** Photosynthesis is the process plants use to convert sunlight into energy using chlorophyll.
+  **Response:** The stock market fluctuates based on economic conditions and investor sentiment.
+
+## [Similarity: 2] (Low Similarity)
+**Definition:** The response shares minimal similarity with the ground truth. It may contain some related concepts but fails to convey the core meaning or provides largely incorrect information.
+
+**Examples:**
+  **Query:** What are the symptoms of diabetes?
+  **Ground Truth:** Common symptoms include increased thirst, frequent urination, fatigue, and blurred vision.
+  **Response:** Diabetes is a health condition that affects many people and requires medical attention.
+
+  **Query:** How do you change a car tire?
+  **Ground Truth:** Remove the hubcap, loosen lug nuts, jack up the car, remove the flat tire, install the spare, and tighten lug nuts.
+  **Response:** Car maintenance is important and you should have tools in your vehicle.
+
+## [Similarity: 3] (Moderate Similarity)
+**Definition:** The response shows moderate similarity to the ground truth. It captures some key information but may miss important details or include some inaccuracies.
+
+**Examples:**
+  **Query:** What causes earthquakes?
+  **Ground Truth:** Earthquakes are caused by the movement of tectonic plates beneath the Earth's surface.
+  **Response:** Earthquakes happen when the ground moves due to underground geological activity.
+
+  **Query:** What is the boiling point of water?
+  **Ground Truth:** Water boils at 100 degrees Celsius or 212 degrees Fahrenheit at sea level.
+  **Response:** Water boils at 100 degrees Celsius under normal conditions.
+
+## [Similarity: 4] (High Similarity)
+**Definition:** The response demonstrates high similarity to the ground truth. It captures most of the key information and meaning, with only minor differences in detail or phrasing.
+
+**Examples:**
+  **Query:** What are the benefits of exercise?
+  **Ground Truth:** Exercise improves cardiovascular health, builds muscle strength, enhances mental well-being, and helps with weight management.
+  **Response:** Regular physical activity strengthens the heart, builds muscles, improves mood, and helps maintain a healthy weight.
+
+  **Query:** How does recycling help the environment?
+  **Ground Truth:** Recycling reduces waste in landfills, conserves natural resources, and decreases pollution.
+  **Response:** Recycling helps by reducing landfill waste, saving natural resources, and lowering environmental pollution.
+
+## [Similarity: 5] (Very High Similarity)
+**Definition:** The response shows very high similarity to the ground truth. It captures all or nearly all the key information and meaning, with equivalent accuracy and completeness.
+
+**Examples:**
+  **Query:** What is the chemical formula for water?
+  **Ground Truth:** The chemical formula for water is H2O.
+  **Response:** Water has the chemical formula H2O.
+
+  **Query:** Who wrote Romeo and Juliet?
+  **Ground Truth:** Romeo and Juliet was written by William Shakespeare.
+  **Response:** William Shakespeare wrote Romeo and Juliet.
+
+# Data
+QUERY: {{query}}
+RESPONSE: {{response}}
+GROUND_TRUTH: {{ground_truth}}
+
+# Tasks
+## Please provide your assessment Score for how similar the RESPONSE is to the GROUND_TRUTH based on the definitions above. Your output should include the following information:
+- **ThoughtChain**: To improve the reasoning process, think step by step and include a step-by-step explanation of your thought process as you analyze the similarity. Keep it brief and start your ThoughtChain with "Let's think step by step:".
+- **Explanation**: a very short explanation of why you think the response should get that similarity score.
+- **Score**: based on your previous analysis, provide your Score. The Score you give MUST be an integer score (i.e., "1", "2"...) based on the levels of the definitions.
+
+## Please provide your answers between the tags: <S0>your chain of thoughts</S0>, <S1>your explanation</S1>, <S2>your Score</S2>.

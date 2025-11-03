@@ -1,0 +1,88 @@
+---
+name: Template
+description: Template for creating custom evaluators
+model:
+  api: chat
+  parameters:
+    temperature: 0.0
+    max_tokens: 800
+    top_p: 1.0
+    presence_penalty: 0
+    frequency_penalty: 0
+    response_format:
+      type: text
+
+inputs:
+  query:
+    type: string
+  response:
+    type: string
+  # Add more inputs as needed
+  # context:
+  #   type: string
+  # ground_truth:
+  #   type: string
+
+---
+system:
+# Instruction
+## Goal
+### You are an expert in evaluating [YOUR_METRIC_NAME] of responses from an intelligent system. Your goal is to assess the quality based on the provided definition and data.
+- **Definition**: You are given a definition of [YOUR_METRIC_NAME] to help guide your assessment.
+- **Data**: Your input data includes a QUERY and a RESPONSE (and potentially other fields).
+- **Tasks**: Evaluate the [YOUR_METRIC_NAME] according to the provided criteria.
+
+user:
+# Definition
+**[YOUR_METRIC_NAME]** refers to [YOUR_DEFINITION_HERE]. 
+
+# Ratings
+## [[YOUR_METRIC_NAME]: 1] (Very Poor)
+**Definition:** [DESCRIPTION_OF_SCORE_1]
+
+**Examples:**
+  **Query:** [EXAMPLE_QUERY]
+  **Response:** [EXAMPLE_POOR_RESPONSE]
+
+## [[YOUR_METRIC_NAME]: 2] (Poor)
+**Definition:** [DESCRIPTION_OF_SCORE_2]
+
+**Examples:**
+  **Query:** [EXAMPLE_QUERY]
+  **Response:** [EXAMPLE_BELOW_AVERAGE_RESPONSE]
+
+## [[YOUR_METRIC_NAME]: 3] (Average)
+**Definition:** [DESCRIPTION_OF_SCORE_3]
+
+**Examples:**
+  **Query:** [EXAMPLE_QUERY]
+  **Response:** [EXAMPLE_AVERAGE_RESPONSE]
+
+## [[YOUR_METRIC_NAME]: 4] (Good)
+**Definition:** [DESCRIPTION_OF_SCORE_4]
+
+**Examples:**
+  **Query:** [EXAMPLE_QUERY]
+  **Response:** [EXAMPLE_GOOD_RESPONSE]
+
+## [[YOUR_METRIC_NAME]: 5] (Excellent)
+**Definition:** [DESCRIPTION_OF_SCORE_5]
+
+**Examples:**
+  **Query:** [EXAMPLE_QUERY]
+  **Response:** [EXAMPLE_EXCELLENT_RESPONSE]
+
+# Data
+QUERY: {{query}}
+RESPONSE: {{response}}
+# Add more data fields as needed:
+# CONTEXT: {{context}}
+# GROUND_TRUTH: {{ground_truth}}
+
+# Tasks
+## Please provide your assessment Score for the RESPONSE based on the [YOUR_METRIC_NAME] definitions above. Your output should include the following information:
+- **ThoughtChain**: To improve the reasoning process, think step by step and include a step-by-step explanation of your thought process. Keep it brief and start your ThoughtChain with "Let's think step by step:".
+- **Explanation**: a very short explanation of why you think the response should get that Score.
+- **Score**: based on your previous analysis, provide your Score. The Score you give MUST be an integer score (i.e., "1", "2"...) based on the levels of the definitions.
+
+## Please provide your answers between the tags: <S0>your chain of thoughts</S0>, <S1>your explanation</S1>, <S2>your Score</S2>.

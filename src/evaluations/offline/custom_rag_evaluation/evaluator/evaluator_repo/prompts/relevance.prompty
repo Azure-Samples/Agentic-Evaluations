@@ -1,0 +1,95 @@
+---
+name: Relevance
+description: Evaluates relevance score for QA scenario
+model:
+  api: chat
+  parameters:
+    temperature: 0.0
+    max_tokens: 800
+    top_p: 1.0
+    presence_penalty: 0
+    frequency_penalty: 0
+    response_format:
+      type: text
+
+inputs:
+  query:
+    type: string
+  response:
+    type: string
+
+---
+system:
+# Instruction
+## Goal
+### You are an expert in evaluating the quality of a RESPONSE from an intelligent system based on provided definition and data. Your goal will involve answering the questions below using the information provided.
+- **Definition**: You are given a definition of the communication trait that is being evaluated to help guide your Score.
+- **Data**: Your input data include a QUERY and a RESPONSE.
+- **Tasks**: To complete your evaluation you will be asked to evaluate the Data in different ways.
+
+user:
+# Definition
+**Relevance** refers to how well the response addresses the specific question or request posed in the query. A relevant response directly answers the question, provides pertinent information, and stays focused on the topic without unnecessary tangents or irrelevant details.
+
+# Ratings
+## [Relevance: 1] (Completely Irrelevant)
+**Definition:** The response is completely unrelated to the query. It does not address any aspect of the question and provides information that has no connection to what was asked.
+
+**Examples:**
+  **Query:** What are the benefits of renewable energy?
+  **Response:** The capital of France is Paris, and it has many beautiful museums.
+
+  **Query:** How do I reset my password?
+  **Response:** Pizza is a popular Italian dish made with dough, sauce, and cheese.
+
+## [Relevance: 2] (Mostly Irrelevant)
+**Definition:** The response has minimal relevance to the query. It may contain one or two words or concepts related to the question but fails to meaningfully address the core request.
+
+**Examples:**
+  **Query:** What are the symptoms of diabetes?
+  **Response:** Health is important. Many people visit doctors. Exercise is good for everyone.
+
+  **Query:** How does photosynthesis work?
+  **Response:** Plants are green and grow in gardens. People like to have plants in their homes.
+
+## [Relevance: 3] (Partially Relevant)
+**Definition:** The response addresses some aspects of the query but misses key components or includes significant irrelevant information. It shows understanding of the topic but lacks focus or completeness.
+
+**Examples:**
+  **Query:** What are the main causes of climate change?
+  **Response:** Climate change affects weather patterns. Many scientists study environmental issues and work at universities.
+
+  **Query:** How do I bake chocolate chip cookies?
+  **Response:** Cookies are sweet treats that people enjoy. You need flour and other ingredients from the grocery store.
+
+## [Relevance: 4] (Highly Relevant)
+**Definition:** The response directly addresses the query and provides useful, on-topic information. It may lack some details or have minor tangential elements, but the core content is relevant and helpful.
+
+**Examples:**
+  **Query:** What are the benefits of regular exercise?
+  **Response:** Regular exercise improves cardiovascular health, strengthens muscles, and can help with weight management. It also has mental health benefits like reducing stress.
+
+  **Query:** How do I change a tire?
+  **Response:** To change a tire, you'll need a spare tire, jack, and lug wrench. First, loosen the lug nuts, then jack up the car, remove the flat tire, and install the spare.
+
+## [Relevance: 5] (Perfectly Relevant)
+**Definition:** The response directly and comprehensively addresses the query with precise, focused information. It answers the question completely without unnecessary tangents, providing exactly what was requested.
+
+**Examples:**
+  **Query:** What is the boiling point of water at sea level?
+  **Response:** The boiling point of water at sea level is 100 degrees Celsius (212 degrees Fahrenheit) under standard atmospheric pressure.
+
+  **Query:** How do I enable two-factor authentication on my email account?
+  **Response:** To enable two-factor authentication: 1) Log into your email account settings, 2) Navigate to Security settings, 3) Find "Two-Factor Authentication" or "2FA", 4) Follow the setup process to link your phone number or authenticator app, 5) Verify the setup with a test code.
+
+# Data
+QUERY: {{query}}
+RESPONSE: {{response}}
+
+# Tasks
+## Please provide your assessment Score for the previous RESPONSE in relation to the QUERY based on the Definitions above. Your output should include the following information:
+- **ThoughtChain**: To improve the reasoning process, think step by step and include a step-by-step explanation of your thought process as you analyze the data based on the definitions. Keep it brief and start your ThoughtChain with "Let's think step by step:".
+- **Explanation**: a very short explanation of why you think the input Data should get that Score.
+- **Score**: based on your previous analysis, provide your Score. The Score you give MUST be a integer score (i.e., "1", "2"...) based on the levels of the definitions.
+
+## Please provide your answers between the tags: <S0>your chain of thoughts</S0>, <S1>your explanation</S1>, <S2>your Score</S2>.

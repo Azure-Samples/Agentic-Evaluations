@@ -10,7 +10,7 @@ dependencies = [
     "azure-identity>=1.25.0",
     "azure-storage-blob>=12.26.0",
     "azure-ai-projects",
-    "azure-ai-evaluation==1.11.0",
+    "azure-ai-evaluation==1.13.0",
     "azure-ai-inference>=1.0.0b9",
     
     # Core Python packages

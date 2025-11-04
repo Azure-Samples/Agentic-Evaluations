@@ -4,10 +4,20 @@
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![Azure](https://img.shields.io/badge/Azure-AI%20Foundry-blue.svg)](https://azure.microsoft.com/en-us/products/ai-foundry)
 
-This project provides a comprehensive framework for evaluating **agentic systems** or **other LLM/SLM systems** leveraging Azure AI Foundry. It focuses on evaluating the inner mechanics of agent-based systems, such as tool invocation, agent selection, and final responses, using both built-in and custom evaluation metrics. The framework also includes visualization of bench mark and detailed analysis through AI Foundry Evaluation dashboard.
+A comprehensive framework that enables **quick setup, experimentation, and evaluation** for both **Agentic systems** and **GenAI applications** (such as RAG). Built on Azure AI Foundry SDK, this framework features a **configurable, pipeline-based architecture** that allows you to add your own modules as plug-and-play components. Evaluation is simplified through just **2-3 steps**, supporting both Azure AI Foundry's built-in evaluation metrics and custom metrics tailored to your specific use cases.
 
 ## Overview
-This repository provides a reproducible, config-driven evaluation pipeline tailored for gen ai and agentic systems. Azure AI Foundry built‑in evaluators for standardized scoring, and project‑specific custom evaluators for agent‑level metrics.   The flow is organized into modular stages (data_loading, data_preprocessing, evaluation, reporting) driven by experiment YAMLs so you can swap datasets, models, or evaluators without changing code. Inputs/outputs use JSONL/golden dataset formats, and results can be uploaded to blob storage and visualized via the AI Foundry Evaluation dashboard for comparison across runs.
+
+This repository provides a **reproducible, config-driven evaluation pipeline** designed for rapid experimentation with GenAI and agentic systems. The framework combines:
+
+- **🔧 Plug-and-Play Architecture**: Modular pipeline design where you can easily add custom data loaders, preprocessors, evaluators, and reporting modules without modifying core framework code
+- **⚡ Quick Setup**: Get started with evaluations in 2-3 simple steps - configure your experiment YAML, register evaluators, and run
+- **🎯 Dual Evaluation Support**: Seamlessly use Azure AI Foundry's built-in evaluators for standardized scoring alongside custom evaluators for domain-specific or agent-level metrics
+- **📊 Flexible Workflows**: Organized into modular stages (data loading, preprocessing, evaluation, reporting) driven by experiment YAMLs, allowing you to swap datasets, models, or evaluators instantly
+- **🔄 Multiple Use Cases**: Evaluate agentic systems (tool invocation, agent selection, multi-step reasoning) as well as GenAI applications like RAG (relevance, groundedness, coherence)
+- **📈 Comprehensive Visualization**: Results automatically integrate with Azure AI Foundry Evaluation dashboard for comparison across experiments and runs
+
+Whether you're building sophisticated agentic workflows or optimizing RAG applications, this framework accelerates your evaluation process from days to hours.
 ### Features
 1. **AI Foundry SDK** - Framework integrated with [Azure AI Evaluation SDK](https://pypi.org/project/azure-ai-evaluation/)
 2. **Built in and custom Evaluators** - Utilizes both built-in evaluators from AI Foundry ([see full list](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/evaluation-evaluators/general-purpose-evaluators)) and also enables custom evaluators. 

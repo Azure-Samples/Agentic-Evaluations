@@ -140,7 +140,13 @@ az login
 ```
 
 ### 4. create env file based on Azure AI Foundry set up (refer to env_template)
+Create a `.env` file in the project root by copying the provided template:
 
+```bash
+cp .env.template .env
+```
+
+Edit the `.env` file to include your Azure AI Foundry credentials and other required environment variables as described in the comments of `.env.template`.
 
 ### 5. Run the Evaluations (as is with sample files provided):
 To run agent_end_response_evaluation
@@ -149,12 +155,53 @@ python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/
 ```
 
 
-## Understanding the Code Structure
-### Folder template allows quick changes 
-1. Add a different datasets (in golden dataset format) and provide the path. -> <datasets folder>
-2. Add Agentic/GenAI Inference component - comming soon!!
-4. Filter the required columns and flatten the response in jsonl format - <data_transform.py. > Comming soon!!
-5. Run your custom evaluations, add your metrics -> <eval_factory_config.py, experiments.yaml. >
+## How to Create New Evaluations
+
+Follow these steps to set up a new evaluation scenario using this framework:
+
+1. **Understand the Folder Structure**  
+  Review the [Folder Structure](#folder-structure) section above to familiarize yourself with where datasets, evaluators, configs, and reports are organized.
+
+2. **Explore Provided Samples**  
+  Go through the sample evaluation folders under `src/evaluations/offline/` (e.g., `agentic_evaluation_custom`, `ai_judge_evaluation_custom`, `genai_evaluation_foundry`). Each contains a README and example configuration.
+
+3. **Copy a Relevant Sample Folder**  
+  Duplicate the sample folder that best matches your use case. For example:
+  ```bash
+  cp -r C:\Eval_Framework\eval_framework_v2\Agentic-Evaluations\src\evaluations\offline\agentic_evaluation_custom <your_new_evaluation_folder>
+  ```
+
+4. **Determine Required Metrics**  
+  Decide which evaluation metrics you need—either built-in (from Azure AI Foundry) or custom.
+
+  - For **built-in metrics**: Import the relevant evaluator classes directly in your `eval_factory.py` (e.g., `from azure.ai.evaluation import RelevanceEvaluator`).
+  To add your own custom evaluation metric:
+
+  - **Create your custom evaluator**: Implement your evaluator as a Python class in the `evaluator_repo/` directory within your evaluation folder. This class should inherit from the base evaluator (e.g., `BaseEvaluator`) and define the required evaluation logic.
+
+  - **Register your evaluator**: In `eval_factory.py`, add an entry for your custom evaluator in the `EVALUATOR_FACTORIES` dictionary. For example:
+    ```python
+    from .evaluator.evaluator_repo.my_custom_evaluator import MyCustomEvaluator
+
+    class EvaluatorFactory:
+       EVALUATOR_FACTORIES = {
+          "my_custom_evaluator": MyCustomEvaluator,
+          # ... other evaluators ...
+       }
+    ```
+
+5. **Update experiment.yaml**  
+  Edit the `experiment.yaml` file in your new evaluation folder:
+  - Add your evaluator(s) under the `evaluators` section.
+  - specify any required column mappings in `evaluator_config`.
+
+6. **Run the Pipeline**  
+  Execute the evaluation pipeline using your updated configuration:
+  ```bash
+  python -m src.agent_evaluation.agentic_ops.runner --config_file <your_new_evaluation_folder>/experiment.yaml
+  ```
+
+This process enables you to quickly set up and run new evaluation scenarios tailored to your data and metrics.
 
 
 ## Folder Structure
@@ -245,33 +292,9 @@ pipeline: # pipeline to run the end to end flow.
     config_key: evaluation # mapped to the config for evaluations above. 
 
 ```
-# How to Add Foundry's built in evaluations 
-1. Register it in `EVALUATOR_FACTORIES` eval_factory_config.py
-   for example - to add similarity evaluator SimilarityEvaluator
-   ```
-   from azure.ai.evaluation import RelevanceEvaluator, **SimilarityEvaluator**
-   from .evaluator.evaluator_repo.evaluate_agent_invoked import EvaluateAgentsInvoked
 
-   class EvaluatorFactory:
-      """Configuration for available evaluators."""
 
-      EVALUATOR_FACTORIES = {
-         "relevance_evaluator": RelevanceEvaluator,
-         **"similarity_evaluator": SimilarityEvaluator,**
-         "custom_agents_invoked_evaluator": EvaluateAgentsInvoked,    
-      }
-   ```
-2. Add metrics in evaluation section in config YAML
-3. Run the pipeline 
-
-## How to Add custom evaluations
-
-1. Add your custom evaluator in `evaluator_repo/`
-2. Register it in `EVALUATOR_FACTORIES` eval_factory_config.py
-3. Add metrics in evaluation section in config YAML
-4. Run the pipeline 
-
-## Custom Evaluation Metrics for SLM Systems
+## Custom Evaluation Metrics for Agentic Systems
 
 | Metric                          | Description                                                       |
 |---------------------------------|-------------------------------------------------------------------|

@@ -10,20 +10,22 @@ A comprehensive framework that enables **quick setup, experimentation, and evalu
 
 This repository provides a **reproducible, config-driven evaluation pipeline** designed for rapid experimentation with GenAI and agentic systems. The framework combines:
 
-- **🔧 Plug-and-Play Architecture**: Modular pipeline design where you can easily add custom data loaders, preprocessors, evaluators, and reporting modules without modifying core framework code
-- **⚡ Quick Setup**: Get started with evaluations in 2-3 simple steps - configure your experiment YAML, register evaluators, and run
-- **🎯 Dual Evaluation Support**: Seamlessly use Azure AI Foundry's built-in evaluators for standardized scoring alongside custom evaluators for domain-specific or agent-level metrics
-- **📊 Flexible Workflows**: Organized into modular stages (data loading, preprocessing, evaluation, reporting) driven by experiment YAMLs, allowing you to swap datasets, models, or evaluators instantly
-- **🔄 Multiple Use Cases**: Evaluate agentic systems (tool invocation, agent selection, multi-step reasoning) as well as GenAI applications like RAG (relevance, groundedness, coherence)
-- **📈 Comprehensive Visualization**: Results automatically integrate with Azure AI Foundry Evaluation dashboard for comparison across experiments and runs
+- **Plug-and-Play Architecture**: Modular pipeline design where you can easily add custom data loaders, preprocessors, evaluators, and reporting modules without modifying core framework code
+- **Quick Setup**: Get started with evaluations in 2-3 simple steps - configure your experiment YAML, register evaluators, and run
+- **Dual Evaluation Support**: Seamlessly use Azure AI Foundry's built-in evaluators for standardized scoring alongside custom evaluators for domain-specific or agent-level metrics
+- **Flexible Workflows**: Organized into modular stages (data loading, preprocessing, evaluation, reporting) driven by experiment YAMLs, allowing you to swap datasets, models, or evaluators instantly
+- **Multiple Use Cases**: Evaluate agentic systems (tool invocation, agent selection, multi-step reasoning) as well as GenAI applications like RAG (relevance, groundedness, coherence)
+- **Comprehensive Visualization**: Results automatically integrate with Azure AI Foundry Evaluation dashboard for comparison across experiments and runs
 
 Whether you're building sophisticated agentic workflows or optimizing RAG applications, this framework accelerates your evaluation process from days to hours.
-### Features
-1. **AI Foundry SDK** - Framework integrated with [Azure AI Evaluation SDK](https://pypi.org/project/azure-ai-evaluation/)
-2. **Built in and custom Evaluators** - Utilizes both built-in evaluators from AI Foundry ([see full list](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/evaluation-evaluators/general-purpose-evaluators)) and also enables custom evaluators. 
-3. **Config driven architecture** - yaml config to customize pipelines, add evaluators etc.,
-4. **Highly customizable pipelines** - not just limiting to evaluations, the framework enables adding own modules for data preprocessing, model inferencing and reporting.
 
+### Key Features
+
+- **🎯 Azure AI Foundry SDK Integration**: Built on [Azure AI Evaluation SDK](https://pypi.org/project/azure-ai-evaluation/) for enterprise-grade evaluation capabilities
+- **⚖️ Dual Evaluator Support**: Use Azure AI Foundry's built-in evaluators ([see full list](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/evaluation-evaluators/general-purpose-evaluators)) alongside custom evaluators tailored to your domain
+- **🔌 Highly Customizable Pipelines**: Add your own modules for data preprocessing, model inferencing, evaluation, and reporting as plug-and-play components
+- **📝 Config-Driven Architecture**: YAML-based configuration for pipelines, evaluators, and experiments - no code changes required
+- **📈 AI Foundry Integration**: Automatic visualization and comparison of evaluation results across experiments
 
 ### Evaluation Pipeline Diagram
 ![Evaluation Pipeline](./assets/Eval-pipeline.png)

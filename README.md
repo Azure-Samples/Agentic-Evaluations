@@ -4,26 +4,82 @@
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![Azure](https://img.shields.io/badge/Azure-AI%20Foundry-blue.svg)](https://azure.microsoft.com/en-us/products/ai-foundry)
 
-A comprehensive framework that enables **quick setup, experimentation, and evaluation** for both **Agentic systems** and **GenAI applications** (such as RAG). Built on Azure AI Foundry SDK, this framework features a **configurable, pipeline-based architecture** that allows you to add your own modules as plug-and-play components. Evaluation is simplified through just **2-3 steps**, supporting both Azure AI Foundry's built-in evaluation metrics and custom metrics tailored to your specific use cases.
+## Making AI Evaluation Simple
 
-This repository provides a **reproducible, config-driven evaluation pipeline** designed for rapid experimentation with GenAI and agentic systems. The framework combines:
+A robust evaluation framework built for **fast, iterative experimentation** with both **agentic systems** and **GenAI applications** (including RAG). Powered by the Azure AI Foundry SDK, it streamlines the evaluation process—reducing setup and experimentation time from days to hours. The framework enables you to quickly configure, run, and compare experiments across datasets, models, and metrics, supporting both standard and custom evaluation workflows.
 
-- **Plug-and-Play Architecture**: Modular pipeline design where you can easily add custom data loaders, preprocessors, evaluators, and reporting modules without modifying core framework code
-- **Quick Setup**: Get started with evaluations in 2-3 simple steps - configure your experiment YAML, register evaluators, and run
-- **Dual Evaluation Support**: Seamlessly use Azure AI Foundry's built-in evaluators for standardized scoring alongside custom evaluators for domain-specific or agent-level metrics
-- **Flexible Workflows**: Organized into modular stages (data loading, preprocessing, evaluation, reporting) driven by experiment YAMLs, allowing you to swap datasets, models, or evaluators instantly
-- **Multiple Use Cases**: Evaluate agentic systems (tool invocation, agent selection, multi-turn reasoning) as well as GenAI applications like RAG (relevance, groundedness, coherence)
-- **Config-Driven Architecture**: YAML-based configuration for pipelines, evaluators, and experiments - minimum or no code changes required
-- **AI Foundry Integration**: Results automatically integrate with Azure AI Foundry Evaluation dashboard for comparison across experiments and runs
+**🚀 Simple Setup & Experimentation**
+- Get started in 2-3 steps with config-driven YAML files
+- No complex boilerplate - just configure and run
+- Swap datasets, models, or metrics instantly without code changes
 
-Whether you're building sophisticated agentic workflows or optimizing RAG applications, this framework accelerates your evaluation process from days to hours.
+**🔌 Plug-and-Play Architecture**
+- Add your own data loaders, preprocessors, and evaluators as modular components
+- Extend the framework without modifying core infrastructure
+- Organized pipeline stages driven by experiment configurations
+
+**📊 Flexible Evaluation Metrics**
+- Use Azure AI Foundry's **built-in evaluators** for standard metrics (relevance, coherence, fluency)
+- Create **custom evaluators** for domain-specific or agent-level metrics
+- Mix and match both types in a single evaluation run
+
+**⚡ Optimized for Speed & Scale**
+- **Local execution**: Fast, multi-threaded processing for quick iterations
+- **Azure AI Foundry**: Distributed execution for large datasets and parallel experiments
+- Results automatically flow to Azure AI Foundry dashboard for comparative analysis
+
+**🎯 Purpose-Built for Modern AI Systems**
+- Evaluate agentic workflows (tool selection, multi-agent coordination, recall@k)
+- Assess GenAI applications (RAG relevance, groundedness, response quality)
+- Compare multiple models side-by-side to identify the best candidate for deployment
+  
+**📊 Automatic Reporting**:
+- Results flow directly to Azure AI Foundry dashboard for visual comparison  
+
+**📝 Config-Driven**: 
+- YAML-based configuration means minimal code changes  
+
+
+## Table of Contents
+
+- [Evaluation Framework using Azure AI Foundry](#evaluation-framework-using-azure-ai-foundry)
+  - [Making AI Evaluation Simple](#making-ai-evaluation-simple)
+  - [Table of Contents](#table-of-contents)
+    - [Evaluation Pipeline Diagram](#evaluation-pipeline-diagram)
+  - [Pipeline Architecture](#pipeline-architecture)
+    - [1. Evaluation Only Pipeline](#1-evaluation-only-pipeline)
+    - [2. Inference + Evaluation Pipeline](#2-inference--evaluation-pipeline)
+    - [3. Data Loading + Inference + Evaluation Pipeline](#3-data-loading--inference--evaluation-pipeline)
+    - [Pipeline Components](#pipeline-components)
+    - [Samples](#samples)
+      - [Provided Evaluation Samples](#provided-evaluation-samples)
+  - [Prerequisites](#prerequisites)
+  - [Azure Services Used](#azure-services-used)
+  - [Installation \& Setup](#installation--setup)
+    - [1. Clone the Repository](#1-clone-the-repository)
+    - [2. Install Dependencies](#2-install-dependencies)
+    - [3. Install Azure CLI \& Login](#3-install-azure-cli--login)
+    - [4. create env file based on Azure AI Foundry set up (refer to env\_template)](#4-create-env-file-based-on-azure-ai-foundry-set-up-refer-to-env_template)
+    - [5. Run the Evaluations (as is with sample files provided):](#5-run-the-evaluations-as-is-with-sample-files-provided)
+  - [How to Create New Evaluations](#how-to-create-new-evaluations)
+  - [Folder Structure](#folder-structure)
+    - [Understand the config.](#understand-the-config)
+  - [Custom Evaluation Metrics for Agentic Systems](#custom-evaluation-metrics-for-agentic-systems)
+  - [Built-in Evaluators (Azure AI Foundry)](#built-in-evaluators-azure-ai-foundry)
+  - [Future Enhancements](#future-enhancements)
+  - [References](#references)
+  - [License](#license)
+  - [Contributing](#contributing)
+
+
 
 ### Evaluation Pipeline Diagram
+
 ![Evaluation Pipeline](./assets/Eval-pipeline.png)
 
 ## Pipeline Architecture
 
-The framework supports flexible pipeline configurations based on your evaluation needs:
+The evaluation pipeline is modular and flexible—run just evaluation, or add inference and data loading as needed. Each stage is independently configurable, so you can adapt workflows, datasets, and metrics easily. Results integrate directly with the Azure AI Foundry dashboard for visualization.
 
 ### 1. Evaluation Only Pipeline
 Use this when you already have model responses and want to evaluate them.

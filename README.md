@@ -11,7 +11,7 @@ A robust evaluation framework built for **fast, iterative experimentation** with
 **🚀 Simple Setup & Experimentation**
 - Get started in 2-3 steps with config-driven YAML files
 - No complex boilerplate - just configure and run
-- Swap datasets, models, or metrics instantly without code changes
+- Swap datasets, models, or metrics instantly with minimum code changes
 
 **🔌 Plug-and-Play Architecture**
 - Add your own data loaders, preprocessors, and evaluators as modular components
@@ -25,19 +25,12 @@ A robust evaluation framework built for **fast, iterative experimentation** with
 
 **⚡ Optimized for Speed & Scale**
 - **Local execution**: Fast, multi-threaded processing for quick iterations
-- **Azure AI Foundry**: Distributed execution for large datasets and parallel experiments
 - Results automatically flow to Azure AI Foundry dashboard for comparative analysis
 
-**🎯 Purpose-Built for Modern AI Systems**
+**🎯 Purpose-Built for Experimenting Modern AI Systems**
 - Evaluate agentic workflows (tool selection, multi-agent coordination, recall@k)
-- Assess GenAI applications (RAG relevance, groundedness, response quality)
-- Compare multiple models side-by-side to identify the best candidate for deployment
-  
-**📊 Automatic Reporting**:
-- Results flow directly to Azure AI Foundry dashboard for visual comparison  
-
-**📝 Config-Driven**: 
-- YAML-based configuration means minimal code changes  
+- Evaluate GenAI applications (RAG relevance, groundedness, response quality)
+- Compare multiple experiments side-by-side to identify the best candidate for deployment
 
 
 ## Table of Contents

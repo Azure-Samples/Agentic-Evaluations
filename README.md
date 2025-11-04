@@ -156,7 +156,7 @@ The repository includes several ready-to-use evaluation samples, each demonstrat
 - Azure AI Foundry project and GPT-4o deployment
 - Python 3.11+
 - Git
-- Create Azure AI Foundry projects : Hub and project or AI foundry project.
+- Create Azure AI Foundry projects : **Hub and project or AI foundry project**.
 
 ## Azure Services Used
 

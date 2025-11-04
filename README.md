@@ -77,12 +77,74 @@ src/
             └── constants.py            # Shared constants
 ```
 
-## Pipeline Flow
+## Pipeline Architecture
 
-1. **data_loading**: download evaluation data from blob storage
-2. **data_preprocessing**: Filter the datasets and quality checks
-4. **Evaluation**: Run selected evaluators.
-5. **Reporting**: View results on AI Foundry dashboard
+The framework supports flexible pipeline configurations based on your evaluation needs:
+
+### 1. Evaluation Only Pipeline
+Use this when you already have model responses and want to evaluate them.
+
+```mermaid
+graph LR
+    A[Evaluation Data<br/>JSONL] --> B[Evaluation<br/>Module]
+    B --> C[AI Foundry Dashboard <br /> Results & Metrics]
+
+    
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#f0e1f
+
+```
+
+**Use Case**: Evaluate existing model outputs, compare different models, or test custom evaluators.
+
+### 2. Inference + Evaluation Pipeline
+Use this when you need to generate responses and evaluate them in one flow.
+
+```mermaid
+graph LR
+    A[Input Queries<br/>Golden Dataset] --> B[Inference Module <br/> Agentic or GenAI]
+    B --> C[Evaluation<br/>Module]
+    C --> D[AI Foundry<br/>Dashboard]
+    
+    style A fill:#e1f5ff
+    style B fill:#ffe1f0
+    style C fill:#fff4e1
+    style D fill:#fff4e
+ 
+```
+
+**Use Case**: End-to-end testing, A/B testing different prompts, or continuous evaluation during development.
+
+### 3. Data Loading + Inference + Evaluation Pipeline
+Use this for complete automation from data storage to evaluation results.
+
+```mermaid
+graph LR
+    A[Data Loading Module <br/> blob storage] --> B[Data Loading<br/>Module]
+    B --> C[Data Preprocessing<br/> Module]
+    C --> D[Inference<br/>Module]
+    D --> E[Evaluation<br/>Module]
+    E --> F[AI Foundry<br/>Dashboard]
+    
+    style A fill:#e1e8ff
+    style B fill:#e1f5ff
+    style C fill:#e1fff5
+    style D fill:#ffe1f0
+    style E fill:#fff4e1
+    style F fill:#fff4e
+
+```
+
+**Use Case**: Production evaluation workflows, scheduled batch evaluations, or large-scale testing.
+
+### Pipeline Components
+
+- **Data Loading**: Download and prepare evaluation data from Azure Blob Storage
+- **Data Preprocessing**: Filter datasets, quality checks, and data transformation
+- **Inference**: Generate model responses using your GenAI/Agentic system
+- **Evaluation**: Run selected evaluators (built-in or custom)
+- **Reporting**: View results on AI Foundry dashboard with comparative analysis
 
 ## Prerequisites
 

@@ -133,38 +133,6 @@ From the repository root:
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/agentic_evaluation_custom/experiment.yaml
 ```
 
-### Configuration Options
-
-Edit `experiment.yaml` to customize:
-
-```yaml
-evaluation:
-  run_local: False                    # Set to True for local-only evaluation
-  input_path: src/evaluations/offline/agentic_evaluation_custom/datasets/
-  input_file: agent_response_sample_data.jsonl
-  output_path: src/evaluations/offline/agentic_evaluation_custom/report/
-  
-  # Map your dataset columns to evaluator parameters
-  column_mapping:
-    user_id: "${data.conversation_id}"
-  
-  # Configure which evaluators to run
-  evaluators:
-    relevance_score: "relevance_evaluator"
-    agents_invoked_eval: "custom_agents_invoked_evaluator"
-  
-  # Map dataset columns to evaluator inputs
-  evaluator_config:
-    relevance_score:
-      column_mapping:
-        query: "${data.user_query}"
-        response: "${data.gt_agent_response}"
-    agents_invoked_eval:
-      column_mapping:
-        expected_agents_to_invoke: "${data.expected_agents_to_invoke}"
-        predicted_agents_to_invoke: "${data.selected_agents}"
-```
-
 ## Output
 
 Results are saved to the configured output path:
@@ -185,5 +153,4 @@ The report includes:
 4. **Single Turn Evaluation**: Assess agent performance on isolated, one-off user queries to ensure correct tool invocation and response quality in simple scenarios.
 5. **Multi-Turn Conversation Evaluation**: Evaluate agent behavior across multi-step dialogues, measuring consistency, memory usage, and correct tool selection throughout the conversation history.
 6. **Multi-Agent Conversation Evaluation**: Analyze scenarios involving multiple agents collaborating or interacting, focusing on coordination, correct delegation, and appropriate tool/plugin usage by each agent.
-7. 
-8. **Regression Testing**: Ensure agent behavior remains consistent across updates 
+7. **Regression Testing**: Ensure agent behavior remains consistent across updates 

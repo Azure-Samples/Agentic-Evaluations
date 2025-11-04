@@ -136,36 +136,6 @@ From the repository root:
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/genai_evaluation_foundry/experiment.yaml
 ```
 
-### Current Configuration
-
-The default `experiment.yaml` is configured as:
-
-```yaml
-app_name: RAG-Evals
-experiment_name: Rag_Evaluation_Experiment
-
-evaluation:
-  run_local: False                    # Set to True for local-only evaluation
-  input_path: src/evaluations/offline/genai_evaluation_foundry/datasets/
-  input_file: rag_sample.jsonl
-  output_path: src/evaluations/offline/genai_evaluation_foundry/report/
-  
-  # Map dataset columns
-  column_mapping:
-    user_id: "${data.query}"
-  
-  # Configure evaluators
-  evaluators:
-    relevance_score: "relevance_evaluator"
-  
-  # Map dataset columns to evaluator inputs
-  evaluator_config:
-    relevance_score:
-      column_mapping:
-        query: "${data.query}"
-        response: "${data.response}"
-```
-
 ## Output
 
 Results are saved to the configured output path:

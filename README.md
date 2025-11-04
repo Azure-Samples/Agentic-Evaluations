@@ -21,7 +21,143 @@ Whether you're building sophisticated agentic workflows or optimizing RAG applic
 ### Evaluation Pipeline Diagram
 ![Evaluation Pipeline](./assets/Eval-pipeline.png)
 
-## Repository Structure
+## Pipeline Architecture
+
+The framework supports flexible pipeline configurations based on your evaluation needs:
+
+### 1. Evaluation Only Pipeline
+Use this when you already have model responses and want to evaluate them.
+
+```mermaid
+graph LR
+    A[Evaluation Data<br/>JSONL] --> B[Evaluation<br/>Module]
+    B --> C[AI Foundry Dashboard <br /> Results & Metrics]
+
+    
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#f0e1f
+
+```
+
+**Use Case**: Evaluate existing model outputs, compare different models, or test custom evaluators.
+
+### 2. Inference + Evaluation Pipeline
+Use this when you need to generate responses and evaluate them in one flow.
+
+```mermaid
+graph LR
+    A[Input Queries<br/>Golden Dataset] --> B[Inference Module <br/> Agentic or GenAI]
+    B --> C[Evaluation<br/>Module]
+    C --> D[AI Foundry<br/>Dashboard]
+    
+    style A fill:#e1f5ff
+    style B fill:#ffe1f0
+    style C fill:#fff4e1
+    style D fill:#fff4e
+ 
+```
+
+**Use Case**: End-to-end testing, Experimentation different prompts / models or continuous evaluation during development.
+
+### 3. Data Loading + Inference + Evaluation Pipeline
+Use this for complete automation from data storage to evaluation results.
+
+```mermaid
+graph LR
+    A[Data Loading Module <br/> blob storage] --> B[Data Loading<br/>Module]
+    B --> C[Data Preprocessing<br/> Module]
+    C --> D[Inference<br/>Module]
+    D --> E[Evaluation<br/>Module]
+    E --> F[AI Foundry<br/>Dashboard]
+    
+    style A fill:#e1e8ff
+    style B fill:#e1f5ff
+    style C fill:#e1fff5
+    style D fill:#ffe1f0
+    style E fill:#fff4e1
+    style F fill:#fff4e
+
+```
+
+**Use Case**: Production evaluation workflows, scheduled batch evaluations, or large-scale testing.
+
+### Pipeline Components
+
+The diagram shows a representation of a pipeline added to the yaml file
+<img src="./assets/pipeline_diragram.png" alt="Pipeline Architecture Diagram" width="400" />
+
+### Samples
+#### Provided Evaluation Samples
+
+The repository includes several ready-to-use evaluation samples, each demonstrating a different evaluation scenario. Each sample folder contains its own detailed README for setup and usage instructions.
+
+| Sample Folder                   | Description & Use Case                                                                                                                                                                                                                                                                      | More Info                |
+| Sample Folder                | Description                                                                                                         | More Info                |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------|--------------------------|
+| `genai_evaluation_foundry`   | Uses Azure AI Foundry's built-in evaluators for standard GenAI tasks (e.g., relevance, fluency). Ideal for quick benchmarking and comparison. | [README](./src/evaluations/offline/genai_evaluation_foundry/README.md) |
+| `ai_judge_evaluation_custom` | Create custom LLM-as-judge evaluation methodology for metrics like coherence and relevance. Supports custom prompts and metrics. | [README](./src/evaluations/offline/ai_judge_evaluation_custom/README.md) |
+| `agentic_evaluation_custom`  | Creates custom evaluation for agentic systems, measuring agent invocation accuracy, recall@k, and other agent-specific metrics. | [README](./src/evaluations/offline/agentic_evaluation_custom/README.md) |
+
+
+## Prerequisites
+
+- Azure Subscription with permissions
+- Azure CLI installed and authenticated
+- Azure AI Foundry project and GPT-4o deployment
+- Python 3.11+
+- Git
+- Create Azure AI Foundry projects : Hub and project or AI foundry project.
+
+## Azure Services Used
+
+- **Azure AI Foundry** (evaluation and model hosting)
+- **GPT-4o** - LLM as a judgment
+
+## Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Azure-Samples/Agentic-Evaluations.git
+cd Agentic-Evaluations
+git checkout -b "your branch"
+```
+
+### 2. Install Dependencies
+
+```bash
+uv sync
+
+# Activate virtual environment
+.venv\Scripts\activate         # PowerShell (Windows)
+source venv/bin/activate       # Linux/macOS
+```
+
+### 3. Install Azure CLI & Login
+```
+az login
+```
+
+### 4. create env file based on Azure AI Foundry set up (refer to env_template)
+
+
+### 5. Run the Evaluations (as is with sample files provided):
+To run agent_end_response_evaluation
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/agentic_evaluation/experiment.yaml
+```
+
+
+## Understanding the Code Structure
+### Folder template allows quick changes 
+1. Add a different datasets (in golden dataset format) and provide the path. -> <datasets folder>
+2. Add Agentic/GenAI Inference component - comming soon!!
+4. Filter the required columns and flatten the response in jsonl format - <data_transform.py. > Comming soon!!
+5. Run your custom evaluations, add your metrics -> <eval_factory_config.py, experiments.yaml. >
+
+
+## Folder Structure
 
 ```text
 src/
@@ -77,137 +213,6 @@ src/
             └── constants.py            # Shared constants
 ```
 
-## Pipeline Architecture
-
-The framework supports flexible pipeline configurations based on your evaluation needs:
-
-### 1. Evaluation Only Pipeline
-Use this when you already have model responses and want to evaluate them.
-
-```mermaid
-graph LR
-    A[Evaluation Data<br/>JSONL] --> B[Evaluation<br/>Module]
-    B --> C[AI Foundry Dashboard <br /> Results & Metrics]
-
-    
-    style A fill:#e1f5ff
-    style B fill:#fff4e1
-    style C fill:#f0e1f
-
-```
-
-**Use Case**: Evaluate existing model outputs, compare different models, or test custom evaluators.
-
-### 2. Inference + Evaluation Pipeline
-Use this when you need to generate responses and evaluate them in one flow.
-
-```mermaid
-graph LR
-    A[Input Queries<br/>Golden Dataset] --> B[Inference Module <br/> Agentic or GenAI]
-    B --> C[Evaluation<br/>Module]
-    C --> D[AI Foundry<br/>Dashboard]
-    
-    style A fill:#e1f5ff
-    style B fill:#ffe1f0
-    style C fill:#fff4e1
-    style D fill:#fff4e
- 
-```
-
-**Use Case**: End-to-end testing, A/B testing different prompts, or continuous evaluation during development.
-
-### 3. Data Loading + Inference + Evaluation Pipeline
-Use this for complete automation from data storage to evaluation results.
-
-```mermaid
-graph LR
-    A[Data Loading Module <br/> blob storage] --> B[Data Loading<br/>Module]
-    B --> C[Data Preprocessing<br/> Module]
-    C --> D[Inference<br/>Module]
-    D --> E[Evaluation<br/>Module]
-    E --> F[AI Foundry<br/>Dashboard]
-    
-    style A fill:#e1e8ff
-    style B fill:#e1f5ff
-    style C fill:#e1fff5
-    style D fill:#ffe1f0
-    style E fill:#fff4e1
-    style F fill:#fff4e
-
-```
-
-**Use Case**: Production evaluation workflows, scheduled batch evaluations, or large-scale testing.
-
-### Pipeline Components
-
-![Pipeline Architecture Diagram](./assets/pipeline_diragram.png)
-
-
-
-## Prerequisites
-
-- Azure Subscription with permissions
-- Azure CLI installed and authenticated
-- Azure AI Foundry project and GPT-4o deployment
-- Python 3.11+
-- Git
-- Prerequisite set up steps for Azure AI Foundry projects
-      If this is your first time running evaluations and logging it to your Azure AI Foundry project, you might need to do a few additional setup steps:
-
-      1. Create and connect your storage account to your Azure AI Foundry project at the resource level. This bicep template provisions and connects a storage account to your Foundry project with key authentication.
-      2. Make sure the connected storage account has access to all projects.
-      3. If you connected your storage account with Microsoft Entra ID, make sure to give MSI (Microsoft Identity) permissions for Storage Blob Data Owner to both your account and Foundry project resource in Azure portal.
-
-      Reference: https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk#evaluate-on-test-dataset-using-evaluate
-
-
-## Azure Services Used
-
-- **Azure AI Foundry** (evaluation and model hosting)
-- **GPT-4o** - LLM as a judgment
-
-## Installation & Setup
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/Azure-Samples/Agentic-Evaluations.git
-cd Agentic-Evaluations
-git checkout -b "your branch"
-```
-
-### 2. Install Dependencies
-
-```bash
-uv sync
-
-# Activate virtual environment
-.venv\Scripts\activate         # PowerShell (Windows)
-source venv/bin/activate       # Linux/macOS
-```
-
-### 3. Install Azure CLI & Login
-```
-az login
-```
-
-### 4. create env file based on Azure AI Foundry set up (refer to env_template)
-
-
-### 5. Run the Evaluations (as is with sample files provided):
-To run agent_end_response_evaluation
-```bash
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/agentic_evaluation/experiment.yaml
-```
-
-
-## Running the Pipeline
-
-### Folder template allows quick changes 
-1. Add a different datasets (in golden dataset format) and provide the path. -> <datasets folder>
-2. Add Agentic/GenAI Inference component - comming soon!!
-4. Filter the required columns and flatten the response in jsonl format - <data_transform.py. > Comming soon!!
-5. Run your custom evaluations, add your metrics -> <eval_factory_config.py, experiments.yaml. >
 
 ### Understand the config. 
 ```yaml

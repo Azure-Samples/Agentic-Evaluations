@@ -6,58 +6,76 @@
 
 A comprehensive framework that enables **quick setup, experimentation, and evaluation** for both **Agentic systems** and **GenAI applications** (such as RAG). Built on Azure AI Foundry SDK, this framework features a **configurable, pipeline-based architecture** that allows you to add your own modules as plug-and-play components. Evaluation is simplified through just **2-3 steps**, supporting both Azure AI Foundry's built-in evaluation metrics and custom metrics tailored to your specific use cases.
 
-## Overview
-
 This repository provides a **reproducible, config-driven evaluation pipeline** designed for rapid experimentation with GenAI and agentic systems. The framework combines:
 
 - **Plug-and-Play Architecture**: Modular pipeline design where you can easily add custom data loaders, preprocessors, evaluators, and reporting modules without modifying core framework code
 - **Quick Setup**: Get started with evaluations in 2-3 simple steps - configure your experiment YAML, register evaluators, and run
 - **Dual Evaluation Support**: Seamlessly use Azure AI Foundry's built-in evaluators for standardized scoring alongside custom evaluators for domain-specific or agent-level metrics
 - **Flexible Workflows**: Organized into modular stages (data loading, preprocessing, evaluation, reporting) driven by experiment YAMLs, allowing you to swap datasets, models, or evaluators instantly
-- **Multiple Use Cases**: Evaluate agentic systems (tool invocation, agent selection, multi-step reasoning) as well as GenAI applications like RAG (relevance, groundedness, coherence)
-- **Comprehensive Visualization**: Results automatically integrate with Azure AI Foundry Evaluation dashboard for comparison across experiments and runs
+- **Multiple Use Cases**: Evaluate agentic systems (tool invocation, agent selection, multi-turn reasoning) as well as GenAI applications like RAG (relevance, groundedness, coherence)
+- **Config-Driven Architecture**: YAML-based configuration for pipelines, evaluators, and experiments - minimum or no code changes required
+- **AI Foundry Integration**: Results automatically integrate with Azure AI Foundry Evaluation dashboard for comparison across experiments and runs
 
 Whether you're building sophisticated agentic workflows or optimizing RAG applications, this framework accelerates your evaluation process from days to hours.
 
-### Key Features
-
-- **🎯 Azure AI Foundry SDK Integration**: Built on [Azure AI Evaluation SDK](https://pypi.org/project/azure-ai-evaluation/) for enterprise-grade evaluation capabilities
-- **⚖️ Dual Evaluator Support**: Use Azure AI Foundry's built-in evaluators ([see full list](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/evaluation-evaluators/general-purpose-evaluators)) alongside custom evaluators tailored to your domain
-- **🔌 Highly Customizable Pipelines**: Add your own modules for data preprocessing, model inferencing, evaluation, and reporting as plug-and-play components
-- **📝 Config-Driven Architecture**: YAML-based configuration for pipelines, evaluators, and experiments - no code changes required
-- **📈 AI Foundry Integration**: Automatic visualization and comparison of evaluation results across experiments
-
 ### Evaluation Pipeline Diagram
 ![Evaluation Pipeline](./assets/Eval-pipeline.png)
-
 
 ## Repository Structure
 
 ```text
 src/
 ├── agent_evaluation/
-│   └── agentic_ops/
-│       ├── runner.py
-│       └── run_eval.py
+│   └── agentic_ops/                    # Core framework infrastructure
+│       ├── runner.py                   # Pipeline orchestration
+│       ├── run_eval.py                 # Evaluation execution engine
+│       ├── base_evaluator.py           # Base class for custom evaluators
+│       ├── client.py                   # LLM client utilities
+│       └── README.md                   # Infrastructure documentation
 │
-├── evaluations/
-│   └── offline/
-│       └── agentic_evaluation/
-│           ├── data_loader/
-│           │   ├── <*your data loader connector.py
-│           ├── data_preprocessing/
-│           │   ├── <*your data preprocessing.py
-│           ├── datasets/
-│           │   ├── <agent_response.jsonl>
-│           ├── evaluator/
-│           │   ├── evaluator_repo/
-│           │   └── <eval_script>.py
-│       ├── <**future Evals**>/
-│       ├── data_sets/
-│           └── DataForEvals/
-│               └── golden_datasets.xlsx
+└── evaluations/
+    └── offline/
+        ├── agentic_evaluation_custom/  # Custom agentic system evaluation
+        │   ├── datasets/               # Sample agent response data
+        │   ├── evaluator/
+        │   │   ├── eval_main.py        # Main evaluation script
+        │   │   └── evaluator_repo/     # Agent-specific custom evaluators
+        │   ├── eval_factory.py         # Evaluator registration
+        │   ├── experiment.yaml         # Agentic eval configuration
+        │   └── report/                 # Evaluation results
+        │
+        ├── ai_judge_evaluation_custom/ # Custom AI Judge evaluation (LLM-as-judge)
+        │   ├── datasets/               # Sample evaluation data
+        │   ├── evaluator/
+        │   │   ├── eval_main.py        # Main evaluation script
+        │   │   └── evaluator_repo/     # Custom AI Judge evaluators
+        │   │       ├── coherence.py    # Coherence evaluator
+        │   │       ├── relevance.py    # Relevance evaluator
+        │   │       ├── fluency.py      # Fluency evaluator
+        │   │       ├── similarity.py   # Similarity evaluator
+        │   │       ├── prompts/        # Prompty template files
+        │   │       └── eval_utils/     # Evaluation utilities
+        │   ├── eval_factory.py         # Evaluator registration
+        │   ├── experiment.yaml         # AI Judge eval configuration
+        │   └── report/                 # Evaluation results
+        │
+        ├── genai_evaluation_foundry/   # Azure AI Foundry built-in evaluators
+        │   ├── datasets/               # Sample data for foundry evaluators
+        │   ├── evaluator/
+        │   │   ├── eval_main.py        # Main evaluation script
+        │   │   └── evaluator_repo/     # Foundry evaluator wrappers
+        │   ├── eval_factory.py         # Evaluator registration
+        │   ├── experiment.yaml         # Foundry eval configuration
+        │   └── report/                 # Evaluation results
+        │
+        ├── golden_dataset/             # Golden datasets for evaluation
+        │   └── raw_data/
+        │       └── DataForEvals/
+        │
+        └── utils/                      # Shared utilities
+            ├── blobFileUpload.py       # Azure Blob storage integration
+            └── constants.py            # Shared constants
 ```
-
 
 ## Pipeline Flow
 

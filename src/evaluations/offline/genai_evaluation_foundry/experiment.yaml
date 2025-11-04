@@ -3,9 +3,9 @@ version: 1.0.0
 experiment_name: Rag_Evaluation_Experiment
 evaluation:
   run_local: False
-  input_path: src/evaluations/offline/rag_evaluation/datasets/
+  input_path: src/evaluations/offline/genai_evaluation_foundry/datasets/
   input_file: rag_sample.jsonl
-  output_path: src/evaluations/offline/rag_evaluation/report/
+  output_path: src/evaluations/offline/genai_evaluation_foundry/report/
   column_mapping:
     user_id: "${data.query}"
   evaluators:

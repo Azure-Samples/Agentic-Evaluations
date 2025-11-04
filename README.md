@@ -140,11 +140,9 @@ graph LR
 
 ### Pipeline Components
 
-- **Data Loading**: Download and prepare evaluation data from Azure Blob Storage
-- **Data Preprocessing**: Filter datasets, quality checks, and data transformation
-- **Inference**: Generate model responses using your GenAI/Agentic system
-- **Evaluation**: Run selected evaluators (built-in or custom)
-- **Reporting**: View results on AI Foundry dashboard with comparative analysis
+![Pipeline Architecture Diagram](./assets/pipeline_diragram.png)
+
+
 
 ## Prerequisites
 

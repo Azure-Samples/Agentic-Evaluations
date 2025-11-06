@@ -141,55 +141,56 @@ experiment_evaluation_pipeline/
 
 Your module must have a function with signature: `function_name(config, args=None)`
 
-<details>
-<summary>Click to expand: Example implementation</summary>
-
-```python
-# experiment/agent_inference.py
-import logging
-from src.evaluations.offline.utils.file_operations import load_queries_from_jsonl, append_to_jsonl
-from .experiment_utils.http_client import chat_http_request
-
-def inference_main(config, args=None):
-    """
-    Main inference function called by the pipeline runner
-    
-    Args:
-        config: Dictionary with experiment configuration from experiment.yaml
-        args: Optional command-line arguments
-    """
-    logging.info("Starting agent inference...")
-    
-    # Access configuration
-    input_path = config["input_path"]
-    input_file = config["input_file"]
-    output_path = config["output_path"]
-    output_file = config["output_file"]
-    base_url = config["base_url"]
-    
-    # Load queries
-    queries = load_queries_from_jsonl(input_path, input_file)
-    
-    # Process each query
-    for item in queries:
-        query = item["query"]
-        session_id = item["session_id"]
-        
-        # Call chat server
-        response = chat_http_request(base_url, query, session_id)
-        
-        # Save response
-        output_data = {
-            "query": query,
-            "session_id": session_id,
-            "response": response
-        }
-        append_to_jsonl(output_path, output_file, output_data)
-    
-    logging.info(f"Inference complete. Responses saved to {output_file}")
-```
-
-</details>
+> [!TIP]
+> <details>
+> <summary><b>💡 Click to expand: Example implementation</b></summary>
+>
+> ```python
+> # experiment/agent_inference.py
+> import logging
+> from src.evaluations.offline.utils.file_operations import load_queries_from_jsonl, append_to_jsonl
+> from .experiment_utils.http_client import chat_http_request
+>
+> def inference_main(config, args=None):
+>     """
+>     Main inference function called by the pipeline runner
+>     
+>     Args:
+>         config: Dictionary with experiment configuration from experiment.yaml
+>         args: Optional command-line arguments
+>     """
+>     logging.info("Starting agent inference...")
+>     
+>     # Access configuration
+>     input_path = config["input_path"]
+>     input_file = config["input_file"]
+>     output_path = config["output_path"]
+>     output_file = config["output_file"]
+>     base_url = config["base_url"]
+>     
+>     # Load queries
+>     queries = load_queries_from_jsonl(input_path, input_file)
+>     
+>     # Process each query
+>     for item in queries:
+>         query = item["query"]
+>         session_id = item["session_id"]
+>         
+>         # Call chat server
+>         response = chat_http_request(base_url, query, session_id)
+>         
+>         # Save response
+>         output_data = {
+>             "query": query,
+>             "session_id": session_id,
+>             "response": response
+>         }
+>         append_to_jsonl(output_path, output_file, output_data)
+>     
+>     logging.info(f"Inference complete. Responses saved to {output_file}")
+> ```
+>
+> </details>
 
 **Step 3: Add Configuration Section**
 

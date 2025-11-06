@@ -15,29 +15,66 @@ This modular pipeline architecture allows you to:
 
 ## Pipeline Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                                    EXPERIMENT & EVALUATION PIPELINE                                                                  │
-└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
- INPUT                    STAGE 1: EXPERIMENT                         STAGE 2: EVALUATION                        OUTPUT
-┌─────────────┐         ┌──────────────────────┐         ┌──────────────────────┐         ┌──────────────────────┐         ┌─────────────────┐
-│   Dataset   │         │  Agent Inference     │         │   Chat Server        │         │   Evaluators         │         │    Reports      │
-│             │  ────>  │                      │  ────>  │                      │  ────>  │                      │  ────>  │                 │
-│ agent_      │         │ • Read queries       │         │ • Process query      │         │ • Load responses     │         │ • JSON report   │
-│ utterances  │         │ • Call chat server   │         │ • Invoke agent       │         │ • Apply metrics:     │         │ • Scores        │
-│ .jsonl      │         │ • Collect responses  │         │ • Use tools          │         │   - Relevance        │         │ • Aggregates    │
-│             │         │ • Save to JSONL      │         │ • Return response    │         │   - TaskAdherence    │         │ • Token stats   │
-│ Fields:     │         │                      │         │                      │         │ • Generate report    │         │ • Dashboard     │
-│ • query     │         │ experiment/          │         │ localhost:8000/chat  │         │                      │         │                 │
-│ • session_id│         │ agent_inference.py   │         │                      │         │ evaluator/           │         │ report/         │
-│ • tool_*    │         │                      │         │ POST: {message,      │         │ eval_main.py         │         │ Agent_Eval.json │
-└─────────────┘         └──────────────────────┘         │       session_id}    │         └──────────────────────┘         └─────────────────┘
-                                 │                        └──────────────────────┘                  │
-                                 │                                 │                                │
-                                 ▼                                 ▼                                ▼
-                        agent_responses.jsonl           {response: "..."}              Metrics: Relevance=5
-                        (query, session_id, response)                                  TaskAdherence=5
+```mermaid
+flowchart LR
+    %% Define styles
+    classDef inputStyle fill:#e1f5ff,stroke:#01579b,stroke-width:2px
+    classDef experimentStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef serverStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef evalStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+    classDef outputStyle fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    
+    %% Input Stage
+    A["📁 Dataset<br/>agent_utterances.jsonl<br/>━━━━━━━━━━━<br/>• query<br/>• session_id<br/>• tool_calls<br/>• tool_definitions"]
+    
+    %% Experiment Stage
+    B["🔬 Agent Inference<br/>experiment/agent_inference.py<br/>━━━━━━━━━━━<br/>• Read queries<br/>• Call chat server<br/>• Collect responses<br/>• Save to JSONL"]
+    
+    %% Chat Server
+    C["💬 Chat Server<br/>localhost:8000/chat<br/>━━━━━━━━━━━<br/>• Process query<br/>• Invoke agent<br/>• Use tools<br/>• Return response"]
+    
+    %% Evaluation Stage
+    D["📊 Evaluators<br/>evaluator/eval_main.py<br/>━━━━━━━━━━━<br/>• Load responses<br/>• Apply metrics:<br/>  - Relevance<br/>  - TaskAdherence<br/>• Generate report"]
+    
+    %% Output Stage
+    E["📈 Reports<br/>report/Agent_Eval.json<br/>━━━━━━━━━━━<br/>• JSON report<br/>• Scores<br/>• Aggregates<br/>• Token stats<br/>• Dashboard"]
+    
+    %% Connections
+    A -->|"agent_utterances.jsonl"| B
+    B -->|"POST: {message, session_id}"| C
+    C -->|"{response: '...'}"| B
+    B -->|"agent_responses.jsonl<br/>(query, session_id, response)"| D
+    D -->|"Metrics:<br/>Relevance=5<br/>TaskAdherence=5"| E
+    
+    %% Apply styles
+    class A inputStyle
+    class B experimentStyle
+    class C serverStyle
+    class D evalStyle
+    class E outputStyle
+    
+    %% Stage labels
+    subgraph " "
+        direction LR
+        A
+    end
+    
+    subgraph "STAGE 1: EXPERIMENT"
+        direction LR
+        B
+        C
+    end
+    
+    subgraph "STAGE 2: EVALUATION"
+        direction LR
+        D
+    end
+    
+    subgraph " "
+        direction LR
+        E
+    end
 ```
 
 **Pipeline Flow:**

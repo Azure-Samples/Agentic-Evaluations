@@ -141,6 +141,9 @@ experiment_evaluation_pipeline/
 
 Your module must have a function with signature: `function_name(config, args=None)`
 
+<details>
+<summary>Click to expand: Example implementation</summary>
+
 ```python
 # experiment/agent_inference.py
 import logging
@@ -185,6 +188,8 @@ def inference_main(config, args=None):
     
     logging.info(f"Inference complete. Responses saved to {output_file}")
 ```
+
+</details>
 
 **Step 3: Add Configuration Section**
 

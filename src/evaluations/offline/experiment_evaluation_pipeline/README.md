@@ -16,82 +16,36 @@ This modular pipeline architecture allows you to:
 ## Pipeline Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                        EXPERIMENT & EVALUATION PIPELINE                      │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                                    EXPERIMENT & EVALUATION PIPELINE                                                                  │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
-┌──────────────────────┐
-│  Stage 1: EXPERIMENT │
-│    (Inference)       │
-└──────────────────────┘
-         │
-         │  Input: agent_utterances.jsonl
-         │  ┌──────────────────────────────────┐
-         │  │ query, session_id, tool_calls,   │
-         │  │ tool_definitions, response_gt    │
-         │  └──────────────────────────────────┘
-         ↓
-┌─────────────────────────────┐
-│  Agent Inference Module     │
-│  (experiment/               │
-│   agent_inference.py)       │
-│                             │
-│  • Read queries from JSONL  │
-│  • Send to chat server      │
-│  • Collect responses        │
-│  • Write to output JSONL    │
-└─────────────────────────────┘
-         │
-         │  HTTP POST: localhost:8000/chat
-         │  Payload: {message, session_id}
-         ↓
-┌─────────────────────────────┐
-│  Chat Server (localhost)    │
-│  • Process user query       │
-│  • Invoke agent logic       │
-│  • Call tools if needed     │
-│  • Return final response    │
-└─────────────────────────────┘
-         │
-         │  Output: agent_responses.jsonl
-         │  ┌──────────────────────────────────┐
-         │  │ query, session_id, response      │
-         │  └──────────────────────────────────┘
-         ↓
-┌──────────────────────┐
-│ Stage 2: EVALUATION  │
-└──────────────────────┘
-         │
-         │  Input: agent_responses.jsonl
-         ↓
-┌─────────────────────────────┐
-│  Evaluation Module          │
-│  (evaluator/eval_main.py)   │
-│                             │
-│  • Load responses           │
-│  • Apply evaluators:        │
-│    - RelevanceEvaluator     │
-│    - TaskAdherenceEvaluator │
-│  • Calculate metrics        │
-│  • Generate report          │
-└─────────────────────────────┘
-         │
-         │  Output: Evaluation Report
-         │  ┌──────────────────────────────────┐
-         │  │ Agent_Evaluation_Experiment.json │
-         │  │ • Relevance scores               │
-         │  │ • Task adherence scores          │
-         │  │ • Aggregate metrics              │
-         │  │ • Token usage stats              │
-         │  └──────────────────────────────────┘
-         ↓
-┌─────────────────────────────┐
-│  Results & Tracking         │
-│  • Local JSON report        │
-│  • Azure AI Foundry         │
-│    Dashboard (optional)     │
-└─────────────────────────────┘
+ INPUT                    STAGE 1: EXPERIMENT                         STAGE 2: EVALUATION                        OUTPUT
+┌─────────────┐         ┌──────────────────────┐         ┌──────────────────────┐         ┌──────────────────────┐         ┌─────────────────┐
+│   Dataset   │         │  Agent Inference     │         │   Chat Server        │         │   Evaluators         │         │    Reports      │
+│             │  ────>  │                      │  ────>  │                      │  ────>  │                      │  ────>  │                 │
+│ agent_      │         │ • Read queries       │         │ • Process query      │         │ • Load responses     │         │ • JSON report   │
+│ utterances  │         │ • Call chat server   │         │ • Invoke agent       │         │ • Apply metrics:     │         │ • Scores        │
+│ .jsonl      │         │ • Collect responses  │         │ • Use tools          │         │   - Relevance        │         │ • Aggregates    │
+│             │         │ • Save to JSONL      │         │ • Return response    │         │   - TaskAdherence    │         │ • Token stats   │
+│ Fields:     │         │                      │         │                      │         │ • Generate report    │         │ • Dashboard     │
+│ • query     │         │ experiment/          │         │ localhost:8000/chat  │         │                      │         │                 │
+│ • session_id│         │ agent_inference.py   │         │                      │         │ evaluator/           │         │ report/         │
+│ • tool_*    │         │                      │         │ POST: {message,      │         │ eval_main.py         │         │ Agent_Eval.json │
+└─────────────┘         └──────────────────────┘         │       session_id}    │         └──────────────────────┘         └─────────────────┘
+                                 │                        └──────────────────────┘                  │
+                                 │                                 │                                │
+                                 ▼                                 ▼                                ▼
+                        agent_responses.jsonl           {response: "..."}              Metrics: Relevance=5
+                        (query, session_id, response)                                  TaskAdherence=5
 ```
+
+**Pipeline Flow:**
+1. **Input Dataset** → Contains test queries with metadata
+2. **Inference Module** → Sends queries to chat server, collects responses
+3. **Chat Server** → Processes queries using agent logic and tools
+4. **Evaluation Module** → Applies Azure AI Foundry evaluators to responses
+5. **Output Reports** → JSON results + optional Azure AI Foundry dashboard
 
 ## Why Build Pipelines?
 
@@ -121,104 +75,53 @@ Applies Azure AI Foundry evaluators to assess the quality of collected responses
 
 ### Configuring `experiment.yaml`
 
-The configuration file has three main sections:
-
 #### 1. Experiment Section (Inference Configuration)
 
 ```yaml
 experiment:
-  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
-  input_file: agent_utterances.jsonl          # Dataset with queries
-  output_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
-  output_file: agent_responses.jsonl         # Where responses are saved
+  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/  # Input directory
+  input_file: agent_utterances.jsonl          # Dataset with queries, session_ids, tool metadata
+  output_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/ # Output directory
+  output_file: agent_responses.jsonl         # Saved responses (query + session_id + response)
   base_url: http://localhost:8000            # Chat server endpoint
-```
-
-**Parameters:**
-- `input_path`: Directory containing input dataset
-- `input_file`: JSONL file with queries, session_ids, tool metadata
-- `output_path`: Directory where responses will be saved
-- `output_file`: Output JSONL file with query + response pairs
-- `base_url`: URL of your chat server (agent endpoint)
-
-**Input Dataset Format (agent_utterances.jsonl):**
-```json
-{
-  "query": "How is the weather in Seattle?",
-  "session_id": "session-1",
-  "tool_calls": [...],
-  "tool_definitions": [...],
-  "response_gt": "Ground truth response (optional)"
-}
-```
-
-**Output Format (agent_responses.jsonl):**
-```json
-{
-  "query": "How is the weather in Seattle?",
-  "session_id": "session-1",
-  "response": "The weather in Seattle is currently cloudy with a temperature of 58°F."
-}
 ```
 
 #### 2. Evaluation Section
 
 ```yaml
 evaluation:
-  run_local: False                            # True = local execution, False = Azure AI Foundry
-  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
+  run_local: False                            # True = local execution, False = push to Azure AI Foundry
+  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/  # Input directory
   input_file: agent_responses.jsonl          # Output from experiment stage
-  output_path: src/evaluations/offline/experiment_evaluation_pipeline/report/
+  output_path: src/evaluations/offline/experiment_evaluation_pipeline/report/   # Report directory
   
   evaluators:
-    relevance_score: "relevance_evaluator"
+    relevance_score: "relevance_evaluator"           # Score name: evaluator type
     task_adherence_score: "task_adherence_evaluator"
   
   evaluator_config:
     relevance_score:
       column_mapping:
-        query: "${data.query}"
+        query: "${data.query}"                # Map dataset field to evaluator parameter
         response: "${data.response}"
-    
     task_adherence_score:
       column_mapping:
         query: "${data.query}"
         response: "${data.response}"
 ```
 
-**Parameters:**
-- `run_local`: Execute locally (True) or push to Azure AI Foundry (False)
-- `input_path`: Directory containing responses from experiment stage
-- `input_file`: JSONL file with agent responses (output from Stage 1)
-- `output_path`: Directory for evaluation reports
-- `evaluators`: Map of score names to evaluator types
-- `evaluator_config`: Column mappings for each evaluator
-
 #### 3. Pipeline Section
 
 ```yaml
 pipeline:
-  - base_path: experiment                     # Folder name in the project
-    module: agent_inference.inference_main    # Module.function to execute
-    config_key: experiment                    # Which config section to pass
+  - base_path: experiment                     # Folder containing the module
+    module: agent_inference.inference_main    # module_file.function_name to execute
+    config_key: experiment                    # Config section to pass as parameter
   
   - base_path: evaluator
     module: eval_main.eval_main
     config_key: evaluation
 ```
-
-**Pipeline Stage Structure:**
-- `base_path`: Folder containing the module (relative to experiment_evaluation_pipeline/)
-- `module`: Python module and function in format `module_name.function_name`
-- `config_key`: Which section of experiment.yaml to pass to the function
-
-**Execution Flow:**
-1. Runner loads `experiment.yaml`
-2. For each pipeline stage:
-   - Import the module from `base_path`
-   - Call the function with the config from `config_key`
-   - Wait for completion before proceeding to next stage
-3. Final report generated in `output_path`
 
 ### Adding Experiment to the Pipeline
 
@@ -294,9 +197,6 @@ experiment:
   output_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
   output_file: agent_responses.jsonl
   base_url: http://localhost:8000
-  # Add any custom parameters your experiment needs
-  timeout: 70
-  max_retries: 3
 ```
 
 **Step 4: Add to Pipeline**
@@ -305,11 +205,10 @@ Register your experiment in the pipeline section:
 
 ```yaml
 pipeline:
-  - base_path: experiment
-    module: agent_inference.inference_main    # module_file.function_name
-    config_key: experiment                    # References the experiment: section above
-  
-  - base_path: evaluator
+  - base_path: experiment                    # References experiment: section
+    module: agent_inference.inference_main   
+    config_key: experiment                   
+  - base_path: evaluator                     # References evaluation: section
     module: eval_main.eval_main
     config_key: evaluation
 ```
@@ -320,39 +219,29 @@ pipeline:
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/experiment_evaluation_pipeline/experiment.yaml
 ```
 
-The runner will:
-1. Execute `experiment/agent_inference.py::inference_main()` with `experiment` config
-2. Execute `evaluator/eval_main.py::eval_main()` with `evaluation` config
-3. Generate final evaluation report
-
 ### Example: Custom Experiment Module
 
-Here's an example of adding a custom preprocessing experiment:
+Add custom preprocessing stage to the pipeline:
 
 ```yaml
-# Add to experiment.yaml
 preprocessing:
   input_path: data/raw/
   input_file: queries.jsonl
   output_path: data/processed/
   output_file: cleaned_queries.jsonl
-  filters: ["remove_duplicates", "validate_format"]
+  filters: ["remove_duplicates", "validate_format"]  # Custom parameters
 
 pipeline:
-  - base_path: preprocessing
+  - base_path: preprocessing              # Stage 1: Preprocess
     module: clean_data.preprocess_main
     config_key: preprocessing
-  
-  - base_path: experiment
+  - base_path: experiment                 # Stage 2: Inference
     module: agent_inference.inference_main
     config_key: experiment
-  
-  - base_path: evaluator
+  - base_path: evaluator                  # Stage 3: Evaluation
     module: eval_main.eval_main
     config_key: evaluation
 ```
-
-This creates a three-stage pipeline: preprocess → inference → evaluation.
 
 ## Evaluation Metrics
 

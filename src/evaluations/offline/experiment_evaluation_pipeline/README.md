@@ -360,15 +360,6 @@ pipeline:
 
 Comment out the experiment stage:
 
-```yaml
-pipeline:
-  # - base_path: experiment
-  #   module: agent_inference.inference_main
-  #   config_key: experiment
-  - base_path: evaluator
-    module: eval_main.eval_main
-    config_key: evaluation
-```
 
 This is useful when you want to:
 - Re-run evaluation with different metrics
@@ -421,40 +412,6 @@ experiment_evaluation_pipeline/
 5. **Review Results**: Check the generated JSON report and Azure AI Foundry dashboard
 6. **Iterate**: Modify queries, add evaluators, or change agent configuration based on results
 7. **Extend Pipeline**: Add custom preprocessing or post-processing stages as needed
-
-## Example Workflows
-
-### Workflow 1: Initial Agent Testing
-```bash
-# 1. Run full pipeline with sample data
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/experiment_evaluation_pipeline/experiment.yaml
-
-# 2. Review results in report/Agent_Evaluation_Experiment.json
-# 3. Identify low-scoring queries
-# 4. Improve agent prompts/logic
-# 5. Re-run pipeline to validate improvements
-```
-
-### Workflow 2: Evaluator Experimentation
-```bash
-# 1. Run inference once to collect responses
-# Comment out evaluation in pipeline, run inference only
-
-# 2. Try different evaluator configurations
-# Edit evaluators in experiment.yaml, run evaluation only multiple times
-
-# 3. Compare evaluation results
-# No need to re-run expensive inference step
-```
-
-### Workflow 3: Production Monitoring
-```bash
-# 1. Collect real user queries → agent_utterances.jsonl
-# 2. Run inference against production agent
-# 3. Evaluate with comprehensive metrics
-# 4. Push results to Azure AI Foundry (run_local: False)
-# 5. Track performance over time in dashboard
-```
 
 ## Resources
 

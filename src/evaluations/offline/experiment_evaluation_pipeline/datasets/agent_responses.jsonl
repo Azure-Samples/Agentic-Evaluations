@@ -1,0 +1,4 @@
+{"query": "How is the weather in Seattle?", "session_id": "session-1", "response": "The weather forecast for Seattle is as follows:\n\n- **November 6, 2025**: High of 56.9°F, low of 48.4°F.\n- **November 7, 2025**: High of 54.0°F, low of 44.7°F.\n- **November 8, 2025**: High of 53.9°F, low of 41.2°F."}
+{"query": "Turn on the air conditioner in the living room", "session_id": "session-2", "response": "There is no air conditioner registered for the living room. If you'd like, I can turn on the air conditioner in the drawing room instead. Let me know!"}
+{"query": "Set the air conditioner temperature to 25 degrees Celsius.", "session_id": "session-3", "response": "The air conditioner is already set to 25 degrees Celsius. If you need assistance with anything else, feel free to ask!"}
+{"query": "Turn off air conditioner.", "session_id": "session-4", "response": "It seems like all air conditioners are already turned off. Let me know if you need further assistance!"}

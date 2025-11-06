@@ -1,0 +1,304 @@
+{
+    "rows": [
+        {
+            "inputs.query": "How is the weather in Seattle?",
+            "inputs.tool_calls": [
+                {
+                    "type": "tool_call",
+                    "tool_call_id": "call_CUdbkBfvVBla2YP3p24uhElJ",
+                    "name": "fetch_weather",
+                    "arguments": {
+                        "location": "Seattle"
+                    }
+                }
+            ],
+            "inputs.tool_definitions": [
+                {
+                    "id": "fetch_weather",
+                    "name": "fetch_weather",
+                    "description": "Fetches the weather information for the specified location.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "location": {
+                                "type": "string",
+                                "description": "The location to fetch weather for."
+                            }
+                        }
+                    }
+                }
+            ],
+            "inputs.response": "The weather in Seattle is currently cloudy with a temperature of 58°F.",
+            "outputs.relevance_score.relevance": 5.0,
+            "outputs.relevance_score.gpt_relevance": 5.0,
+            "outputs.relevance_score.relevance_result": "pass",
+            "outputs.relevance_score.relevance_threshold": 3,
+            "outputs.relevance_score.relevance_reason": "The response directly answers the user's query about the weather in Seattle, providing specific details about the current conditions and temperature. It is accurate and fully relevant to the question asked.",
+            "outputs.relevance_score.relevance_prompt_tokens": 1594,
+            "outputs.relevance_score.relevance_completion_tokens": 50,
+            "outputs.relevance_score.relevance_total_tokens": 1644,
+            "outputs.relevance_score.relevance_finish_reason": "stop",
+            "outputs.relevance_score.relevance_model": "gpt-4o-mini-2024-07-18",
+            "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"How is the weather in Seattle?\\\", \\\"response\\\": \\\"The weather in Seattle is currently cloudy with a temperature of 58\\\\u00b0F.\\\"}\"}]",
+            "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly answers the user's query about the weather in Seattle, providing specific details about the current conditions and temperature. It is accurate and fully relevant to the question asked.\\\",\\n  \\\"score\\\": 5\\n}\"}]",
+            "outputs.task_adherence_score.task_adherence": 5.0,
+            "outputs.task_adherence_score.gpt_task_adherence": 5.0,
+            "outputs.task_adherence_score.task_adherence_result": "pass",
+            "outputs.task_adherence_score.task_adherence_threshold": 3,
+            "outputs.task_adherence_score.task_adherence_reason": "The assistant provided the current weather in Seattle accurately, adhering to the user's request. There were no system constraints or tool requirements to violate, resulting in a complete and satisfactory response.",
+            "outputs.task_adherence_score.task_adherence_prompt_tokens": 2826,
+            "outputs.task_adherence_score.task_adherence_completion_tokens": 91,
+            "outputs.task_adherence_score.task_adherence_total_tokens": 2917,
+            "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+            "outputs.task_adherence_score.task_adherence_model": "gpt-4o-mini-2024-07-18",
+            "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"How is the weather in Seattle?\\\", \\\"response\\\": \\\"The weather in Seattle is currently cloudy with a temperature of 58\\\\u00b0F.\\\", \\\"tool_definitions\\\": null}\"}]",
+            "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The assistant provided the current weather in Seattle accurately, adhering to the user's request. There were no system constraints or tool requirements to violate, resulting in a complete and satisfactory response.\\\",\\n  \\\"agent_perceived_task\\\": \\\"provide current weather in Seattle\\\",\\n  \\\"actual_task\\\": \\\"How is the weather in Seattle?\\\",\\n  \\\"tools_used\\\": [],\\n  \\\"expected_tool_calls\\\": [],\\n  \\\"score\\\": 5\\n}\"}]",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy": 5.0,
+            "outputs.tool_call_accuracy_score.gpt_tool_call_accuracy": 5.0,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Let's think step by step: The user's last query is about the weather in Seattle. The relevant tool available is 'fetch_weather', which is designed to fetch weather information for a specified location. The agent made a single tool call to 'fetch_weather' with the argument 'location' set to 'Seattle'. This is directly relevant to the user's query, and the parameter is correctly grounded from the conversation. There are no unnecessary duplicate calls, and the tool call is expected to succeed as it is correctly formed. Since the tool call is relevant, correct, and efficient, I would rate this as a Level 5.",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {
+                "tool_calls_made_by_agent": 1,
+                "correct_tool_calls_made_by_agent": 1,
+                "per_tool_call_details": [
+                    {
+                        "tool_name": "fetch_weather",
+                        "total_calls_required": 1,
+                        "correct_calls_made_by_agent": 1,
+                        "correct_tool_percentage": 1.0,
+                        "tool_call_errors": 0,
+                        "tool_success_result": "pass"
+                    }
+                ],
+                "excess_tool_calls": {
+                    "total": 0,
+                    "details": []
+                },
+                "missing_tool_calls": {
+                    "total": 0,
+                    "details": []
+                }
+            },
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_prompt_tokens": 2124,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_completion_tokens": 292,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_total_tokens": 2416,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_finish_reason": "stop",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_model": "gpt-4o-mini-2024-07-18",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"How is the weather in Seattle?\\\", \\\"tool_calls\\\": [{\\\"type\\\": \\\"tool_call\\\", \\\"tool_call_id\\\": \\\"call_CUdbkBfvVBla2YP3p24uhElJ\\\", \\\"name\\\": \\\"fetch_weather\\\", \\\"arguments\\\": {\\\"location\\\": \\\"Seattle\\\"}}], \\\"tool_definitions\\\": [{\\\"id\\\": \\\"fetch_weather\\\", \\\"name\\\": \\\"fetch_weather\\\", \\\"description\\\": \\\"Fetches the weather information for the specified location.\\\", \\\"parameters\\\": {\\\"type\\\": \\\"object\\\", \\\"properties\\\": {\\\"location\\\": {\\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The location to fetch weather for.\\\"}}}}]}\"}]",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"chain_of_thought\\\": \\\"Let's think step by step: The user's last query is about the weather in Seattle. The relevant tool available is 'fetch_weather', which is designed to fetch weather information for a specified location. The agent made a single tool call to 'fetch_weather' with the argument 'location' set to 'Seattle'. This is directly relevant to the user's query, and the parameter is correctly grounded from the conversation. There are no unnecessary duplicate calls, and the tool call is expected to succeed as it is correctly formed. Since the tool call is relevant, correct, and efficient, I would rate this as a Level 5.\\\",\\n  \\\"tool_calls_success_level\\\": 5,\\n  \\\"details\\\": {\\n    \\\"tool_calls_made_by_agent\\\": 1,\\n    \\\"correct_tool_calls_made_by_agent\\\": 1,\\n    \\\"per_tool_call_details\\\": [\\n      {\\n        \\\"tool_name\\\": \\\"fetch_weather\\\",\\n        \\\"total_calls_required\\\": 1,\\n        \\\"correct_calls_made_by_agent\\\": 1,\\n        \\\"correct_tool_percentage\\\": 1.0,\\n        \\\"tool_call_errors\\\": 0,\\n        \\\"tool_success_result\\\": \\\"pass\\\"\\n      }\\n    ],\\n    \\\"excess_tool_calls\\\": {\\n      \\\"total\\\": 0,\\n      \\\"details\\\": []\\n    },\\n    \\\"missing_tool_calls\\\": {\\n      \\\"total\\\": 0,\\n      \\\"details\\\": []\\n    }\\n  }\\n}\"}]",
+            "line_number": 0
+        },
+        {
+            "inputs.query": "Turn on the air conditioner in the living room.",
+            "inputs.tool_calls": [
+                {
+                    "type": "tool_call",
+                    "tool_call_id": "call_1",
+                    "name": "control_device",
+                    "arguments": {
+                        "device": "air conditioner",
+                        "action": "turn_on",
+                        "location": "living room"
+                    }
+                }
+            ],
+            "inputs.tool_definitions": [
+                {
+                    "id": "control_device",
+                    "name": "control_device",
+                    "description": "Controls smart devices in the specified location.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "device": {
+                                "type": "string",
+                                "description": "The device to control."
+                            },
+                            "action": {
+                                "type": "string",
+                                "description": "The action to perform."
+                            },
+                            "location": {
+                                "type": "string",
+                                "description": "The location of the device."
+                            }
+                        }
+                    }
+                }
+            ],
+            "inputs.response": "The air conditioner in the living room has been turned on.",
+            "outputs.relevance_score.relevance": 5.0,
+            "outputs.relevance_score.gpt_relevance": 5.0,
+            "outputs.relevance_score.relevance_result": "pass",
+            "outputs.relevance_score.relevance_threshold": 3,
+            "outputs.relevance_score.relevance_reason": "The response directly addresses the user's request to turn on the air conditioner by confirming that it has been turned on. It is clear and relevant, providing the necessary information without any omissions.",
+            "outputs.relevance_score.relevance_prompt_tokens": 1594,
+            "outputs.relevance_score.relevance_completion_tokens": 52,
+            "outputs.relevance_score.relevance_total_tokens": 1646,
+            "outputs.relevance_score.relevance_finish_reason": "stop",
+            "outputs.relevance_score.relevance_model": "gpt-4o-mini-2024-07-18",
+            "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Turn on the air conditioner in the living room.\\\", \\\"response\\\": \\\"The air conditioner in the living room has been turned on.\\\"}\"}]",
+            "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly addresses the user's request to turn on the air conditioner by confirming that it has been turned on. It is clear and relevant, providing the necessary information without any omissions.\\\",\\n  \\\"score\\\": 5\\n}\"}]",
+            "outputs.task_adherence_score.task_adherence": 5.0,
+            "outputs.task_adherence_score.gpt_task_adherence": 5.0,
+            "outputs.task_adherence_score.task_adherence_result": "pass",
+            "outputs.task_adherence_score.task_adherence_threshold": 3,
+            "outputs.task_adherence_score.task_adherence_reason": "The assistant successfully turned on the air conditioner in the living room as requested by the user. It adhered to the task without any violations of system constraints.",
+            "outputs.task_adherence_score.task_adherence_prompt_tokens": 2826,
+            "outputs.task_adherence_score.task_adherence_completion_tokens": 93,
+            "outputs.task_adherence_score.task_adherence_total_tokens": 2919,
+            "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+            "outputs.task_adherence_score.task_adherence_model": "gpt-4o-mini-2024-07-18",
+            "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Turn on the air conditioner in the living room.\\\", \\\"response\\\": \\\"The air conditioner in the living room has been turned on.\\\", \\\"tool_definitions\\\": null}\"}]",
+            "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The assistant successfully turned on the air conditioner in the living room as requested by the user. It adhered to the task without any violations of system constraints.\\\",\\n  \\\"agent_perceived_task\\\": \\\"turn on the air conditioner in the living room\\\",\\n  \\\"actual_task\\\": \\\"Turn on the air conditioner in the living room\\\",\\n  \\\"tools_used\\\": [],\\n  \\\"expected_tool_calls\\\": [],\\n  \\\"score\\\": 5\\n}\"}]",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy": 5.0,
+            "outputs.tool_call_accuracy_score.gpt_tool_call_accuracy": 5.0,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Let's think step by step: The user's last query is to turn on the air conditioner in the living room. The relevant tool available is 'control_device', which is designed to control smart devices in specified locations. The tool call made by the agent correctly specifies the device as 'air conditioner', the action as 'turn_on', and the location as 'living room'. All parameters are grounded in the user's request and are correctly formatted according to the tool definition. There are no unnecessary duplicate calls, and the tool call is expected to execute successfully without errors. Therefore, the tool call is fully relevant and efficient, meeting the criteria for an optimal solution. Based on this analysis, the tool call accuracy level is 5.",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {
+                "tool_calls_made_by_agent": 1,
+                "correct_tool_calls_made_by_agent": 1,
+                "per_tool_call_details": [
+                    {
+                        "tool_name": "control_device",
+                        "total_calls_required": 1,
+                        "correct_calls_made_by_agent": 1,
+                        "correct_tool_percentage": 1.0,
+                        "tool_call_errors": 0,
+                        "tool_success_result": "pass"
+                    }
+                ],
+                "excess_tool_calls": {
+                    "total": 0,
+                    "details": []
+                },
+                "missing_tool_calls": {
+                    "total": 0,
+                    "details": []
+                }
+            },
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_prompt_tokens": 2163,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_completion_tokens": 312,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_total_tokens": 2475,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_finish_reason": "stop",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_model": "gpt-4o-mini-2024-07-18",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Turn on the air conditioner in the living room.\\\", \\\"tool_calls\\\": [{\\\"type\\\": \\\"tool_call\\\", \\\"tool_call_id\\\": \\\"call_1\\\", \\\"name\\\": \\\"control_device\\\", \\\"arguments\\\": {\\\"device\\\": \\\"air conditioner\\\", \\\"action\\\": \\\"turn_on\\\", \\\"location\\\": \\\"living room\\\"}}], \\\"tool_definitions\\\": [{\\\"id\\\": \\\"control_device\\\", \\\"name\\\": \\\"control_device\\\", \\\"description\\\": \\\"Controls smart devices in the specified location.\\\", \\\"parameters\\\": {\\\"type\\\": \\\"object\\\", \\\"properties\\\": {\\\"device\\\": {\\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The device to control.\\\"}, \\\"action\\\": {\\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The action to perform.\\\"}, \\\"location\\\": {\\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The location of the device.\\\"}}}}]}\"}]",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"chain_of_thought\\\": \\\"Let's think step by step: The user's last query is to turn on the air conditioner in the living room. The relevant tool available is 'control_device', which is designed to control smart devices in specified locations. The tool call made by the agent correctly specifies the device as 'air conditioner', the action as 'turn_on', and the location as 'living room'. All parameters are grounded in the user's request and are correctly formatted according to the tool definition. There are no unnecessary duplicate calls, and the tool call is expected to execute successfully without errors. Therefore, the tool call is fully relevant and efficient, meeting the criteria for an optimal solution. Based on this analysis, the tool call accuracy level is 5.\\\",\\n  \\\"tool_calls_success_level\\\": 5,\\n  \\\"details\\\": {\\n    \\\"tool_calls_made_by_agent\\\": 1,\\n    \\\"correct_tool_calls_made_by_agent\\\": 1,\\n    \\\"per_tool_call_details\\\": [\\n      {\\n        \\\"tool_name\\\": \\\"control_device\\\",\\n        \\\"total_calls_required\\\": 1,\\n        \\\"correct_calls_made_by_agent\\\": 1,\\n        \\\"correct_tool_percentage\\\": 1.0,\\n        \\\"tool_call_errors\\\": 0,\\n        \\\"tool_success_result\\\": \\\"pass\\\"\\n      }\\n    ],\\n    \\\"excess_tool_calls\\\": {\\n      \\\"total\\\": 0,\\n      \\\"details\\\": []\\n    },\\n    \\\"missing_tool_calls\\\": {\\n      \\\"total\\\": 0,\\n      \\\"details\\\": []\\n    }\\n  }\\n}\"}]",
+            "line_number": 1
+        },
+        {
+            "inputs.query": "Set the air conditioner temperature to 25 degrees Celsius.",
+            "inputs.tool_calls": [
+                {
+                    "type": "tool_call",
+                    "tool_call_id": "call_2",
+                    "name": "set_device_temperature",
+                    "arguments": {
+                        "device": "air conditioner",
+                        "temperature": 25
+                    }
+                }
+            ],
+            "inputs.tool_definitions": [
+                {
+                    "id": "set_device_temperature",
+                    "name": "set_device_temperature",
+                    "description": "Sets the temperature of a device.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "device": {
+                                "type": "string",
+                                "description": "The device to set temperature for."
+                            },
+                            "temperature": {
+                                "type": "number",
+                                "description": "The desired temperature in Celsius."
+                            }
+                        }
+                    }
+                }
+            ],
+            "inputs.response": "The air conditioner temperature has been set to 25 degrees Celsius.",
+            "outputs.relevance_score.relevance": 5.0,
+            "outputs.relevance_score.gpt_relevance": 5.0,
+            "outputs.relevance_score.relevance_result": "pass",
+            "outputs.relevance_score.relevance_threshold": 3,
+            "outputs.relevance_score.relevance_reason": "The response directly addresses the user's request to set the air conditioner temperature, confirming that it has been set to 25 degrees Celsius. It is clear, accurate, and fully relevant to the user's query.",
+            "outputs.relevance_score.relevance_prompt_tokens": 1596,
+            "outputs.relevance_score.relevance_completion_tokens": 56,
+            "outputs.relevance_score.relevance_total_tokens": 1652,
+            "outputs.relevance_score.relevance_finish_reason": "stop",
+            "outputs.relevance_score.relevance_model": "gpt-4o-mini-2024-07-18",
+            "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Set the air conditioner temperature to 25 degrees Celsius.\\\", \\\"response\\\": \\\"The air conditioner temperature has been set to 25 degrees Celsius.\\\"}\"}]",
+            "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly addresses the user's request to set the air conditioner temperature, confirming that it has been set to 25 degrees Celsius. It is clear, accurate, and fully relevant to the user's query.\\\",\\n  \\\"score\\\": 5\\n}\"}]",
+            "outputs.task_adherence_score.task_adherence": 5.0,
+            "outputs.task_adherence_score.gpt_task_adherence": 5.0,
+            "outputs.task_adherence_score.task_adherence_result": "pass",
+            "outputs.task_adherence_score.task_adherence_threshold": 3,
+            "outputs.task_adherence_score.task_adherence_reason": "The assistant successfully set the air conditioner temperature to 25 degrees Celsius as requested by the user. It adhered to the task without any errors or omissions.",
+            "outputs.task_adherence_score.task_adherence_prompt_tokens": 2828,
+            "outputs.task_adherence_score.task_adherence_completion_tokens": 95,
+            "outputs.task_adherence_score.task_adherence_total_tokens": 2923,
+            "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+            "outputs.task_adherence_score.task_adherence_model": "gpt-4o-mini-2024-07-18",
+            "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Set the air conditioner temperature to 25 degrees Celsius.\\\", \\\"response\\\": \\\"The air conditioner temperature has been set to 25 degrees Celsius.\\\", \\\"tool_definitions\\\": null}\"}]",
+            "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The assistant successfully set the air conditioner temperature to 25 degrees Celsius as requested by the user. It adhered to the task without any errors or omissions.\\\",\\n  \\\"agent_perceived_task\\\": \\\"set the air conditioner temperature to 25 degrees Celsius\\\",\\n  \\\"actual_task\\\": \\\"Set the air conditioner temperature to 25 degrees Celsius\\\",\\n  \\\"tools_used\\\": [],\\n  \\\"expected_tool_calls\\\": [],\\n  \\\"score\\\": 5\\n}\"}]",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy": 5.0,
+            "outputs.tool_call_accuracy_score.gpt_tool_call_accuracy": 5.0,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Let's think step by step: The user's last query is to set the air conditioner temperature to 25 degrees Celsius. The relevant tool available is 'set_device_temperature', which is designed to set the temperature of a device. The agent made one tool call to 'set_device_temperature' with the correct parameters: the device is 'air conditioner' and the temperature is 25. Both parameters are grounded in the user's request and are correctly formatted according to the tool definition. There are no unnecessary duplicate calls, and the tool call is expected to execute successfully without errors. Since the tool call is relevant, correct, and efficient, I would rate this as a level 5 for tool call accuracy.",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {
+                "tool_calls_made_by_agent": 1,
+                "correct_tool_calls_made_by_agent": 1,
+                "per_tool_call_details": [
+                    {
+                        "tool_name": "set_device_temperature",
+                        "total_calls_required": 1,
+                        "correct_calls_made_by_agent": 1,
+                        "correct_tool_percentage": 1.0,
+                        "tool_call_errors": 0,
+                        "tool_success_result": "pass"
+                    }
+                ],
+                "excess_tool_calls": {
+                    "total": 0,
+                    "details": []
+                },
+                "missing_tool_calls": {
+                    "total": 0,
+                    "details": []
+                }
+            },
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_prompt_tokens": 2141,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_completion_tokens": 308,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_total_tokens": 2449,
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_finish_reason": "stop",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_model": "gpt-4o-mini-2024-07-18",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Set the air conditioner temperature to 25 degrees Celsius.\\\", \\\"tool_calls\\\": [{\\\"type\\\": \\\"tool_call\\\", \\\"tool_call_id\\\": \\\"call_2\\\", \\\"name\\\": \\\"set_device_temperature\\\", \\\"arguments\\\": {\\\"device\\\": \\\"air conditioner\\\", \\\"temperature\\\": 25}}], \\\"tool_definitions\\\": [{\\\"id\\\": \\\"set_device_temperature\\\", \\\"name\\\": \\\"set_device_temperature\\\", \\\"description\\\": \\\"Sets the temperature of a device.\\\", \\\"parameters\\\": {\\\"type\\\": \\\"object\\\", \\\"properties\\\": {\\\"device\\\": {\\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The device to set temperature for.\\\"}, \\\"temperature\\\": {\\\"type\\\": \\\"number\\\", \\\"description\\\": \\\"The desired temperature in Celsius.\\\"}}}}]}\"}]",
+            "outputs.tool_call_accuracy_score.tool_call_accuracy_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"chain_of_thought\\\": \\\"Let's think step by step: The user's last query is to set the air conditioner temperature to 25 degrees Celsius. The relevant tool available is 'set_device_temperature', which is designed to set the temperature of a device. The agent made one tool call to 'set_device_temperature' with the correct parameters: the device is 'air conditioner' and the temperature is 25. Both parameters are grounded in the user's request and are correctly formatted according to the tool definition. There are no unnecessary duplicate calls, and the tool call is expected to execute successfully without errors. Since the tool call is relevant, correct, and efficient, I would rate this as a level 5 for tool call accuracy.\\\",\\n  \\\"tool_calls_success_level\\\": 5,\\n  \\\"details\\\": {\\n    \\\"tool_calls_made_by_agent\\\": 1,\\n    \\\"correct_tool_calls_made_by_agent\\\": 1,\\n    \\\"per_tool_call_details\\\": [\\n      {\\n        \\\"tool_name\\\": \\\"set_device_temperature\\\",\\n        \\\"total_calls_required\\\": 1,\\n        \\\"correct_calls_made_by_agent\\\": 1,\\n        \\\"correct_tool_percentage\\\": 1.0,\\n        \\\"tool_call_errors\\\": 0,\\n        \\\"tool_success_result\\\": \\\"pass\\\"\\n      }\\n    ],\\n    \\\"excess_tool_calls\\\": {\\n      \\\"total\\\": 0,\\n      \\\"details\\\": []\\n    },\\n    \\\"missing_tool_calls\\\": {\\n      \\\"total\\\": 0,\\n      \\\"details\\\": []\\n    }\\n  }\\n}\"}]",
+            "line_number": 2
+        }
+    ],
+    "metrics": {
+        "relevance_score.relevance": 5.0,
+        "relevance_score.gpt_relevance": 5.0,
+        "relevance_score.relevance_threshold": 3.0,
+        "task_adherence_score.task_adherence": 5.0,
+        "task_adherence_score.gpt_task_adherence": 5.0,
+        "task_adherence_score.task_adherence_threshold": 3.0,
+        "tool_call_accuracy_score.tool_call_accuracy": 5.0,
+        "tool_call_accuracy_score.gpt_tool_call_accuracy": 5.0,
+        "tool_call_accuracy_score.tool_call_accuracy_threshold": 3.0,
+        "tool_call_accuracy_score.tool_call_accuracy_prompt_tokens": 2142.6666666666665,
+        "tool_call_accuracy_score.tool_call_accuracy_completion_tokens": 304.0,
+        "tool_call_accuracy_score.tool_call_accuracy_total_tokens": 2446.6666666666665,
+        "relevance_score.binary_aggregate": 1.0,
+        "task_adherence_score.binary_aggregate": 1.0,
+        "tool_call_accuracy_score.binary_aggregate": 1.0
+    },
+    "studio_url": "https://ai.azure.com/build/evaluation/2c799512-a6b5-4517-9a92-1cdccaa2426f?wsid=/subscriptions/3547dcae-ed47-4a74-962e-07489552156f/resourceGroups/rg-eval-framework-project66/providers/Microsoft.MachineLearningServices/workspaces/eval-framework-project66"
+}

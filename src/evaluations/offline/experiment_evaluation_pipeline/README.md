@@ -141,7 +141,6 @@ experiment_evaluation_pipeline/
 
 Your module must have a function with signature: `function_name(config, args=None)`
 
-> [!TIP]
 > <details>
 > <summary><b>💡 Click to expand: Example implementation</b></summary>
 >

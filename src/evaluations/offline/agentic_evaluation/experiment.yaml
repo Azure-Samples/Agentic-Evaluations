@@ -11,15 +11,20 @@ evaluation:
   evaluators:
     relevance_score: "relevance_evaluator"
     agents_invoked_eval: "custom_agents_invoked_evaluator"
+    task_adherence_score: "task_adherence_evaluator"
   evaluator_config:
     relevance_score:
       column_mapping:
-        query: "${data.user_query}"
+        query: "${data.query}"
         response: "${data.gt_agent_response}" 
     agents_invoked_eval:
       column_mapping:
         expected_agents_to_invoke: "${data.expected_agents_to_invoke}"
         predicted_agents_to_invoke: "${data.selected_agents}"
+    task_adherence_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.response}"
 
 pipeline:
   - base_path: evaluator

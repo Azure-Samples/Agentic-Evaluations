@@ -53,11 +53,10 @@ A robust evaluation framework built for **fast, iterative experimentation** with
     - [3. Install Azure CLI \& Login](#3-install-azure-cli--login)
     - [4. Configure Environment Variables](#4-configure-environment-variables)
     - [5. Run Sample Evaluations](#5-run-sample-evaluations)
-  - [How to Create New Evaluations](#how-to-create-new-evaluations)
-    - [Adding Custom Evaluators](#adding-custom-evaluators)
   - [Folder Structure](#folder-structure)
     - [Understanding experiment.yaml Configuration](#understanding-experimentyaml-configuration)
-    - [Understanding experiment.yaml Configuration](#understanding-experimentyaml-configuration-1)
+  - [How to Create New Evaluations](#how-to-create-new-evaluations)
+    - [Adding Custom Evaluators](#adding-custom-evaluators)
   - [Custom Evaluation Metrics for Agentic Systems](#custom-evaluation-metrics-for-agentic-systems)
   - [Built-in Evaluators (Azure AI Foundry)](#built-in-evaluators-azure-ai-foundry)
   - [Future Enhancements](#future-enhancements)
@@ -239,6 +238,121 @@ python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/
 - Azure AI Foundry dashboard: Check `studio_url` in results JSON (if `run_local: False`)
 
 
+## Folder Structure
+
+```text
+src/
+├── agent_evaluation/
+│   └── agentic_ops/                    # Core framework infrastructure
+│       ├── runner.py                   # Pipeline orchestration
+│       ├── run_eval.py                 # Evaluation execution engine
+│       ├── base_evaluator.py           # Base class for custom evaluators
+│       ├── client.py                   # LLM client utilities
+│       └── README.md                   # Infrastructure documentation
+│
+└── evaluations/
+    └── offline/
+        ├── agentic_evaluation/         # Agentic systems evaluation
+        │   ├── datasets/               # Sample: 10 home automation agent interactions
+        │   │   └── agent_response_sample_data.jsonl  # Fields: query, expected_agents, selected_agents, response
+        │   ├── evaluator/
+        │   │   ├── eval_main.py        # Main evaluation script
+        │   │   └── evaluator_repo/     # Agent-specific custom evaluators
+        │   │       ├── evaluate_agent_invoked.py  # Invocation Accuracy, Recall@K
+        │   │       └── eval_utils/     # Metric calculation utilities
+        │   ├── eval_factory.py         # Agent evaluators + Relevance + Task Adherence
+        │   ├── experiment.yaml         # Agentic eval configuration
+        │   ├── report/                 # Evaluation results
+        │   └── README.md               # Detailed setup guide
+        │
+        ├── ai_judge_evaluation_custom/ # Custom AI Judge (LLM-as-judge)
+        │   ├── datasets/               # Sample: 4 query-response examples
+        │   │   └── rag_sample.jsonl    # Fields: query, response, ground_truth
+        │   ├── evaluator/
+        │   │   ├── eval_main.py        # Main evaluation script
+        │   │   └── evaluator_repo/     # Custom AI Judge evaluators
+        │   │       ├── coherence.py    # Coherence evaluator
+        │   │       ├── relevance.py    # Relevance evaluator
+        │   │       ├── fluency.py      # Fluency evaluator
+        │   │       ├── similarity.py   # Similarity evaluator
+        │   │       ├── prompts/        # Prompty template files (.prompty)
+        │   │       └── eval_utils/     # Evaluation utilities
+        │   ├── eval_factory.py         # Custom evaluators registered
+        │   ├── experiment.yaml         # AI Judge eval configuration
+        │   ├── report/                 # Evaluation results
+        │   └── README.md               # Detailed setup guide
+        │
+        ├── genai_evaluation_foundry/   # Azure AI Foundry built-in evaluators
+        │   ├── datasets/               # Sample: 4 query-response examples
+        │   ├── evaluator/
+        │   ├── eval_factory.py
+        │   ├── experiment.yaml
+        │   └── README.md
+        │
+        ├── pipeline_experiment_evaluation/  # Full pipeline: Data → Inference → Eval
+        │   ├── datasets/
+        │   ├── evaluator/
+        │   ├── experiment/             # Inference modules
+        │   ├── experiment.yaml
+        │   └── README.md
+        │
+        ├── golden_dataset/             # Reference datasets
+        │   └── raw_data/
+        │       └── DataForEvals/
+        │
+        └── utils/                      # Shared utilities
+            ├── blobFileUpload.py       # Azure Blob storage integration
+            ├── constants.py            # Shared constants
+            └── file_operations.py      # File handling utilities
+```
+
+### Understanding experiment.yaml Configuration
+
+The `experiment.yaml` file is the central configuration for your evaluation. Here's what each section controls:
+
+```yaml
+app_name: Agentic-Evals
+version: 1.0.0
+experiment_name: My_Evaluation_Experiment  # Appears in results and dashboard
+
+evaluation:  # Evaluation configuration
+  run_local: True  # False = push results to Azure AI Foundry dashboard
+  input_path: src/evaluations/offline/my_evaluation/datasets/
+  input_file: my_data.jsonl  # Your JSONL dataset
+  output_path: src/evaluations/offline/my_evaluation/report/
+  
+  column_mapping:  # Optional: Map dataset columns to standard names
+    user_id: "${data.conversation_id}"
+  
+  evaluators:  # List evaluators to run
+    relevance_score: "relevance_evaluator"  # Format: <output_name>: "<factory_key>"
+    groundedness_score: "groundedness_evaluator"
+  
+  evaluator_config:  # Configure each evaluator's inputs
+    relevance_score:
+      column_mapping:  # Map dataset fields to evaluator parameters
+        query: "${data.query}"  # ${data.<field_name>} syntax
+        response: "${data.response}"
+    
+    groundedness_score:
+      column_mapping:
+        response: "${data.response}"
+        context: "${data.context}"
+
+pipeline:  # Pipeline stages to execute
+  - base_path: evaluator  # Folder name
+    module: eval_main.eval_main  # Python module to run
+    config_key: evaluation  # Maps to 'evaluation' config above
+```
+
+**Key Points:**
+- **run_local: True** - Fast local execution, results in JSON file
+- **run_local: False** - Pushes to Azure AI Foundry dashboard (requires `EVAL_AZURE_FOUNDRY_CONNECTION_STRING` in .env)
+- **evaluators** - Keys become column names in results
+- **evaluator_config** - Must match evaluator parameter requirements (see [Built-in Evaluators](#built-in-evaluators-azure-ai-foundry))
+- **column_mapping** - `${data.<field>}` references fields in your JSONL dataset
+
+
 ## How to Create New Evaluations
 
 Follow these steps to set up a new agentic evaluation:
@@ -354,122 +468,6 @@ To create domain-specific evaluation metrics:
 **See sample implementations:**
 - Custom logic: `agentic_evaluation/evaluator/evaluator_repo/`
 - AI Judge (prompty): `ai_judge_evaluation_custom/evaluator/evaluator_repo/`
-
-
-## Folder Structure
-
-```text
-src/
-├── agent_evaluation/
-│   └── agentic_ops/                    # Core framework infrastructure
-│       ├── runner.py                   # Pipeline orchestration
-│       ├── run_eval.py                 # Evaluation execution engine
-│       ├── base_evaluator.py           # Base class for custom evaluators
-│       ├── client.py                   # LLM client utilities
-│       └── README.md                   # Infrastructure documentation
-│
-└── evaluations/
-    └── offline/
-        ├── agentic_evaluation/         # Agentic systems evaluation
-        │   ├── datasets/               # Sample: 10 home automation agent interactions
-        │   │   └── agent_response_sample_data.jsonl  # Fields: query, expected_agents, selected_agents, response
-        │   ├── evaluator/
-        │   │   ├── eval_main.py        # Main evaluation script
-        │   │   └── evaluator_repo/     # Agent-specific custom evaluators
-        │   │       ├── evaluate_agent_invoked.py  # Invocation Accuracy, Recall@K
-        │   │       └── eval_utils/     # Metric calculation utilities
-        │   ├── eval_factory.py         # Agent evaluators + Relevance + Task Adherence
-        │   ├── experiment.yaml         # Agentic eval configuration
-        │   ├── report/                 # Evaluation results
-        │   └── README.md               # Detailed setup guide
-        │
-        ├── ai_judge_evaluation_custom/ # Custom AI Judge (LLM-as-judge)
-        │   ├── datasets/               # Sample: 4 query-response examples
-        │   │   └── rag_sample.jsonl    # Fields: query, response, ground_truth
-        │   ├── evaluator/
-        │   │   ├── eval_main.py        # Main evaluation script
-        │   │   └── evaluator_repo/     # Custom AI Judge evaluators
-        │   │       ├── coherence.py    # Coherence evaluator
-        │   │       ├── relevance.py    # Relevance evaluator
-        │   │       ├── fluency.py      # Fluency evaluator
-        │   │       ├── similarity.py   # Similarity evaluator
-        │   │       ├── prompts/        # Prompty template files (.prompty)
-        │   │       └── eval_utils/     # Evaluation utilities
-        │   ├── eval_factory.py         # Custom evaluators registered
-        │   ├── experiment.yaml         # AI Judge eval configuration
-        │   ├── report/                 # Evaluation results
-        │   └── README.md               # Detailed setup guide
-        │
-        ├── genai_evaluation_foundry/   # Azure AI Foundry built-in evaluators
-        │   ├── datasets/               # Sample: 4 query-response examples
-        │   ├── evaluator/
-        │   ├── eval_factory.py
-        │   ├── experiment.yaml
-        │   └── README.md
-        │
-        ├── pipeline_experiment_evaluation/  # Full pipeline: Data → Inference → Eval
-        │   ├── datasets/
-        │   ├── evaluator/
-        │   ├── experiment/             # Inference modules
-        │   ├── experiment.yaml
-        │   └── README.md
-        │
-        ├── golden_dataset/             # Reference datasets
-        │   └── raw_data/
-        │       └── DataForEvals/
-        │
-        └── utils/                      # Shared utilities
-            ├── blobFileUpload.py       # Azure Blob storage integration
-            ├── constants.py            # Shared constants
-            └── file_operations.py      # File handling utilities
-```
-
-### Understanding experiment.yaml Configuration 
-### Understanding experiment.yaml Configuration
-
-The `experiment.yaml` file is the central configuration for your evaluation. Here's what each section controls:
-
-```yaml
-app_name: Agentic-Evals
-version: 1.0.0
-experiment_name: My_Evaluation_Experiment  # Appears in results and dashboard
-
-evaluation:  # Evaluation configuration
-  run_local: True  # False = push results to Azure AI Foundry dashboard
-  input_path: src/evaluations/offline/my_evaluation/datasets/
-  input_file: my_data.jsonl  # Your JSONL dataset
-  output_path: src/evaluations/offline/my_evaluation/report/
-  
-  column_mapping:  # Optional: Map dataset columns to standard names
-    user_id: "${data.conversation_id}"
-  
-  evaluators:  # List evaluators to run
-    relevance_score: "relevance_evaluator"  # Format: <output_name>: "<factory_key>"
-    groundedness_score: "groundedness_evaluator"
-  
-  evaluator_config:  # Configure each evaluator's inputs
-    relevance_score:
-      column_mapping:  # Map dataset fields to evaluator parameters
-        query: "${data.query}"  # ${data.<field_name>} syntax
-        response: "${data.response}"
-    
-    groundedness_score:
-      column_mapping:
-        response: "${data.response}"
-        context: "${data.context}"
-
-pipeline:  # Pipeline stages to execute
-  - base_path: evaluator  # Folder name
-    module: eval_main.eval_main  # Python module to run
-    config_key: evaluation  # Maps to 'evaluation' config above
-```
-
-**Key Points:**
-- **run_local: True** - Fast local execution, results in JSON file
-- **run_local: False** - Pushes to Azure AI Foundry dashboard (requires `EVAL_AZURE_FOUNDRY_CONNECTION_STRING` in .env)
-- **evaluators** - Keys become column names in results
-- **evaluator_config** - Must match evaluator parameter requirements (see [Built-in Evaluators](#built-in-evaluators-azure-ai-foundry))
-- **column_mapping** - `${data.<field>}` references fields in your JSONL dataset
 
 
 ## Custom Evaluation Metrics for Agentic Systems

@@ -2,7 +2,13 @@
 
 ## Overview
 
-This evaluation framework provides **AI-as-a-Judge** evaluations for RAG (Retrieval-Augmented Generation) systems. Unlike rule-based metrics, AI judges use large language models to assess the quality of generated responses across multiple dimensions, providing nuanced scoring that better aligns with human judgment.
+This evaluation provides **AI-as-a-Judge** evaluations using custom prompty templates. Unlike built-in evaluators with fixed criteria, custom AI judges let you define your own evaluation rubrics and scoring logic tailored to your domain.
+
+**What's Included:**
+- **Sample Dataset**: 4 RAG system responses in JSONL format
+- **Pre-configured Evaluators**: Custom Coherence + Custom Relevance + Custom Fluency + Custom Similarity
+- **Prompty Templates**: 4 customizable evaluation prompts in `evaluator/evaluator_repo/prompts/`
+- **Ready to Run**: Complete configuration with `experiment.yaml`
 
 **What is AI-as-a-Judge evaluation?**
 - Uses LLMs (like GPT-4) to evaluate response quality based on defined criteria
@@ -16,41 +22,21 @@ This framework supports both **Azure AI Foundry built-in evaluators** and **cust
 
 ### Built-in Metrics (Azure AI Foundry SDK)
 
-- **Relevance**: Measures how well the response addresses the query
-  - Score range: 1-5
-  - Evaluates directness and pertinence to the question
-
-- **Coherence**: Assesses logical flow and consistency
-  - Score range: 1-5
-  - Evaluates how well the response reads and maintains internal consistency
+| Metric | Description | Score Range | Use Case |
+|--------|-------------|-------------|----------|
+| **Relevance** | How well response addresses query | 1-5 | On-topic responses |
+| **Coherence** | Logical flow and consistency | 1-5 | Response structure |
 
 ### Custom AI Judge Metrics (Prompty-Based)
 
-All custom evaluators use prompty templates that define scoring criteria and rubrics:
+All custom evaluators use prompty templates in `evaluator/evaluator_repo/prompts/` that define scoring criteria and rubrics:
 
-- **Custom Coherence** (`custom_coherence_evaluator`)
-  - Evaluates natural language flow and readability
-  - Assesses whether text reads smoothly and resembles human-like language
-  - Use case: Measuring user-friendliness of generated responses
-  - Score range: 1-5
-
-- **Custom Relevance** (`custom_relevance_evaluator`)
-  - Measures how directly the response answers the query
-  - Evaluates completeness and appropriateness of the answer
-  - Use case: Ensuring responses stay on-topic and address user intent
-  - Score range: 1-5
-
-- **Custom Fluency** (`custom_fluency_evaluator`)
-  - Assesses linguistic quality: grammar, syntax, readability
-  - Checks for natural language conventions and proper phrasing
-  - Use case: Identifying grammatical errors and awkward constructions
-  - Score range: 1-5
-
-- **Custom Similarity** (`custom_similarity_evaluator`)
-  - Compares generated response to ground truth reference
-  - Evaluates semantic similarity and factual alignment
-  - Use case: Validating factual accuracy against known correct answers
-  - Score range: 1-5
+| Evaluator | Prompty File | Measures | Score Range | Use Case |
+|-----------|--------------|----------|-------------|----------|
+| **Custom Coherence** | `custom_coherence.prompty` | Natural language flow, readability | 1-5 | User-friendliness of responses |
+| **Custom Relevance** | `custom_relevance.prompty` | Directness, completeness of answer | 1-5 | Ensuring on-topic responses |
+| **Custom Fluency** | `custom_fluency.prompty` | Grammar, syntax, linguistic quality | 1-5 | Identifying language errors |
+| **Custom Similarity** | `custom_similarity.prompty` | Semantic similarity to ground truth | 1-5 | Factual accuracy validation |
 
 ## Dataset Format
 
@@ -58,17 +44,64 @@ Your evaluation dataset should be in JSONL format:
 
 ```json
 {
-  "query": "What is machine learning?",
-  "response": "Machine learning is a subset of artificial intelligence...",
-  "ground_truth": "Machine learning is a method of data analysis..."
+  "query": "What is the weather like today?",
+  "response": "The weather today is sunny with a high of 75 degrees...",
+  "ground_truth": "Today's weather is sunny and 75°F..."
 }
 ```
 
-**Required fields depend on evaluators:**
-- All evaluators: `query`, `response`
-- Similarity evaluator: `query`, `response`, `ground_truth`
+### Field Requirements
+
+| Field | Required? | Description | Used By |
+|-------|-----------|-------------|---------|
+| `query` | ✅ Yes | User's question or input | All evaluators |
+| `response` | ✅ Yes | Generated response to evaluate | All evaluators |
+| `ground_truth` | Optional | Reference answer | Custom Similarity evaluator |
+
+**Sample Dataset**: `datasets/rag_sample.jsonl` contains 4 simple query-response examples
+
+**Important Notes:**
+- Custom evaluators receive all dataset fields, so you can reference them in prompty templates
+- Built-in evaluators only accept specific fields defined in their schemas
+
+## Quick Start
+
+### Prerequisites
+
+1. **Azure Setup**: AI Foundry project with GPT-4o deployment
+2. **Environment**: `.env` file configured (see main README)
+3. **Installation**: Dependencies installed (`uv sync`)
+
+### Run with Sample Data
+
+**Run Directly:**
+```bash
+# Activate virtual environment
+.venv\Scripts\activate  # Windows
+source .venv/bin/activate  # Linux/macOS
+
+# Run evaluation with sample data
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/ai_judge_evaluation_custom/experiment.yaml
+```
+
+### Run with Your Data
+
+1. **Prepare your dataset**: Create `datasets/my_rag_data.jsonl` with required fields
+2. **Update experiment.yaml**:
+   ```yaml
+   evaluation:
+     input_file: my_rag_data.jsonl
+   ```
+3. **Run evaluation** (same command as above)
 
 ## How to Add Custom Metrics
+
+### Overview
+
+Custom evaluators consist of three components:
+1. **Prompty Template** (`.prompty` file): Defines evaluation criteria and rubric
+2. **Evaluator Class** (Python file): Wraps prompty and handles scoring logic
+3. **Factory Registration** (`eval_factory.py`): Makes evaluator available to framework
 
 ### Step 1: Create a Prompty Template
 

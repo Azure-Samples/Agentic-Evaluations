@@ -38,19 +38,26 @@ A robust evaluation framework built for **fast, iterative experimentation** with
 - [Evaluation Framework using Azure AI Foundry](#evaluation-framework-using-azure-ai-foundry)
   - [Making AI Evaluation Simple](#making-ai-evaluation-simple)
   - [Table of Contents](#table-of-contents)
-  - [Evaluation Pipeline Diagram](#evaluation-pipeline-diagram)
   - [Pipeline Architecture](#pipeline-architecture)
     - [1. Evaluation Only Pipeline](#1-evaluation-only-pipeline)
     - [2. Inference + Evaluation Pipeline](#2-inference--evaluation-pipeline)
     - [3. Data Loading + Inference + Evaluation Pipeline](#3-data-loading--inference--evaluation-pipeline)
     - [Pipeline Components](#pipeline-components)
     - [Samples](#samples)
-      - [Provided Evaluation Samples](#provided-evaluation-samples)
+    - [Provided Evaluation Samples](#provided-evaluation-samples)
   - [Prerequisites](#prerequisites)
   - [Azure Services Used](#azure-services-used)
   - [Installation \& Setup](#installation--setup)
+    - [1. Clone the Repository](#1-clone-the-repository)
+    - [2. Install Dependencies](#2-install-dependencies)
+    - [3. Install Azure CLI \& Login](#3-install-azure-cli--login)
+    - [4. Configure Environment Variables](#4-configure-environment-variables)
+    - [5. Run Sample Evaluations](#5-run-sample-evaluations)
   - [How to Create New Evaluations](#how-to-create-new-evaluations)
+    - [Adding Custom Evaluators](#adding-custom-evaluators)
   - [Folder Structure](#folder-structure)
+    - [Understanding experiment.yaml Configuration](#understanding-experimentyaml-configuration)
+    - [Understanding experiment.yaml Configuration](#understanding-experimentyaml-configuration-1)
   - [Custom Evaluation Metrics for Agentic Systems](#custom-evaluation-metrics-for-agentic-systems)
   - [Built-in Evaluators (Azure AI Foundry)](#built-in-evaluators-azure-ai-foundry)
   - [Future Enhancements](#future-enhancements)
@@ -356,19 +363,15 @@ src/
 └── evaluations/
     └── offline/
         ├── genai_evaluation_foundry/   # Azure AI Foundry built-in evaluators
-        │   ├── datasets/               # Sample: 4 healthcare insurance queries
-        │   │   └── rag_sample.jsonl    # Fields: query, response, context, ground_truth
+        │   ├── datasets/               # Sample: 4 query-response examples
         │   ├── evaluator/
-        │   │   ├── eval_main.py        # Main evaluation script
-        │   │   └── evaluator_repo/     # Foundry evaluator wrappers
-        │   ├── eval_factory.py         # Fluency + Coherence evaluators registered
-        │   ├── experiment.yaml         # Foundry eval configuration
-        │   ├── report/                 # Evaluation results
-        │   └── README.md               # Detailed setup guide
+        │   ├── eval_factory.py
+        │   ├── experiment.yaml
+        │   └── README.md
         │
         ├── ai_judge_evaluation_custom/ # Custom AI Judge (LLM-as-judge)
-        │   ├── datasets/               # Sample: RAG evaluation data
-        │   │   └── rag_sample.jsonl
+        │   ├── datasets/               # Sample: 4 query-response examples
+        │   │   └── rag_sample.jsonl    # Fields: query, response, ground_truth
         │   ├── evaluator/
         │   │   ├── eval_main.py        # Main evaluation script
         │   │   └── evaluator_repo/     # Custom AI Judge evaluators
@@ -384,7 +387,7 @@ src/
         │   └── README.md               # Detailed setup guide
         │
         ├── agentic_evaluation/         # Agentic systems evaluation
-        │   ├── datasets/               # Sample: 10 agent response records
+        │   ├── datasets/               # Sample: 10 home automation agent interactions
         │   │   └── agent_response_sample_data.jsonl  # Fields: query, expected_agents, selected_agents, response
         │   ├── evaluator/
         │   │   ├── eval_main.py        # Main evaluation script

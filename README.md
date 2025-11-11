@@ -142,10 +142,9 @@ The repository includes several ready-to-use evaluation samples, each demonstrat
 
 | Sample Folder                   | Description & Use Case                                                                                          | Key Features | More Info                |
 |---------------------------------|----------------------------------------------------------------------------------------------------------------|--------------|--------------------------|
-| `genai_evaluation_foundry`      | **Standard GenAI/RAG Evaluation** - Uses Azure AI Foundry's built-in evaluators (Relevance, Coherence, Fluency, Groundedness). Ideal for quick benchmarking and comparison. | • Sample dataset with 4 healthcare insurance queries<br>• Pre-configured with Fluency + Coherence evaluators<br>• Ready to run immediately | [README](./src/evaluations/offline/genai_evaluation_foundry/README.md) |
-| `ai_judge_evaluation_custom`    | **Custom AI Judge (LLM-as-Judge)** - Create custom evaluation methodology for metrics like coherence and relevance using prompty templates. Perfect for domain-specific quality criteria. | • Sample RAG dataset<br>• Custom prompty templates for Coherence, Relevance, Fluency, Similarity<br>• Domain-specific rubrics (1-5 scale) | [README](./src/evaluations/offline/ai_judge_evaluation_custom/README.md) |
 | `agentic_evaluation`            | **Agentic Systems Evaluation** - Measures agent invocation accuracy, recall@k, and tool-calling correctness. Purpose-built for multi-agent and autonomous systems. | • Sample dataset with 10 agent responses<br>• Custom evaluators: Invocation Accuracy, Recall@K, Agent Hallucination<br>• Built-in evaluators: Relevance, Task Adherence | [README](./src/evaluations/offline/agentic_evaluation/README.md) |
-| `multi_agent_experiment_evals`  | **Multi-Agent Experimentation** - End-to-end pipeline for testing multi-agent systems with live agent invocation + evaluation. | • Inference + Evaluation pipeline<br>• Agent response generation<br>• Custom agentic metrics | [README](./src/evaluations/offline/multi_agent_experiment_evals/README.md) |
+| `ai_judge_evaluation_custom`    | **Custom AI Judge (LLM-as-Judge)** - Create custom evaluation methodology for metrics like coherence and relevance using prompty templates. Perfect for domain-specific quality criteria. | • Sample RAG dataset<br>• Custom prompty templates for Coherence, Relevance, Fluency, Similarity<br>• Domain-specific rubrics (1-5 scale) | [README](./src/evaluations/offline/ai_judge_evaluation_custom/README.md) |
+| `genai_evaluation_foundry`      | **Standard GenAI/RAG Evaluation** - Uses Azure AI Foundry's built-in evaluators (Relevance, Coherence, Fluency, Groundedness). Ideal for quick benchmarking and comparison. | • Sample dataset with 4 healthcare insurance queries<br>• Pre-configured with Fluency + Coherence evaluators<br>• Ready to run immediately | [README](./src/evaluations/offline/genai_evaluation_foundry/README.md) |
 | `pipeline_experiment_evaluation`| **Complete Pipeline with Inference** - Full data loading → inference → evaluation workflow for production-scale testing. | • Azure Blob integration<br>• Data preprocessing<br>• Batch evaluation | [README](./src/evaluations/offline/pipeline_experiment_evaluation/README.md) |
 
 **Quick Start:**
@@ -396,12 +395,6 @@ src/
         │   ├── datasets/               # Sample: 4 query-response examples
         │   ├── evaluator/
         │   ├── eval_factory.py
-        │   ├── experiment.yaml
-        │   └── README.md
-        │
-        ├── multi_agent_experiment_evals/  # Multi-agent experimentation pipeline
-        │   ├── datasets/
-        │   ├── evaluator/
         │   ├── experiment.yaml
         │   └── README.md
         │

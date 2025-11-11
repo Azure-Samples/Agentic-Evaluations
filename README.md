@@ -38,7 +38,7 @@ A robust evaluation framework built for **fast, iterative experimentation** with
 - [Evaluation Framework using Azure AI Foundry](#evaluation-framework-using-azure-ai-foundry)
   - [Making AI Evaluation Simple](#making-ai-evaluation-simple)
   - [Table of Contents](#table-of-contents)
-    - [Evaluation Pipeline Diagram](#evaluation-pipeline-diagram)
+  - [Evaluation Pipeline Diagram](#evaluation-pipeline-diagram)
   - [Pipeline Architecture](#pipeline-architecture)
     - [1. Evaluation Only Pipeline](#1-evaluation-only-pipeline)
     - [2. Inference + Evaluation Pipeline](#2-inference--evaluation-pipeline)
@@ -49,14 +49,8 @@ A robust evaluation framework built for **fast, iterative experimentation** with
   - [Prerequisites](#prerequisites)
   - [Azure Services Used](#azure-services-used)
   - [Installation \& Setup](#installation--setup)
-    - [1. Clone the Repository](#1-clone-the-repository)
-    - [2. Install Dependencies](#2-install-dependencies)
-    - [3. Install Azure CLI \& Login](#3-install-azure-cli--login)
-    - [4. create env file based on Azure AI Foundry set up (refer to env\_template)](#4-create-env-file-based-on-azure-ai-foundry-set-up-refer-to-env_template)
-    - [5. Run the Evaluations (as is with sample files provided):](#5-run-the-evaluations-as-is-with-sample-files-provided)
   - [How to Create New Evaluations](#how-to-create-new-evaluations)
   - [Folder Structure](#folder-structure)
-    - [Understand the config.](#understand-the-config)
   - [Custom Evaluation Metrics for Agentic Systems](#custom-evaluation-metrics-for-agentic-systems)
   - [Built-in Evaluators (Azure AI Foundry)](#built-in-evaluators-azure-ai-foundry)
   - [Future Enhancements](#future-enhancements)
@@ -64,9 +58,7 @@ A robust evaluation framework built for **fast, iterative experimentation** with
   - [License](#license)
   - [Contributing](#contributing)
 
-
-
-### Evaluation Pipeline Diagram
+---
 
 ![Evaluation Pipeline](./assets/Eval-pipeline.png)
 
@@ -137,16 +129,23 @@ The diagram shows a representation of a pipeline added to the yaml file
 <img src="./assets/pipeline_diragram.png" alt="Pipeline Architecture Diagram" width="400" />
 
 ### Samples
-#### Provided Evaluation Samples
+### Provided Evaluation Samples
 
 The repository includes several ready-to-use evaluation samples, each demonstrating a different evaluation scenario. Each sample folder contains its own detailed README for setup and usage instructions.
 
-| Sample Folder                   | Description & Use Case                                                                                                                                                                                                                                                                      | More Info                |
-| Sample Folder                | Description                                                                                                         | More Info                |
-|------------------------------|---------------------------------------------------------------------------------------------------------------------|--------------------------|
-| `genai_evaluation_foundry`   | Uses Azure AI Foundry's built-in evaluators for standard GenAI tasks (e.g., relevance, fluency). Ideal for quick benchmarking and comparison. | [README](./src/evaluations/offline/genai_evaluation_foundry/README.md) |
-| `ai_judge_evaluation_custom` | Create custom LLM-as-judge evaluation methodology for metrics like coherence and relevance. Supports custom prompts and metrics. | [README](./src/evaluations/offline/ai_judge_evaluation_custom/README.md) |
-| `agentic_evaluation_custom`  | Creates custom evaluation for agentic systems, measuring agent invocation accuracy, recall@k, and other agent-specific metrics. | [README](./src/evaluations/offline/agentic_evaluation_custom/README.md) |
+| Sample Folder                   | Description & Use Case                                                                                          | Key Features | More Info                |
+|---------------------------------|----------------------------------------------------------------------------------------------------------------|--------------|--------------------------|
+| `genai_evaluation_foundry`      | **Standard GenAI/RAG Evaluation** - Uses Azure AI Foundry's built-in evaluators (Relevance, Coherence, Fluency, Groundedness). Ideal for quick benchmarking and comparison. | • Sample dataset with 4 healthcare insurance queries<br>• Pre-configured with Fluency + Coherence evaluators<br>• Ready to run immediately | [README](./src/evaluations/offline/genai_evaluation_foundry/README.md) |
+| `ai_judge_evaluation_custom`    | **Custom AI Judge (LLM-as-Judge)** - Create custom evaluation methodology for metrics like coherence and relevance using prompty templates. Perfect for domain-specific quality criteria. | • Sample RAG dataset<br>• Custom prompty templates for Coherence, Relevance, Fluency, Similarity<br>• Domain-specific rubrics (1-5 scale) | [README](./src/evaluations/offline/ai_judge_evaluation_custom/README.md) |
+| `agentic_evaluation`            | **Agentic Systems Evaluation** - Measures agent invocation accuracy, recall@k, and tool-calling correctness. Purpose-built for multi-agent and autonomous systems. | • Sample dataset with 10 agent responses<br>• Custom evaluators: Invocation Accuracy, Recall@K, Agent Hallucination<br>• Built-in evaluators: Relevance, Task Adherence | [README](./src/evaluations/offline/agentic_evaluation/README.md) |
+| `multi_agent_experiment_evals`  | **Multi-Agent Experimentation** - End-to-end pipeline for testing multi-agent systems with live agent invocation + evaluation. | • Inference + Evaluation pipeline<br>• Agent response generation<br>• Custom agentic metrics | [README](./src/evaluations/offline/multi_agent_experiment_evals/README.md) |
+| `pipeline_experiment_evaluation`| **Complete Pipeline with Inference** - Full data loading → inference → evaluation workflow for production-scale testing. | • Azure Blob integration<br>• Data preprocessing<br>• Batch evaluation | [README](./src/evaluations/offline/pipeline_experiment_evaluation/README.md) |
+
+**Quick Start:**
+1. Choose the sample that matches your use case
+2. Copy the folder: `cp -r src/evaluations/offline/<sample_name> src/evaluations/offline/my_evaluation`
+3. Update `experiment.yaml` with your dataset path and selected evaluators
+4. Run: `python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/my_evaluation/experiment.yaml`
 
 
 ## Prerequisites
@@ -170,7 +169,6 @@ The repository includes several ready-to-use evaluation samples, each demonstrat
 ```bash
 git clone https://github.com/Azure-Samples/Agentic-Evaluations.git
 cd Agentic-Evaluations
-git checkout -b "your branch"
 ```
 
 ### 2. Install Dependencies
@@ -180,77 +178,167 @@ uv sync
 
 # Activate virtual environment
 .venv\Scripts\activate         # PowerShell (Windows)
-source venv/bin/activate       # Linux/macOS
+source .venv/bin/activate      # Linux/macOS
 ```
 
 ### 3. Install Azure CLI & Login
-```
+
+```bash
 az login
+az account set --subscription "<your-subscription-id>"
 ```
 
-### 4. create env file based on Azure AI Foundry set up (refer to env_template)
+### 4. Configure Environment Variables
+
 Create a `.env` file in the project root by copying the provided template:
 
 ```bash
 cp .env.template .env
 ```
 
-Edit the `.env` file to include your Azure AI Foundry credentials and other required environment variables as described in the comments of `.env.template`.
+Edit the `.env` file to include your Azure AI Foundry credentials:
 
-### 5. Run the Evaluations (as is with sample files provided):
-To run agent_end_response_evaluation
+```env
+# Required for all evaluations
+EVAL_AZURE_OPENAI_KEY=<your-azure-openai-key>
+EVAL_AZURE_OPENAI_VERSION=2024-12-01-preview
+EVAL_AZURE_OPENAI_ENDPOINT=https://<your-resource>.openai.azure.com/
+EVAL_AZURE_OPENAI_MODEL=<your-deployment-name>
+
+# Optional: For pushing results to Azure AI Foundry dashboard
+EVAL_AZURE_FOUNDRY_CONNECTION_STRING=<your-ai-foundry-connection-string>
+```
+
+### 5. Run Sample Evaluations
+
+Test the framework with provided sample data:
+
+**GenAI Evaluation (Built-in Evaluators):**
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/genai_evaluation_foundry/experiment.yaml
+```
+
+**Agentic Evaluation (Custom Metrics):**
 ```bash
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/agentic_evaluation/experiment.yaml
 ```
 
+**Custom AI Judge Evaluation:**
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/ai_judge_evaluation_custom/experiment.yaml
+```
+
+**Results Location:**
+- Local results: `src/evaluations/offline/<evaluation_name>/report/`
+- Azure AI Foundry dashboard: Check `studio_url` in results JSON (if `run_local: False`)
+
 
 ## How to Create New Evaluations
 
-Follow these steps to set up a new evaluation scenario using this framework:
+Follow these steps to set up a new evaluation:
 
-1. **Understand the Folder Structure**  
-  Review the [Folder Structure](#folder-structure) section above to familiarize yourself with where datasets, evaluators, configs, and reports are organized.
+1. **Copy a Relevant Sample Folder**  
+   ```bash
+   cp -r src/evaluations/offline/genai_evaluation_foundry src/evaluations/offline/my_evaluation
+   cd src/evaluations/offline/my_evaluation
+   ```
 
-2. **Explore Provided Samples**  
-  Go through the sample evaluation folders under `src/evaluations/offline/` (e.g., `agentic_evaluation_custom`, `ai_judge_evaluation_custom`, `genai_evaluation_foundry`). Each contains a README and example configuration.
+2. **Prepare Your Dataset**  
+   Create a JSONL file in `datasets/` with required fields:
+   ```jsonl
+   {"query": "What is your refund policy?", "response": "Our refund policy allows...", "context": "Policy document..."}
+   {"query": "How do I reset password?", "response": "To reset your password...", "context": "Help docs..."}
+   ```
 
-3. **Copy a Relevant Sample Folder**  
-  Duplicate the sample folder that best matches your use case. For example:
-  ```bash
-  cp -r C:\Eval_Framework\eval_framework_v2\Agentic-Evaluations\src\evaluations\offline\agentic_evaluation_custom <your_new_evaluation_folder>
-  ```
+3. **Select Your Evaluators**  
+   Decide which metrics you need:
+   - **Built-in**: Relevance, Coherence, Fluency, Groundedness, Similarity
+   - **Custom**: Create your own evaluators in `evaluator/evaluator_repo/`
 
-4. **Determine Required Metrics**  
-  Decide which evaluation metrics you need—either built-in (from Azure AI Foundry) or custom.
-
-  - For **built-in metrics**: Import the relevant evaluator classes directly in your `eval_factory.py` (e.g., `from azure.ai.evaluation import RelevanceEvaluator`).
-  To add your own custom evaluation metric:
-
-  - **Create your custom evaluator**: Implement your evaluator as a Python class in the `evaluator_repo/` directory within your evaluation folder. This class should inherit from the base evaluator (e.g., `BaseEvaluator`) and define the required evaluation logic.
-
-  - **Register your evaluator**: In `eval_factory.py`, add an entry for your custom evaluator in the `EVALUATOR_FACTORIES` dictionary. For example:
-    ```python
-    from .evaluator.evaluator_repo.my_custom_evaluator import MyCustomEvaluator
-
-    class EvaluatorFactory:
+4. **Update `eval_factory.py`**  
+   Register your selected evaluators:
+   ```python
+   from azure.ai.evaluation import RelevanceEvaluator, GroundednessEvaluator
+   
+   class EvaluatorFactory:
        EVALUATOR_FACTORIES = {
-          "my_custom_evaluator": MyCustomEvaluator,
-          # ... other evaluators ...
+           "relevance_evaluator": RelevanceEvaluator,
+           "groundedness_evaluator": GroundednessEvaluator,
        }
-    ```
+   ```
 
-5. **Update experiment.yaml**  
-  Edit the `experiment.yaml` file in your new evaluation folder:
-  - Add your evaluator(s) under the `evaluators` section.
-  - specify any required column mappings in `evaluator_config`.
+5. **Configure `experiment.yaml`**  
+   ```yaml
+   evaluation:
+     run_local: True  # Set False to push to Azure AI Foundry dashboard
+     input_path: src/evaluations/offline/my_evaluation/datasets/
+     input_file: my_data.jsonl
+     output_path: src/evaluations/offline/my_evaluation/report/
+     
+     evaluators:
+       relevance_score: "relevance_evaluator"
+       groundedness_score: "groundedness_evaluator"
+     
+     evaluator_config:
+       relevance_score:
+         column_mapping:
+           query: "${data.query}"
+           response: "${data.response}"
+       groundedness_score:
+         column_mapping:
+           response: "${data.response}"
+           context: "${data.context}"
+   ```
 
-6. **Run the Pipeline**  
-  Execute the evaluation pipeline using your updated configuration:
-  ```bash
-  python -m src.agent_evaluation.agentic_ops.runner --config_file <your_new_evaluation_folder>/experiment.yaml
-  ```
+6. **Run Your Evaluation**  
+   ```bash
+   python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/my_evaluation/experiment.yaml
+   ```
 
-This process enables you to quickly set up and run new evaluation scenarios tailored to your data and metrics.
+7. **Review Results**  
+   - Local: Check `report/<experiment_name>.json`
+   - Azure dashboard: Open `studio_url` from results JSON
+
+### Adding Custom Evaluators
+
+To create domain-specific evaluation metrics:
+
+1. **Create evaluator class** in `evaluator/evaluator_repo/my_evaluator.py`:
+   ```python
+   class MyCustomEvaluator:
+       def __init__(self):
+           pass
+       
+       def __call__(self, query, response, **kwargs):
+           # Your evaluation logic here
+           score = self.calculate_score(query, response)
+           return {"my_metric": score}
+   ```
+
+2. **Register in `eval_factory.py`**:
+   ```python
+   from .evaluator.evaluator_repo.my_evaluator import MyCustomEvaluator
+   
+   EVALUATOR_FACTORIES = {
+       "my_custom_evaluator": MyCustomEvaluator,
+   }
+   ```
+
+3. **Add to `experiment.yaml`**:
+   ```yaml
+   evaluators:
+     my_metric_score: "my_custom_evaluator"
+   
+   evaluator_config:
+     my_metric_score:
+       column_mapping:
+         query: "${data.query}"
+         response: "${data.response}"
+   ```
+
+**See sample implementations:**
+- Custom logic: `agentic_evaluation/evaluator/evaluator_repo/`
+- AI Judge (prompty): `ai_judge_evaluation_custom/evaluator/evaluator_repo/`
 
 
 ## Folder Structure
@@ -267,17 +355,20 @@ src/
 │
 └── evaluations/
     └── offline/
-        ├── agentic_evaluation_custom/  # Custom agentic system evaluation
-        │   ├── datasets/               # Sample agent response data
+        ├── genai_evaluation_foundry/   # Azure AI Foundry built-in evaluators
+        │   ├── datasets/               # Sample: 4 healthcare insurance queries
+        │   │   └── rag_sample.jsonl    # Fields: query, response, context, ground_truth
         │   ├── evaluator/
         │   │   ├── eval_main.py        # Main evaluation script
-        │   │   └── evaluator_repo/     # Agent-specific custom evaluators
-        │   ├── eval_factory.py         # Evaluator registration
-        │   ├── experiment.yaml         # Agentic eval configuration
-        │   └── report/                 # Evaluation results
+        │   │   └── evaluator_repo/     # Foundry evaluator wrappers
+        │   ├── eval_factory.py         # Fluency + Coherence evaluators registered
+        │   ├── experiment.yaml         # Foundry eval configuration
+        │   ├── report/                 # Evaluation results
+        │   └── README.md               # Detailed setup guide
         │
-        ├── ai_judge_evaluation_custom/ # Custom AI Judge evaluation (LLM-as-judge)
-        │   ├── datasets/               # Sample evaluation data
+        ├── ai_judge_evaluation_custom/ # Custom AI Judge (LLM-as-judge)
+        │   ├── datasets/               # Sample: RAG evaluation data
+        │   │   └── rag_sample.jsonl
         │   ├── evaluator/
         │   │   ├── eval_main.py        # Main evaluation script
         │   │   └── evaluator_repo/     # Custom AI Judge evaluators
@@ -285,87 +376,157 @@ src/
         │   │       ├── relevance.py    # Relevance evaluator
         │   │       ├── fluency.py      # Fluency evaluator
         │   │       ├── similarity.py   # Similarity evaluator
-        │   │       ├── prompts/        # Prompty template files
+        │   │       ├── prompts/        # Prompty template files (.prompty)
         │   │       └── eval_utils/     # Evaluation utilities
-        │   ├── eval_factory.py         # Evaluator registration
+        │   ├── eval_factory.py         # Custom evaluators registered
         │   ├── experiment.yaml         # AI Judge eval configuration
-        │   └── report/                 # Evaluation results
+        │   ├── report/                 # Evaluation results
+        │   └── README.md               # Detailed setup guide
         │
-        ├── genai_evaluation_foundry/   # Azure AI Foundry built-in evaluators
-        │   ├── datasets/               # Sample data for foundry evaluators
+        ├── agentic_evaluation/         # Agentic systems evaluation
+        │   ├── datasets/               # Sample: 10 agent response records
+        │   │   └── agent_response_sample_data.jsonl  # Fields: query, expected_agents, selected_agents, response
         │   ├── evaluator/
         │   │   ├── eval_main.py        # Main evaluation script
-        │   │   └── evaluator_repo/     # Foundry evaluator wrappers
-        │   ├── eval_factory.py         # Evaluator registration
-        │   ├── experiment.yaml         # Foundry eval configuration
-        │   └── report/                 # Evaluation results
+        │   │   └── evaluator_repo/     # Agent-specific custom evaluators
+        │   │       ├── evaluate_agent_invoked.py  # Invocation Accuracy, Recall@K
+        │   │       └── eval_utils/     # Metric calculation utilities
+        │   ├── eval_factory.py         # Agent evaluators + Relevance + Task Adherence
+        │   ├── experiment.yaml         # Agentic eval configuration
+        │   ├── report/                 # Evaluation results
+        │   └── README.md               # Detailed setup guide
         │
-        ├── golden_dataset/             # Golden datasets for evaluation
+        ├── multi_agent_experiment_evals/  # Multi-agent experimentation pipeline
+        │   ├── datasets/
+        │   ├── evaluator/
+        │   ├── experiment.yaml
+        │   └── README.md
+        │
+        ├── pipeline_experiment_evaluation/  # Full pipeline: Data → Inference → Eval
+        │   ├── datasets/
+        │   ├── evaluator/
+        │   ├── experiment/             # Inference modules
+        │   ├── experiment.yaml
+        │   └── README.md
+        │
+        ├── golden_dataset/             # Reference datasets
         │   └── raw_data/
         │       └── DataForEvals/
         │
         └── utils/                      # Shared utilities
             ├── blobFileUpload.py       # Azure Blob storage integration
-            └── constants.py            # Shared constants
+            ├── constants.py            # Shared constants
+            └── file_operations.py      # File handling utilities
 ```
 
+### Understanding experiment.yaml Configuration 
+### Understanding experiment.yaml Configuration
 
-### Understand the config. 
+The `experiment.yaml` file is the central configuration for your evaluation. Here's what each section controls:
+
 ```yaml
 app_name: Agentic-Evals
 version: 1.0.0
-experiment_name: Agentic_Evaluation_Experiment
-evaluation:  #evaluation configuration. 
-  run_local: True #Make it False if you wish to push the eval results to AI Foundry. Make sure your AI foundry setup and keys are added to env. 
-  input_path: src/evaluations/offline/agentic_evaluation/datasets/
-  input_file: agent_response_sample_data.jsonl
-  output_path: src/evaluations/offline/agentic_evaluation/report/
-  column_mapping:
+experiment_name: My_Evaluation_Experiment  # Appears in results and dashboard
+
+evaluation:  # Evaluation configuration
+  run_local: True  # False = push results to Azure AI Foundry dashboard
+  input_path: src/evaluations/offline/my_evaluation/datasets/
+  input_file: my_data.jsonl  # Your JSONL dataset
+  output_path: src/evaluations/offline/my_evaluation/report/
+  
+  column_mapping:  # Optional: Map dataset columns to standard names
     user_id: "${data.conversation_id}"
-  evaluators:
-    relevance_score: "relevance_evaluator"
-    agents_invoked_eval: "custom_agents_invoked_evaluator"
-  evaluator_config:
+  
+  evaluators:  # List evaluators to run
+    relevance_score: "relevance_evaluator"  # Format: <output_name>: "<factory_key>"
+    groundedness_score: "groundedness_evaluator"
+  
+  evaluator_config:  # Configure each evaluator's inputs
     relevance_score:
+      column_mapping:  # Map dataset fields to evaluator parameters
+        query: "${data.query}"  # ${data.<field_name>} syntax
+        response: "${data.response}"
+    
+    groundedness_score:
       column_mapping:
-        query: "${data.user_query}"
-        response: "${data.gt_agent_response}" 
-    agents_invoked_eval:
-      column_mapping:
-        expected_agents_to_invoke: "${data.expected_agents_to_invoke}"
-        predicted_agents_to_invoke: "${data.selected_agents}"
+        response: "${data.response}"
+        context: "${data.context}"
 
-pipeline: # pipeline to run the end to end flow. 
-  - base_path: evaluator # folder name for evaluations
-    module: eval_main.eval_main # module to run evaluations
-    config_key: evaluation # mapped to the config for evaluations above. 
-
+pipeline:  # Pipeline stages to execute
+  - base_path: evaluator  # Folder name
+    module: eval_main.eval_main  # Python module to run
+    config_key: evaluation  # Maps to 'evaluation' config above
 ```
+
+**Key Points:**
+- **run_local: True** - Fast local execution, results in JSON file
+- **run_local: False** - Pushes to Azure AI Foundry dashboard (requires `EVAL_AZURE_FOUNDRY_CONNECTION_STRING` in .env)
+- **evaluators** - Keys become column names in results
+- **evaluator_config** - Must match evaluator parameter requirements (see [Built-in Evaluators](#built-in-evaluators-azure-ai-foundry))
+- **column_mapping** - `${data.<field>}` references fields in your JSONL dataset
 
 
 ## Custom Evaluation Metrics for Agentic Systems
 
-| Metric                          | Description                                                       |
-|---------------------------------|-------------------------------------------------------------------|
-| Agent invoke accuracy           | checks if agents actually invoked is same as expected agents for a query |
-| Recall@k                        | check the recall @1 to recall@3 for agents invoked.               |
-| Relevance score                 | Built in evaluator checks the relevance of response to the query  |
+The framework includes purpose-built metrics for evaluating agent behavior:
+
+| Metric                          | Formula | Output | Description                                                       |
+|---------------------------------|---------|--------|-------------------------------------------------------------------|
+| **Agent Invocation Accuracy**   | `set(expected) == set(predicted)` | True/False | Exact match - did system invoke exactly the right agents? |
+| **Recall@K**                    | `len(set(expected) ∩ set(predicted[:k])) / len(expected)` | 0.0-1.0 | Are expected agents in top-K selections? (K=1,2,3) |
+| **Agent Hallucination**         | `len(predicted) > len(expected)` | "yes"/"no" | Did system call extra agents unnecessarily? (over-invocation) |
+
+**Example:**
+```python
+Expected agents: ["weather_agent", "location_agent"]
+Selected agents: ["weather_agent", "location_agent", "calendar_agent"]
+
+Results:
+- Invocation Accuracy: False  # Extra agent called
+- Recall@3: 1.0              # Both expected agents in top 3
+- Agent Hallucination: "yes" # 3 > 2, over-invoked
+```
+
+**Use Cases:**
+- Multi-agent orchestration quality
+- Tool selection accuracy
+- Agent routing optimization
+- Reducing unnecessary agent invocations
+
+**See sample:** `src/evaluations/offline/agentic_evaluation/`
 
 
 ## Built-in Evaluators (Azure AI Foundry)
 
-| Evaluator                     | Query       | Response    | Context     | Ground Truth | Conversation |
-|------------------------------|-------------|-------------|-------------|---------------|--------------|
-| RelevanceEvaluator           | Required    | Required    | N/A         | N/A           | Yes          |
-| FluencyEvaluator             | N/A         | Required    | N/A         | N/A           | Yes          |
-| GroundednessEvaluator        | Optional    | Required    | Required    | N/A           | Yes          |
-| SimilarityEvaluator          | Required    | Required    | N/A         | Required      | No           |
-| RougeScoreEvaluator          | N/A         | Required    | N/A         | Required      | No           |
-| ContentSafetyEvaluator       | Required    | Required    | N/A         | N/A           | Yes          |
-| CodeVulnerabilityEvaluator   | Required    | Required    | N/A         | N/A           | Yes          |
-| CoherenceEvaluator           | Required    | Required    | N/A         | N/A           | Yes          |
+Azure AI Foundry provides production-ready evaluators. Each evaluator has specific parameter requirements:
 
-*For full list of evaluators, refer to the [AI Foundry Evaluator Reference](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)*
+| Evaluator                     | Query       | Response    | Context     | Ground Truth | Conversation | Use Case |
+|------------------------------|-------------|-------------|-------------|---------------|--------------|----------|
+| **RelevanceEvaluator**       | Required    | Required    | N/A         | N/A           | Yes          | Does response answer the query? |
+| **FluencyEvaluator**         | N/A         | Required    | N/A         | N/A           | Yes          | Grammar and language quality |
+| **CoherenceEvaluator**       | Required    | Required    | N/A         | N/A           | Yes          | Logical flow and clarity |
+| **GroundednessEvaluator**    | Optional    | Required    | Required    | N/A           | Yes          | Stays within provided context (anti-hallucination) |
+| **SimilarityEvaluator**      | Required    | Required    | N/A         | Required      | No           | Match to expected ground truth |
+| **F1ScoreEvaluator**         | N/A         | Required    | N/A         | Required      | No           | Token-level precision/recall |
+| **RougeScoreEvaluator**      | N/A         | Required    | N/A         | Required      | No           | N-gram overlap metrics |
+| **ContentSafetyEvaluator**   | Required    | Required    | N/A         | N/A           | Yes          | Detect harmful content |
+| **ViolenceEvaluator**        | Required    | Required    | N/A         | N/A           | Yes          | Violence detection |
+| **SexualEvaluator**          | Required    | Required    | N/A         | N/A           | Yes          | Sexual content detection |
+| **SelfHarmEvaluator**        | Required    | Required    | N/A         | N/A           | Yes          | Self-harm detection |
+| **HateUnfairnessEvaluator**  | Required    | Required    | N/A         | N/A           | Yes          | Hate speech detection |
+
+**Common Mistakes:**
+- ❌ Adding `query` to FluencyEvaluator (only needs `response`)
+- ❌ Forgetting `context` for GroundednessEvaluator
+- ❌ Forgetting `ground_truth` for SimilarityEvaluator
+
+**Dataset Requirements:**
+- **RAG Systems**: Need `query`, `response`, `context` fields
+- **Benchmark Testing**: Need `query`, `response`, `ground_truth` fields
+- **Quality Testing**: Need `query`, `response` fields
+
+*For full documentation, refer to the [AI Foundry Evaluator Reference](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)*
 
 ## Future Enhancements
 

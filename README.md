@@ -362,12 +362,18 @@ src/
 │
 └── evaluations/
     └── offline/
-        ├── genai_evaluation_foundry/   # Azure AI Foundry built-in evaluators
-        │   ├── datasets/               # Sample: 4 query-response examples
+        ├── agentic_evaluation/         # Agentic systems evaluation
+        │   ├── datasets/               # Sample: 10 home automation agent interactions
+        │   │   └── agent_response_sample_data.jsonl  # Fields: query, expected_agents, selected_agents, response
         │   ├── evaluator/
-        │   ├── eval_factory.py
-        │   ├── experiment.yaml
-        │   └── README.md
+        │   │   ├── eval_main.py        # Main evaluation script
+        │   │   └── evaluator_repo/     # Agent-specific custom evaluators
+        │   │       ├── evaluate_agent_invoked.py  # Invocation Accuracy, Recall@K
+        │   │       └── eval_utils/     # Metric calculation utilities
+        │   ├── eval_factory.py         # Agent evaluators + Relevance + Task Adherence
+        │   ├── experiment.yaml         # Agentic eval configuration
+        │   ├── report/                 # Evaluation results
+        │   └── README.md               # Detailed setup guide
         │
         ├── ai_judge_evaluation_custom/ # Custom AI Judge (LLM-as-judge)
         │   ├── datasets/               # Sample: 4 query-response examples
@@ -386,18 +392,12 @@ src/
         │   ├── report/                 # Evaluation results
         │   └── README.md               # Detailed setup guide
         │
-        ├── agentic_evaluation/         # Agentic systems evaluation
-        │   ├── datasets/               # Sample: 10 home automation agent interactions
-        │   │   └── agent_response_sample_data.jsonl  # Fields: query, expected_agents, selected_agents, response
+        ├── genai_evaluation_foundry/   # Azure AI Foundry built-in evaluators
+        │   ├── datasets/               # Sample: 4 query-response examples
         │   ├── evaluator/
-        │   │   ├── eval_main.py        # Main evaluation script
-        │   │   └── evaluator_repo/     # Agent-specific custom evaluators
-        │   │       ├── evaluate_agent_invoked.py  # Invocation Accuracy, Recall@K
-        │   │       └── eval_utils/     # Metric calculation utilities
-        │   ├── eval_factory.py         # Agent evaluators + Relevance + Task Adherence
-        │   ├── experiment.yaml         # Agentic eval configuration
-        │   ├── report/                 # Evaluation results
-        │   └── README.md               # Detailed setup guide
+        │   ├── eval_factory.py
+        │   ├── experiment.yaml
+        │   └── README.md
         │
         ├── multi_agent_experiment_evals/  # Multi-agent experimentation pipeline
         │   ├── datasets/

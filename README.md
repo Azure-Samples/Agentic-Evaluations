@@ -241,35 +241,44 @@ python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/
 
 ## How to Create New Evaluations
 
-Follow these steps to set up a new evaluation:
+Follow these steps to set up a new agentic evaluation:
 
 1. **Copy a Relevant Sample Folder**  
    ```bash
-   cp -r src/evaluations/offline/genai_evaluation_foundry src/evaluations/offline/my_evaluation
-   cd src/evaluations/offline/my_evaluation
+   cp -r src/evaluations/offline/agentic_evaluation src/evaluations/offline/my_agentic_evaluation
+   cd src/evaluations/offline/my_agentic_evaluation
    ```
 
 2. **Prepare Your Dataset**  
-   Create a JSONL file in `datasets/` with required fields:
+   Create a JSONL file in `datasets/` with required fields for agentic evaluation:
    ```jsonl
-   {"query": "What is your refund policy?", "response": "Our refund policy allows...", "context": "Policy document..."}
-   {"query": "How do I reset password?", "response": "To reset your password...", "context": "Help docs..."}
+   {"query": "Turn on the TV and switch to channel 5", "expected_agents": ["tv_agent"], "selected_agents": ["tv_agent"], "response": "I've turned on the TV and switched to channel 5 for you."}
+   {"query": "What's the weather today and set AC to 72 degrees", "expected_agents": ["weather_agent", "ac_agent"], "selected_agents": ["weather_agent", "ac_agent"], "response": "The current weather is sunny and 68°F. I've set your AC to 72 degrees."}
+   {"query": "Check weather and turn on TV", "expected_agents": ["weather_agent", "tv_agent"], "selected_agents": ["weather_agent", "tv_agent", "ac_agent"], "response": "Today's weather is partly cloudy with a high of 75°F. I've turned on the TV for you."}
    ```
+   
+   **Required Fields for Agentic Evaluation:**
+   - `query`: User's input/request
+   - `expected_agents`: List of agents that should be invoked
+   - `selected_agents`: List of agents that were actually invoked
+   - `response`: Agent's response to the query
 
 3. **Select Your Evaluators**  
    Decide which metrics you need:
-   - **Built-in**: Relevance, Coherence, Fluency, Groundedness, Similarity
-   - **Custom**: Create your own evaluators in `evaluator/evaluator_repo/`
+   - **Custom Agentic Metrics**: Agent Invocation Accuracy, Agent Hallucination
+   - **Built-in Azure Metrics**: Relevance, Coherence, Fluency
+   - Mix custom and built-in evaluators as needed
 
 4. **Update `eval_factory.py`**  
    Register your selected evaluators:
    ```python
-   from azure.ai.evaluation import RelevanceEvaluator, GroundednessEvaluator
+   from azure.ai.evaluation import RelevanceEvaluator
+   from .evaluator.evaluator_repo.evaluate_agent_invoked import AgentInvokedEvaluator
    
    class EvaluatorFactory:
        EVALUATOR_FACTORIES = {
+           "agent_invoked_evaluator": AgentInvokedEvaluator,
            "relevance_evaluator": RelevanceEvaluator,
-           "groundedness_evaluator": GroundednessEvaluator,
        }
    ```
 
@@ -277,28 +286,33 @@ Follow these steps to set up a new evaluation:
    ```yaml
    evaluation:
      run_local: True  # Set False to push to Azure AI Foundry dashboard
-     input_path: src/evaluations/offline/my_evaluation/datasets/
-     input_file: my_data.jsonl
-     output_path: src/evaluations/offline/my_evaluation/report/
+     input_path: src/evaluations/offline/my_agentic_evaluation/datasets/
+     input_file: my_agent_data.jsonl
+     output_path: src/evaluations/offline/my_agentic_evaluation/report/
      
      evaluators:
+       agent_invocation_accuracy: "agent_invoked_evaluator"
+       agent_hallucination: "agent_invoked_evaluator"
        relevance_score: "relevance_evaluator"
-       groundedness_score: "groundedness_evaluator"
      
      evaluator_config:
+       agent_invocation_accuracy:
+         column_mapping:
+           expected_agents: "${data.expected_agents}"
+           selected_agents: "${data.selected_agents}"
+       agent_hallucination:
+         column_mapping:
+           expected_agents: "${data.expected_agents}"
+           selected_agents: "${data.selected_agents}"
        relevance_score:
          column_mapping:
            query: "${data.query}"
            response: "${data.response}"
-       groundedness_score:
-         column_mapping:
-           response: "${data.response}"
-           context: "${data.context}"
    ```
 
 6. **Run Your Evaluation**  
    ```bash
-   python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/my_evaluation/experiment.yaml
+   python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/my_agentic_evaluation/experiment.yaml
    ```
 
 7. **Review Results**  

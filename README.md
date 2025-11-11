@@ -292,15 +292,10 @@ Follow these steps to set up a new agentic evaluation:
      
      evaluators:
        agent_invocation_accuracy: "agent_invoked_evaluator"
-       agent_hallucination: "agent_invoked_evaluator"
        relevance_score: "relevance_evaluator"
      
      evaluator_config:
        agent_invocation_accuracy:
-         column_mapping:
-           expected_agents: "${data.expected_agents}"
-           selected_agents: "${data.selected_agents}"
-       agent_hallucination:
          column_mapping:
            expected_agents: "${data.expected_agents}"
            selected_agents: "${data.selected_agents}"

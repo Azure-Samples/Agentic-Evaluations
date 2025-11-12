@@ -57,6 +57,7 @@ A robust evaluation framework built for **fast, iterative experimentation** with
     - [Understanding experiment.yaml Configuration](#understanding-experimentyaml-configuration)
   - [How to Create New Evaluations](#how-to-create-new-evaluations)
     - [Adding Custom Evaluators](#adding-custom-evaluators)
+      - [Column Mapping Example in `experiment.yaml`](#column-mapping-example-in-experimentyaml)
   - [Custom Evaluation Metrics for Agentic Systems](#custom-evaluation-metrics-for-agentic-systems)
   - [Built-in Evaluators (Azure AI Foundry)](#built-in-evaluators-azure-ai-foundry)
   - [Future Enhancements](#future-enhancements)
@@ -451,9 +452,50 @@ To create domain-specific evaluation metrics:
    EVALUATOR_FACTORIES = {
        "my_custom_evaluator": MyCustomEvaluator,
    }
-   ```
+  3. **Add to `experiment.yaml`**:
 
-3. **Add to `experiment.yaml`**:
+  Below is a sample view of your evaluation data and how to map fields for built-in metrics using Azure AI Foundry SDK.
+
+  ### Built-in Metrics (Azure AI Foundry SDK)
+
+  | Evaluator               | Required Fields      | Score Range | What It Measures                      |
+  |-------------------------|---------------------|-------------|---------------------------------------|
+  | RelevanceEvaluator      | query, response     | 1-5         | Does response answer the query?       |
+  | TaskAdherenceEvaluator  | query, response     | 1-5         | Does response follow instructions?    |
+
+  #### Dataset Format
+
+  Your evaluation dataset should be in JSONL format (one JSON object per line) with these fields:
+
+  ```jsonl
+  {"conversation_id": "001", "query": "Set AC to 24 degrees", "expected_agents_to_invoke": ["ACAgent"], "selected_agents": ["ACAgent"], "response": "Temperature set to 24 degrees."}
+  ```
+
+  **Field Descriptions:**
+  - `query` or `user_query`: User's input that triggers agent selection
+  - `expected_agents_to_invoke`: Ground truth list of agents that should be invoked (array of strings)
+  - `selected_agents`: Actual agents selected/invoked by your system (array of strings)
+  - `response` (optional): Agent's text response – required for Relevance/Task Adherence evaluators
+
+  #### Column Mapping Example in `experiment.yaml`
+
+  ```yaml
+  evaluators:
+    relevance_score: "relevance_evaluator"
+    task_adherence_score: "task_adherence_evaluator"
+
+  evaluator_config:
+    relevance_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.response}"
+    task_adherence_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.response}"
+  ```
+
+  **Tip:** Ensure your dataset fields match the required inputs for each evaluator. Use `${data.<field_name>}` syntax to map dataset fields to evaluator parameters.
    ```yaml
    evaluators:
      my_metric_score: "my_custom_evaluator"

@@ -56,6 +56,7 @@ A robust evaluation framework built for **fast, iterative experimentation** with
   - [Folder Structure](#folder-structure)
     - [Understanding experiment.yaml Configuration](#understanding-experimentyaml-configuration)
   - [How to Create New Evaluations](#how-to-create-new-evaluations)
+    - [Understanding Your Evaluation Dataset and Column Mapping](#understanding-your-evaluation-dataset-and-column-mapping)
     - [Adding Custom Evaluators](#adding-custom-evaluators)
       - [Column Mapping Example in `experiment.yaml`](#column-mapping-example-in-experimentyaml)
   - [Custom Evaluation Metrics for Agentic Systems](#custom-evaluation-metrics-for-agentic-systems)
@@ -397,28 +398,50 @@ Follow these steps to set up a new agentic evaluation:
        }
    ```
 
-5. **Configure `experiment.yaml`**  
-   ```yaml
-   evaluation:
-     run_local: True  # Set False to push to Azure AI Foundry dashboard
-     input_path: src/evaluations/offline/my_agentic_evaluation/datasets/
-     input_file: my_agent_data.jsonl
-     output_path: src/evaluations/offline/my_agentic_evaluation/report/
-     
-     evaluators:
-       agent_invocation_accuracy: "agent_invoked_evaluator"
-       relevance_score: "relevance_evaluator"
-     
-     evaluator_config:
-       agent_invocation_accuracy:
-         column_mapping:
-           expected_agents: "${data.expected_agents}"
-           selected_agents: "${data.selected_agents}"
-       relevance_score:
-         column_mapping:
-           query: "${data.query}"
-           response: "${data.response}"
-   ```
+  
+
+### Understanding Your Evaluation Dataset and Column Mapping
+
+Before configuring your evaluation, it's important to understand how your sample dataset should be structured and how evaluator requirements map to dataset fields.
+
+**Sample Dataset Format (JSONL):**
+Each line in your dataset is a JSON object representing one evaluation example. For agentic evaluations, a typical entry looks like:
+
+```jsonl
+{"query": "Turn on the TV and switch to channel 5", "expected_agents": ["tv_agent"], "selected_agents": ["tv_agent"], "response": "I've turned on the TV and switched to channel 5 for you."}
+```
+
+**Common Fields:**
+- `query`: The user's request or input.
+- `expected_agents`: List of agents that should be invoked (ground truth).
+- `selected_agents`: List of agents actually invoked by your system.
+- `response`: The agent's response text.
+
+**Evaluator Requirements:**
+
+| Evaluator               | Required Fields      | Score Range | What It Measures                      |
+|-------------------------|---------------------|-------------|---------------------------------------|
+| AgentInvokedEvaluator   | expected_agents, selected_agents | True/False | Did the system invoke the correct agents? |
+| RelevanceEvaluator      | query, response     | 1-5         | Does response answer the query?       |
+| TaskAdherenceEvaluator  | query, response     | 1-5         | Does response follow instructions?    |
+
+**Column Mapping in `experiment.yaml`:**
+To connect your dataset fields to evaluator inputs, use the `column_mapping` section for each evaluator. For example:
+
+```yaml
+evaluator_config:
+  agent_invocation_accuracy:
+    column_mapping:
+      expected_agents: "${data.expected_agents}"
+      selected_agents: "${data.selected_agents}"
+  relevance_score:
+    column_mapping:
+      query: "${data.query}"
+      response: "${data.response}"
+```
+
+**Tip:** Always ensure your dataset contains the required fields for each evaluator you plan to use. The `${data.<field>}` syntax maps your dataset's field names to evaluator parameters.
+
 
 6. **Run Your Evaluation**  
    ```bash

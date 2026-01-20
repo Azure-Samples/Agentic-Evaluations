@@ -39,7 +39,6 @@ def setup_evaluation(config, EvaluatorFactory, azure_ai_project=None, credential
     """Setup the evaluation based on the provided configuration."""
     model_config = {
         "azure_endpoint": os.environ.get("EVAL_AZURE_OPENAI_ENDPOINT"),
-        "api_key": os.environ.get("EVAL_AZURE_OPENAI_KEY"),
         "azure_deployment": os.environ.get("EVAL_AZURE_OPENAI_MODEL"),
         "api_version": os.environ.get("EVAL_AZURE_OPENAI_VERSION"),
     }

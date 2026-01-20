@@ -203,16 +203,15 @@ Create a `.env` file in the project root by copying the provided template:
 cp .env.template .env
 ```
 
-Edit the `.env` file to include your Azure AI Foundry credentials:
+Edit the `.env` file to include your Azure AI Foundry credentials -
 
 ```env
 # Required for all evaluations
-EVAL_AZURE_OPENAI_KEY=<your-azure-openai-key>
 EVAL_AZURE_OPENAI_VERSION=2024-12-01-preview
 EVAL_AZURE_OPENAI_ENDPOINT=https://<your-resource>.openai.azure.com/
 EVAL_AZURE_OPENAI_MODEL=<your-deployment-name>
 
-# Optional: For pushing results to Azure AI Foundry dashboard
+# Optional: For pushing results to Azure AI Foundry dashboard Works: Needed only for traditional Hub and project created in Foundry. 
 EVAL_AZURE_FOUNDRY_CONNECTION_STRING=<your-ai-foundry-connection-string>
 ```
 

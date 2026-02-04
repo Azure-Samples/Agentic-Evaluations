@@ -1,0 +1,35 @@
+app_name: Agent-Evals
+version: 1.0.0
+experiment_name: Agent_Evaluation_Experiment
+experiment:
+  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
+  input_file: agent_utterances.jsonl
+  output_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
+  output_file: agent_responses.jsonl
+  base_url: http://localhost:8000
+evaluation:
+  run_local: False
+  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
+  input_file: agent_responses.jsonl
+  output_path: src/evaluations/offline/experiment_evaluation_pipeline/report/
+  column_mapping:
+    user_id: "${data.query}"
+  evaluators:
+    relevance_score: "relevance_evaluator"
+    task_adherence_score: "task_adherence_evaluator"
+  evaluator_config:
+    relevance_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.response}"
+    task_adherence_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.response}"
+pipeline:
+  - base_path: experiment
+    module: agent_inference.inference_main
+    config_key: experiment
+  - base_path: evaluator
+    module: eval_main.eval_main
+    config_key: evaluation

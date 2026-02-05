@@ -32,6 +32,9 @@ logger = get_logger(__name__)
 
 # =============================================================================
 # AGENT INFERENCE - CUSTOMIZE THIS FUNCTION
+# this is a placeholder function to simulate agent responses. 
+# Replace it with your actual inference logic. 
+# Can be an API call, local model inference, or any other processing.
 # =============================================================================
 def simulate_agent_response(query: str) -> str:
     """
@@ -85,6 +88,7 @@ def inference_main(config: dict, args=None) -> None:
         
         # =============================================================================
         # To Do: Replace simulate_agent_response() with your agent logic
+        # This can be an API call, a local model inference, or any other processing you need to do
         # =============================================================================
 
         response = simulate_agent_response(query)

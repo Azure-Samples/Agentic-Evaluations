@@ -2,7 +2,7 @@ app_name: RAG-Evals
 version: 1.0.0
 experiment_name: Rag_Evaluation_Experiment
 evaluation:
-  run_local: False
+  run_local: True
   input_path: src/evaluations/offline/ai_judge_evaluation_custom/datasets/
   input_file: rag_sample.jsonl
   output_path: src/evaluations/offline/ai_judge_evaluation_custom/report/

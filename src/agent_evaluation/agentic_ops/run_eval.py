@@ -85,33 +85,40 @@ def execute_eval(name, data_path, output_path, eval_config, EvaluatorFactory):
     """
     Evaluate the model using the given data and column mapping.
     """
-    project_endpoint = os.environ.get("EVAL_AZURE_FOUNDRY_PROJECT_ENDPOINT")
-    if not project_endpoint:
-        logger.error("[EVALUATION][CUSTOM EVAL] - Environment variable 'EVAL_AZURE_FOUNDRY_PROJECT_ENDPOINT' is not set.")
-        raise KeyError("Environment variable 'EVAL_AZURE_FOUNDRY_PROJECT_ENDPOINT' is not set. Please set it before running the evaluation.")
+    run_local = eval_config.get("run_local", False)
+    
+    # Azure project setup is only required when not running locally
+    if not run_local:
+        project_endpoint = os.environ.get("EVAL_AZURE_FOUNDRY_PROJECT_ENDPOINT")
+        if not project_endpoint:
+            logger.error("[EVALUATION][CUSTOM EVAL] - Environment variable 'EVAL_AZURE_FOUNDRY_PROJECT_ENDPOINT' is not set.")
+            raise KeyError("Environment variable 'EVAL_AZURE_FOUNDRY_PROJECT_ENDPOINT' is not set. Please set it before running the evaluation.")
 
+        # Resolve Azure AI project identifiers from environment (support multiple variable names) or parse connection string
+        sub = os.environ.get("AZURE_SUBSCRIPTION_ID") or os.environ.get("EVAL_AZURE_SUBSCRIPTION_ID")
+        rg = os.environ.get("AZURE_RESOURCE_GROUP_NAME") or os.environ.get("EVAL_AZURE_RESOURCE_GROUP_NAME")
+        pname = os.environ.get("AZURE_PROJECT_NAME") or os.environ.get("EVAL_AZURE_PROJECT_NAME")
 
-    # Resolve Azure AI project identifiers from environment (support multiple variable names) or parse connection string
-    sub = os.environ.get("AZURE_SUBSCRIPTION_ID") or os.environ.get("EVAL_AZURE_SUBSCRIPTION_ID")
-    rg = os.environ.get("AZURE_RESOURCE_GROUP_NAME") or os.environ.get("EVAL_AZURE_RESOURCE_GROUP_NAME")
-    pname = os.environ.get("AZURE_PROJECT_NAME") or os.environ.get("EVAL_AZURE_PROJECT_NAME")
+        # Fallback: parse EVAL_AZURE_FOUNDRY_CONNECTION_STRING which may be: connection_string;subscription_id;resource_group;project_name
+        conn = os.environ.get("EVAL_AZURE_FOUNDRY_CONNECTION_STRING")
+        if conn and (not sub or not rg or not pname):
+            parts = conn.split(";")
+            if len(parts) >= 4:
+                sub = sub or parts[1]
+                rg = rg or parts[2]
+                pname = pname or parts[3]
 
-    # Fallback: parse EVAL_AZURE_FOUNDRY_CONNECTION_STRING which may be: connection_string;subscription_id;resource_group;project_name
-    conn = os.environ.get("EVAL_AZURE_FOUNDRY_CONNECTION_STRING")
-    if conn and (not sub or not rg or not pname):
-        parts = conn.split(";")
-        if len(parts) >= 4:
-            sub = sub or parts[1]
-            rg = rg or parts[2]
-            pname = pname or parts[3]
+        if not sub or not rg or not pname:
+            logger.error("[EVALUATION][CUSTOM EVAL] - Missing Azure AI project identifiers. Set AZURE_SUBSCRIPTION_ID, AZURE_RESOURCE_GROUP_NAME and AZURE_PROJECT_NAME or provide them in EVAL_AZURE_FOUNDRY_CONNECTION_STRING.")
+            raise KeyError("Azure AI project identifiers are not set (subscription_id/resource_group_name/project_name).")
 
-    if not sub or not rg or not pname:
-        logger.error("[EVALUATION][CUSTOM EVAL] - Missing Azure AI project identifiers. Set AZURE_SUBSCRIPTION_ID, AZURE_RESOURCE_GROUP_NAME and AZURE_PROJECT_NAME or provide them in EVAL_AZURE_FOUNDRY_CONNECTION_STRING.")
-        raise KeyError("Azure AI project identifiers are not set (subscription_id/resource_group_name/project_name).")
-
-    credential = DefaultAzureCredential()
-    project = AIProjectClient(endpoint=project_endpoint, credential=credential)
-    evaluators, evaluator_config = setup_evaluation(eval_config, EvaluatorFactory, azure_ai_project=project, credential=credential)
+        credential = DefaultAzureCredential()
+        project = AIProjectClient(endpoint=project_endpoint, credential=credential)
+        evaluators, evaluator_config = setup_evaluation(eval_config, EvaluatorFactory, azure_ai_project=project, credential=credential)
+    else:
+        # Running locally - no Azure project setup required
+        logger.info("[EVALUATION][LOCAL] - Running evaluation locally without Azure AI project.")
+        evaluators, evaluator_config = setup_evaluation(eval_config, EvaluatorFactory)
 
     final_evaluators = {name: func for name, func in evaluators.items()}
     final_evaluator_config = {name: cfg for name, cfg in evaluator_config.items()}
@@ -128,12 +135,12 @@ def execute_eval(name, data_path, output_path, eval_config, EvaluatorFactory):
         "evaluator_config": final_evaluator_config,
         "output_path": output_path,
     }
-    if not eval_config.get("run_local", False):
+    if not run_local:
         azure_ai_project = {
-        "subscription_id": str(sub),
-        "resource_group_name": str(rg),
-        "project_name": str(pname),
-    }
+            "subscription_id": str(sub),
+            "resource_group_name": str(rg),
+            "project_name": str(pname),
+        }
         eval_kwargs["azure_ai_project"] = azure_ai_project
 
     result = evaluate(**eval_kwargs)

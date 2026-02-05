@@ -14,3 +14,7 @@ __pycache__/
 # Logs
 *.log
 logs/
+
+# Evaluation output files (may contain sensitive Azure resource info)
+**/report/*.json
+!**/report/__init__.py

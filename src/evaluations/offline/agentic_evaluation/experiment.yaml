@@ -2,10 +2,10 @@ app_name: Agentic-Evals
 version: 1.0.0
 experiment_name: Agentic_Evaluation_Experiment
 evaluation:
-  run_local: False
-  input_path: src/evaluations/offline/agentic_evaluation_custom/datasets/
+  run_local: True
+  input_path: src/evaluations/offline/agentic_evaluation/datasets/
   input_file: agent_response_sample_data.jsonl
-  output_path: src/evaluations/offline/agentic_evaluation_custom/report/
+  output_path: src/evaluations/offline/agentic_evaluation/report/
   column_mapping:
     user_id: "${data.conversation_id}"
   evaluators:

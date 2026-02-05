@@ -1,7 +1,7 @@
 [project]
 name = "Agentic_Evaluation_Framework"
 version = "0.1.0"
-description = "Add your description here"
+description = "A config-driven evaluation framework for agentic systems and GenAI applications built on Azure AI Foundry SDK"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.12"

@@ -8,7 +8,7 @@ experiment:
   output_file: agent_responses.jsonl
   base_url: http://localhost:8000
 evaluation:
-  run_local: False
+  run_local: True
   input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
   input_file: agent_responses.jsonl
   output_path: src/evaluations/offline/experiment_evaluation_pipeline/report/

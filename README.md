@@ -6,6 +6,15 @@
 
 A config-driven evaluation framework for **agentic systems** and **GenAI applications** built on Azure AI Foundry SDK. Get started in minutes with YAML-based experiment configuration.
 
+```mermaid
+flowchart LR
+    A[📄 Dataset] --> B[🤖 Inference]
+    B --> C[⚙️ Evaluation]
+    C --> D[📊 Results]
+```
+
+![Evaluation Pipeline](./assets/Eval-pipeline.png)
+
 ## About This Framework
 
 This framework provides two core capabilities for rapid AI evaluation:
@@ -184,16 +193,9 @@ Register in `eval_factory.py` and add to your `experiment.yaml`.
 
 ### Built-in Evaluators (Azure AI Foundry)
 
-| Evaluator | Required Fields | Use Case |
-|-----------|-----------------|----------|
-| **RelevanceEvaluator** | query, response | Does response answer the query? |
-| **FluencyEvaluator** | response | Grammar and language quality |
-| **CoherenceEvaluator** | query, response | Logical flow and clarity |
-| **GroundednessEvaluator** | response, context | Anti-hallucination check |
-| **SimilarityEvaluator** | query, response, ground_truth | Match to expected output |
-| **ContentSafetyEvaluator** | query, response | Harmful content detection |
+For built-in evaluators like Relevance, Fluency, Coherence, Groundedness, and Content Safety, see the official documentation:
 
-📖 [Full Azure AI Foundry Evaluator Reference](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)
+📖 [Azure AI Foundry Evaluator Reference](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)
 
 ---
 

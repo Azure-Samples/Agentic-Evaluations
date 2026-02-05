@@ -6,14 +6,23 @@
 
 A config-driven evaluation framework for **agentic systems** and **GenAI applications** built on Azure AI Foundry SDK. Get started in minutes with YAML-based experiment configuration.
 
+Whether you're evaluating RAG applications, multi-agent systems, or custom GenAI workflows, this framework reduces boilerplate and accelerates iteration.
+
+## Key Features
+
+- **🚀 Quick Setup** — Config-driven YAML files; swap datasets, models, or metrics instantly
+- **🔌 Plug-and-Play** — Modular architecture for custom data loaders, evaluators, and pipeline stages
+- **📊 AI Foundry Evaluators** — Built-in RAG metrics (Relevance, Coherence, Groundedness) and Agentic metrics (Task Adherence, Tool Call Accuracy)
+- **🎯 Custom Evaluators** — Create domain-specific metrics with simple Python classes
+- **⚖️ LLM-as-Judge** — Build custom AI judges using prompty templates for flexible scoring
+- **🔗 Experimentation Pipelines** — Combine data loading, inference, and evaluation in configurable YAML pipelines
+
 ```mermaid
 flowchart LR
     A[📄 Dataset] --> B[🤖 Inference]
     B --> C[⚙️ Evaluation]
     C --> D[📊 Results]
 ```
-
-![Evaluation Pipeline](./assets/Eval-pipeline.png)
 
 ## About This Framework
 
@@ -22,18 +31,10 @@ This framework provides two core capabilities for rapid AI evaluation:
 1. **Simplified Evaluation SDK Integration** — Easily add both built-in Azure AI Foundry evaluators and custom metrics with minimal code
 2. **Pipeline-Based Architecture** — Connect your experiments, inference modules, and data loaders through a configurable pipeline defined in YAML
 
-Whether you're evaluating RAG applications, multi-agent systems, or custom GenAI workflows, this framework reduces boilerplate and accelerates iteration.
-
 > **Note:** Pushing evaluation results to Azure AI Foundry dashboard is not currently supported, as the evaluation SDK requires key-based authentication. All evaluations run locally with results saved to JSON files.
 
-## Key Features
 
-| Feature | Description |
-|---------|-------------|
-| **🚀 Quick Setup** | Config-driven YAML files—swap datasets, models, or metrics instantly |
-| **🔌 Plug-and-Play** | Modular architecture for custom data loaders, evaluators, and pipeline stages |
-| **📊 Flexible Metrics** | Use Azure AI Foundry built-in evaluators or create custom ones |
-| **🎯 Agentic Focus** | Purpose-built metrics for tool selection, multi-agent coordination, and recall@k |
+![Evaluation Pipeline](./assets/Eval-pipeline.png)
 
 ---
 

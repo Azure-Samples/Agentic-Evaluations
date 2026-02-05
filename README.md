@@ -183,17 +183,8 @@ Register in `eval_factory.py` and add to your `experiment.yaml`.
 
 ## Evaluators Reference
 
-### Custom Agentic Metrics
 
-| Metric | Output | Description |
-|--------|--------|-------------|
-| **Agent Invocation Accuracy** | True/False | Exact match of expected vs. selected agents |
-| **Recall@K** | 0.0-1.0 | Expected agents found in top-K selections |
-| **Agent Hallucination** | yes/no | Detects unnecessary agent invocations |
-
-### Built-in Evaluators (Azure AI Foundry)
-
-For built-in evaluators like Relevance, Fluency, Coherence, Groundedness, and Content Safety, see the official documentation:
+For AI Foundry's evaluators for Agentic and RAG see the official documentation:
 
 📖 [Azure AI Foundry Evaluator Reference](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)
 

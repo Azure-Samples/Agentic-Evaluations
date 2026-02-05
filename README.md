@@ -88,12 +88,29 @@ python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/
 
 ## Samples
 
-| Sample | Description | Run Command |
-|--------|-------------|-------------|
-| [`genai_evaluation_foundry`](./src/evaluations/offline/genai_evaluation_foundry/README.md) | **Standard GenAI/RAG** - Built-in evaluators (Relevance, Coherence, Fluency) | `python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/genai_evaluation_foundry/experiment.yaml` |
-| [`agentic_evaluation`](./src/evaluations/offline/agentic_evaluation/README.md) | **Agentic Systems** - Agent invocation accuracy, recall@k, hallucination detection | `python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/agentic_evaluation/experiment.yaml` |
-| [`ai_judge_evaluation_custom`](./src/evaluations/offline/ai_judge_evaluation_custom/README.md) | **Custom AI Judge** - LLM-as-Judge with prompty templates | `python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/ai_judge_evaluation_custom/experiment.yaml` |
-| [`pipeline_experiment_evaluation`](./src/evaluations/offline/pipeline_experiment_evaluation/README.md) | **Full Pipeline** - Data loading → Inference → Evaluation | `python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_experiment_evaluation/experiment.yaml` |
+### [`genai_evaluation_foundry`](./src/evaluations/offline/genai_evaluation_foundry/README.md)
+**Standard GenAI/RAG** — Built-in evaluators (Relevance, Coherence, Fluency)
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/genai_evaluation_foundry/experiment.yaml
+```
+
+### [`agentic_evaluation`](./src/evaluations/offline/agentic_evaluation/README.md)
+**Agentic Systems** — Agent invocation accuracy, recall@k, hallucination detection
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/agentic_evaluation/experiment.yaml
+```
+
+### [`ai_judge_evaluation_custom`](./src/evaluations/offline/ai_judge_evaluation_custom/README.md)
+**Custom AI Judge** — LLM-as-Judge with prompty templates
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/ai_judge_evaluation_custom/experiment.yaml
+```
+
+### [`pipeline_experiment_evaluation`](./src/evaluations/offline/pipeline_experiment_evaluation/README.md)
+**Full Pipeline** — Data loading → Inference → Evaluation
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_experiment_evaluation/experiment.yaml
+```
 
 ---
 

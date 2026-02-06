@@ -2,16 +2,15 @@ app_name: Agent-Evals
 version: 1.0.0
 experiment_name: Agent_Evaluation_Experiment
 experiment:
-  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
+  input_path: src/evaluations/offline/pipeline_experiment_evaluation/datasets/
   input_file: agent_utterances.jsonl
-  output_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
+  output_path: src/evaluations/offline/pipeline_experiment_evaluation/datasets/
   output_file: agent_responses.jsonl
-  base_url: http://localhost:8000
 evaluation:
   run_local: True
-  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
+  input_path: src/evaluations/offline/pipeline_experiment_evaluation/datasets/
   input_file: agent_responses.jsonl
-  output_path: src/evaluations/offline/experiment_evaluation_pipeline/report/
+  output_path: src/evaluations/offline/pipeline_experiment_evaluation/report/
   column_mapping:
     user_id: "${data.query}"
   evaluators:

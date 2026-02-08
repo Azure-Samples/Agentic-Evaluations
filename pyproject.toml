@@ -21,3 +21,6 @@ dependencies = [
     "agent-framework-azure-ai>=1.0.0b260116",
     "aiohttp>=3.13.2"
 ]
+
+[tool.uv]
+prerelease = "allow"

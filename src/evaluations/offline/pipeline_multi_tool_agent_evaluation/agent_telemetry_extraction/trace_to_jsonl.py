@@ -220,13 +220,15 @@ def merge_and_save_to_jsonl(
             # Get App Insights data for this trace
             ai_data = app_insights_data.get(trace_id, {})
             
-            # Extract tool names as simple list (matching expected_tools format)
-            tool_calls_raw = ai_data.get("tool_calls", [])
-            tool_calls = [tc["name"] for tc in tool_calls_raw if isinstance(tc, dict) and tc.get("name")]
+            # Get tool_calls as list of dicts
+            tool_calls = ai_data.get("tool_calls", [])
+            
+            # Extract tool names for filtering tool_definitions
+            tool_names = [tc["name"] for tc in tool_calls if isinstance(tc, dict) and tc.get("name")]
             
             # Filter tool_definitions to only include tools that were actually called
             all_tool_defs = ai_data.get("tool_definitions", [])
-            tool_definitions = [td for td in all_tool_defs if td.get("name") in tool_calls]
+            tool_definitions = [td for td in all_tool_defs if td.get("name") in tool_names]
             
             # Merge record (tool_definitions at the end)
             merged = {

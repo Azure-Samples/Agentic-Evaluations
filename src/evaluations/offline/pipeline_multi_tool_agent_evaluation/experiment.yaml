@@ -24,8 +24,8 @@ evaluation:
   input_file: agent_responses_enriched.jsonl
   output_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/report/
   evaluators:
-    # relevance_score: "relevance_evaluator"
-    # task_adherence_score: "task_adherence_evaluator"
+    relevance_score: "relevance_evaluator"
+    task_adherence_score: "task_adherence_evaluator"
     tool_call_accuracy_score: "tool_call_accuracy_evaluator"
   evaluator_config:
     relevance_score:

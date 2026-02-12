@@ -1,345 +1,252 @@
-# Experiment & Evaluation Pipeline for AI Agents
+# Multi-Tool Agent Evaluation Pipeline
 
 ## Overview
 
-This framework demonstrates a **complete end-to-end pipeline** for AI agent experimentation and evaluation. The pipeline consists of two stages:
+This framework demonstrates a **complete end-to-end pipeline** for multi-tool AI agent experimentation and evaluation. The pipeline consists of three stages:
 
-1. **Experiment Stage (Inference)**: Execute agent interactions with a chat server and collect responses
-2. **Evaluation Stage**: Assess agent performance using Azure AI Foundry's built-in evaluators
+1. **Agent Inference**: Run a multi-tool agent on queries using Microsoft Agent Framework
+2. **Telemetry Extraction**: Enrich responses with tool call data from Azure Application Insights
+3. **Evaluation**: Assess agent performance using Azure AI Foundry evaluators
 
 This modular pipeline architecture allows you to:
-- **Separate concerns**: Keep inference logic separate from evaluation logic
+- **Separate concerns**: Keep inference, telemetry extraction, and evaluation independent
 - **Reuse evaluations**: Run evaluations on pre-collected responses without re-running inference
-- **Flexible experimentation**: Easily swap different agent implementations or evaluation metrics
-- **Track lineage**: Maintain clear traceability from queries → responses → evaluation scores
+- **Track tool usage**: Capture actual tool calls and definitions from agent telemetry
+- **Comprehensive metrics**: Evaluate response quality AND tool call accuracy
 
-## Pipeline Architecture
-
+## Evaluation Pipeline Flow
 
 ```mermaid
 flowchart LR
-    %% Define styles
-    classDef inputStyle fill:#e1f5ff,stroke:#01579b,stroke-width:2px
-    classDef experimentStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef serverStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef evalStyle fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    classDef outputStyle fill:#fce4ec,stroke:#880e4f,stroke-width:2px
-    
-    %% Input Stage
-    A["📁 Dataset<br/>agent_utterances.jsonl<br/>━━━━━━━━━━━<br/>• query<br/>• session_id<br/>• tool_calls<br/>• tool_definitions"]
-    
-    %% Experiment Stage
-    B["🔬 Agent Inference<br/>experiment/agent_inference.py<br/>━━━━━━━━━━━<br/>• Read queries<br/>• Call chat server<br/>• Collect responses<br/>• Save to JSONL"]
-    
-    %% Chat Server
-    C["💬 Chat Server<br/>localhost:8000/chat<br/>━━━━━━━━━━━<br/>• Process query<br/>• Invoke agent<br/>• Use tools<br/>• Return response"]
-    
-    %% Evaluation Stage
-    D["📊 Evaluators<br/>evaluator/eval_main.py<br/>━━━━━━━━━━━<br/>• Load responses<br/>• Apply metrics:<br/>  - Relevance<br/>  - TaskAdherence<br/>• Generate report"]
-    
-    %% Output Stage
-    E["📈 Reports<br/>report/Agent_Eval.json<br/>━━━━━━━━━━━<br/>• JSON report<br/>• Scores<br/>• Aggregates<br/>• Token stats<br/>• Dashboard"]
-    
-    %% Connections
-    A -->|"agent_utterances.jsonl"| B
-    B -->|"POST: {message, session_id}"| C
-    C -->|"{response: '...'}"| B
-    B -->|"agent_responses.jsonl<br/>(query, session_id, response)"| D
-    D -->|"Metrics:<br/>Relevance=5<br/>TaskAdherence=5"| E
-    
-    %% Apply styles
-    class A inputStyle
-    class B experimentStyle
-    class C serverStyle
-    class D evalStyle
-    class E outputStyle
-    
-    %% Stage labels
-    subgraph " "
-        direction LR
-        A
+    subgraph stage1["STAGE 1: AGENT INFERENCE"]
+        A["📁 Input Dataset<br/>agent_queries.json"] --> B["🤖 Multi-Tool Agent<br/>agent_inference/multi_tool_agent.py"]
+        B --> C["📄 agent_responses.jsonl<br/>query, response, trace_id"]
     end
     
-    subgraph "STAGE 1: EXPERIMENT"
-        direction LR
-        B
-        C
+    subgraph stage2["STAGE 2: TELEMETRY EXTRACTION"]
+        C --> D["📡 App Insights Query<br/>agent_telemetry_extraction/trace_to_jsonl.py"]
+        E["☁️ Azure Application Insights<br/>Tool definitions & calls"] --> D
+        D --> F["📄 agent_responses_enriched.jsonl<br/>+ tool_definitions, tool_calls"]
     end
     
-    subgraph "STAGE 2: EVALUATION"
-        direction LR
-        D
+    subgraph stage3["STAGE 3: EVALUATION"]
+        F --> G["📊 Azure AI Foundry Evaluators<br/>evaluator/eval_main.py"]
+        G --> H["📈 Evaluation Report<br/>report/*.json"]
     end
-    
-    subgraph " "
-        direction LR
-        E
-    end
+
+    style A fill:#e3f2fd
+    style C fill:#fff3e0
+    style F fill:#e8f5e9
+    style H fill:#fce4ec
 ```
 
 **Pipeline Flow:**
-1. **Input Dataset** → Contains test queries with metadata
-2. **Inference Module** → Sends queries to chat server, collects responses
-3. **Chat Server** → Processes queries using agent logic and tools
-4. **Evaluation Module** → Applies Azure AI Foundry evaluators to responses
-5. **Output Reports** → JSON results + optional Azure AI Foundry dashboard
+1. **Agent Inference** → Runs multi-tool agent on queries, captures responses and trace IDs
+2. **Telemetry Extraction** → Queries Application Insights to extract tool definitions and tool calls
+3. **Evaluation** → Applies Azure AI Foundry evaluators (Relevance, TaskAdherence, ToolCallAccuracy)
 
 ## Why Build Pipelines?
 
 **Modular Design Benefits:**
-- **Separation of Concerns**: Inference and evaluation are independent stages
-- **Reusability**: Evaluate the same responses with different metrics without re-running inference
-- **Flexibility**: Swap agent implementations without changing evaluation code
-
+- **Separation of Concerns**: Inference, telemetry, and evaluation are independent stages
+- **Observability**: Full traceability from queries → tool calls → responses → evaluation scores
+- **Flexibility**: Run any stage independently or skip stages using pre-collected data
+- **Production Ready**: Same pipeline can evaluate production telemetry offline
 
 **Example Use Cases:**
 1. Run inference once, try multiple evaluation configurations
 2. Collect responses from production, evaluate offline
 3. Compare different agent versions using the same evaluation metrics
+4. Analyze tool usage patterns across different query types
 
 
 ## Pipeline Configuration
 
-### Understanding the Two-Stage Pipeline
+### Understanding the Three-Stage Pipeline
 
-The pipeline is defined in `experiment.yaml` and consists of two sequential stages:
+The pipeline is defined in `experiment.yaml` and consists of three sequential stages:
 
-#### Stage 1: Experiment (Inference)
-Executes the agent inference module to collect responses from your chat server.
+#### Stage 1: Agent Inference
+Runs the multi-tool agent on queries from the input dataset, capturing responses and trace IDs.
 
-#### Stage 2: Evaluation
-Applies Azure AI Foundry evaluators to assess the quality of collected responses.
+#### Stage 2: Telemetry Extraction
+Queries Azure Application Insights to extract tool definitions and tool calls for each trace, enriching the response data.
+
+#### Stage 3: Evaluation
+Applies Azure AI Foundry evaluators to assess the quality of responses and tool call accuracy.
 
 ### Configuring `experiment.yaml`
 
-#### 1. Experiment Section (Inference Configuration)
+#### 1. Agent Inference Configuration
 
 ```yaml
-experiment:
-  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/  # Input directory
-  input_file: agent_utterances.jsonl          # Dataset with queries, session_ids, tool metadata
-  output_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/ # Output directory
-  output_file: agent_responses.jsonl         # Saved responses (query + session_id + response)
-  base_url: http://localhost:8000            # Chat server endpoint
+agent_inference:
+  input_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
+  input_file: agent_queries.json          # Input queries with expected tools
+  output_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
+  output_file: agent_responses.jsonl      # Output: query + response + trace_id
 ```
 
-#### 2. Evaluation Section
+#### 2. Telemetry Extraction Configuration
+
+```yaml
+agent_telemetry_extraction:
+  delay_seconds: 60                       # Wait for App Insights data ingestion
+  input_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
+  input_file: agent_responses.jsonl       # From Stage 1
+  output_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
+  output_file: agent_responses_enriched.jsonl  # Enriched with tool data
+```
+
+#### 3. Evaluation Configuration
 
 ```yaml
 evaluation:
-  run_local: False                            # True = local execution, False = push to Azure AI Foundry
-  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/  # Input directory
-  input_file: agent_responses.jsonl          # Output from experiment stage
-  output_path: src/evaluations/offline/experiment_evaluation_pipeline/report/   # Report directory
+  run_local: True                         # True = local, False = Azure AI Foundry
+  input_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
+  input_file: agent_responses_enriched.jsonl   # From Stage 2
+  output_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/report/
   
   evaluators:
-    relevance_score: "relevance_evaluator"           # Score name: evaluator type
+    relevance_score: "relevance_evaluator"
     task_adherence_score: "task_adherence_evaluator"
+    tool_call_accuracy_score: "tool_call_accuracy_evaluator"
   
   evaluator_config:
     relevance_score:
       column_mapping:
-        query: "${data.query}"                # Map dataset field to evaluator parameter
+        query: "${data.query}"
         response: "${data.response}"
     task_adherence_score:
       column_mapping:
         query: "${data.query}"
         response: "${data.response}"
+    tool_call_accuracy_score:
+      column_mapping:
+        query: "${data.query}"
+        tool_definitions: "${data.tool_definitions}"
+        tool_calls: "${data.tool_calls}"
+        response: "${data.response}"
 ```
 
-#### 3. Pipeline Section
+#### 4. Pipeline Configuration
 
 ```yaml
 pipeline:
-  - base_path: experiment                     # Folder containing the module
-    module: agent_inference.inference_main    # module_file.function_name to execute
-    config_key: experiment                    # Config section to pass as parameter
-  
+  - base_path: agent_inference
+    module: multi_tool_agent.inference_main
+    config_key: agent_inference
+  - base_path: agent_telemetry_extraction
+    module: trace_to_jsonl.get_trace_main
+    config_key: agent_telemetry_extraction
   - base_path: evaluator
     module: eval_main.eval_main
     config_key: evaluation
 ```
 
-### Adding Experiment to the Pipeline
+## Multi-Tool Agent
 
-To add a new experiment module to the pipeline:
+The agent (`agent_inference/multi_tool_agent.py`) is built using **Microsoft Agent Framework** with the following tools:
 
-**Step 1: Create Experiment Module**
+| Tool | Description |
+|------|-------------|
+| `get_weather` | Get weather for a location |
+| `get_current_datetime` | Get current date and time |
+| `calculate_sum` | Sum a list of numbers |
+| `calculate_product` | Multiply a list of numbers |
+| `convert_temperature` | Convert between Celsius, Fahrenheit, Kelvin |
+| `count_words` | Count words, characters, sentences in text |
+| `generate_uuid` | Generate a random UUID |
+| `format_json` | Format JSON with indentation |
 
-Create a new folder under `experiment_evaluation_pipeline/`:
-```
-experiment_evaluation_pipeline/
-├── experiment/              # Your experiment folder
-│   ├── agent_inference.py  # Contains inference_main(config, args)
-│   └── experiment_utils/   # Helper modules
-```
-
-**Step 2: Implement the Main Function**
-
-Your module must have a function with signature: `function_name(config, args=None)`
-
-> <details>
-> <summary><b>💡 Click to expand: Example implementation</b></summary>
->
-> ```python
-> # experiment/agent_inference.py
-> import logging
-> from src.evaluations.offline.utils.file_operations import load_queries_from_jsonl, append_to_jsonl
-> from .experiment_utils.http_client import chat_http_request
->
-> def inference_main(config, args=None):
->     """
->     Main inference function called by the pipeline runner
->     
->     Args:
->         config: Dictionary with experiment configuration from experiment.yaml
->         args: Optional command-line arguments
->     """
->     logging.info("Starting agent inference...")
->     
->     # Access configuration
->     input_path = config["input_path"]
->     input_file = config["input_file"]
->     output_path = config["output_path"]
->     output_file = config["output_file"]
->     base_url = config["base_url"]
->     
->     # Load queries
->     queries = load_queries_from_jsonl(input_path, input_file)
->     
->     # Process each query
->     for item in queries:
->         query = item["query"]
->         session_id = item["session_id"]
->         
->         # Call chat server
->         response = chat_http_request(base_url, query, session_id)
->         
->         # Save response
->         output_data = {
->             "query": query,
->             "session_id": session_id,
->             "response": response
->         }
->         append_to_jsonl(output_path, output_file, output_data)
->     
->     logging.info(f"Inference complete. Responses saved to {output_file}")
-> ```
->
-> </details>
-
-**Step 3: Add Configuration Section**
-
-Add your experiment configuration to `experiment.yaml`:
-
-```yaml
-experiment:
-  input_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
-  input_file: agent_utterances.jsonl
-  output_path: src/evaluations/offline/experiment_evaluation_pipeline/datasets/
-  output_file: agent_responses.jsonl
-  base_url: http://localhost:8000
-```
-
-**Step 4: Add to Pipeline**
-
-Register your experiment in the pipeline section:
-
-```yaml
-pipeline:
-  - base_path: experiment                    # References experiment: section
-    module: agent_inference.inference_main   
-    config_key: experiment                   
-  - base_path: evaluator                     # References evaluation: section
-    module: eval_main.eval_main
-    config_key: evaluation
-```
-
-**Step 5: Run the Pipeline**
-
-```bash
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/experiment_evaluation_pipeline/experiment.yaml
-```
-
-### Example: Custom Experiment Module
-
-Add custom preprocessing stage to the pipeline:
-
-```yaml
-preprocessing:
-  input_path: data/raw/
-  input_file: queries.jsonl
-  output_path: data/processed/
-  output_file: cleaned_queries.jsonl
-  filters: ["remove_duplicates", "validate_format"]  # Custom parameters
-
-pipeline:
-  - base_path: preprocessing              # Stage 1: Preprocess
-    module: clean_data.preprocess_main
-    config_key: preprocessing
-  - base_path: experiment                 # Stage 2: Inference
-    module: agent_inference.inference_main
-    config_key: experiment
-  - base_path: evaluator                  # Stage 3: Evaluation
-    module: eval_main.eval_main
-    config_key: evaluation
-```
+The agent uses **Azure OpenAI** as the chat client and instruments all calls with **OpenTelemetry** for observability.
 
 ## Evaluation Metrics
 
-This example demonstrates **Relevance** and **Task Adherence** evaluators as samples, but the framework supports all Azure AI Foundry built-in evaluators.
+This pipeline uses Azure AI Foundry evaluators configured in `eval_factory.py`:
 
-### Current Configuration
+### Available Evaluators
 
-This example is configured with both standard GenAI and specialized agent-specific evaluators:
+| Evaluator | Description | Required Fields |
+|-----------|-------------|-----------------|
+| **RelevanceEvaluator** | Measures how well the response addresses the query (1-5) | `query`, `response` |
+| **TaskAdherenceEvaluator** | Evaluates instruction following and constraint adherence (1-5) | `query`, `response` |
+| **ToolCallAccuracyEvaluator** | Measures tool invocation correctness | `query`, `response`, `tool_calls`, `tool_definitions` |
 
-#### Standard GenAI Metrics
+### Adding More Evaluators
 
-- **Relevance**: Measures how well the response addresses the query (Score: 1-5)
-  - **Required**: `query`, `response`
+To add new evaluators, update `eval_factory.py`:
 
-#### Agent-Specific Metrics (Experimental)
+```python
+from azure.ai.evaluation import RelevanceEvaluator, TaskAdherenceEvaluator, ToolCallAccuracyEvaluator
 
-- **Task Adherence**: Evaluates instruction following and constraint adherence (Score: 1-5)
-  - **Required**: `query`, `response`
-
-**Other Available Evaluators:**
-- **Tool Call Accuracy**: Measures tool invocation correctness (requires `query`, `tool_calls`, `tool_definitions`)
-- **Intent Resolution**: Assesses user intent fulfillment (requires `query`, `response`, `tool_definitions`)
-- **Coherence, Groundedness, Fluency, Similarity, F1 Score**: Standard GenAI/RAG metrics
-
-> See [Azure AI Foundry documentation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app) for complete evaluator list.
+class EvaluatorFactory:
+    EVALUATOR_FACTORIES = {
+        "relevance_evaluator": RelevanceEvaluator,
+        "task_adherence_evaluator": TaskAdherenceEvaluator,
+        "tool_call_accuracy_evaluator": ToolCallAccuracyEvaluator,
+        # Add new evaluators here
+    }
+```
 
 ## Dataset Format
 
-### Input Dataset (agent_utterances.jsonl)
-
-For inference stage:
+### Input Dataset (agent_queries.json)
 
 ```json
 {
-  "query": "How is the weather in Seattle?",
-  "session_id": "session-1",
-  "tool_calls": [...],           // Optional: for evaluation
-  "tool_definitions": [...],     // Optional: for evaluation
-  "response_gt": "..."           // Optional: ground truth
+  "single_intent": [
+    {
+      "id": "weather_1",
+      "query": "What's the weather in Seattle?",
+      "expected_tools": ["get_weather"]
+    }
+  ],
+  "multi_intent": [
+    {
+      "id": "multi_1",
+      "query": "Get weather in NYC and convert 72F to Celsius",
+      "expected_tools": ["get_weather", "convert_temperature"]
+    }
+  ]
 }
 ```
 
-### Output Dataset (agent_responses.jsonl)
-
-Generated by inference stage:
+### Stage 1 Output (agent_responses.jsonl)
 
 ```json
 {
-  "query": "How is the weather in Seattle?",
-  "session_id": "session-1",
-  "response": "The weather in Seattle is currently cloudy with a temperature of 58°F."
+  "id": "weather_1",
+  "query": "What's the weather in Seattle?",
+  "response": "The weather in Seattle is cloudy with a high of 18°C.",
+  "trace_id": "abc123def456",
+  "expected_tools": ["get_weather"],
+  "category": "single_intent"
 }
 ```
 
-## How to Add More Evaluators
-For detailed instructions on adding more evaluators, refer to [agent_evaluation_foundry](https://github.com/Azure-Samples/Agentic-Evaluations/tree/inference_pipeline/src/evaluations/offline/agent_evaluation_foundry). This resource provides examples and guidance for integrating additional Azure AI Foundry evaluators into your pipeline.
+### Stage 2 Output (agent_responses_enriched.jsonl)
+
+```json
+{
+  "id": "weather_1",
+  "query": "What's the weather in Seattle?",
+  "response": "The weather in Seattle is cloudy with a high of 18°C.",
+  "trace_id": "abc123def456",
+  "category": "single_intent",
+  "expected_tools": ["get_weather"],
+  "tool_calls": [{"type": "tool_call", "name": "get_weather"}],
+  "agent_name": "MultiToolAgent",
+  "tool_definitions": [
+    {
+      "id": "get_weather",
+      "name": "get_weather",
+      "description": "Get the weather for a given location.",
+      "parameters": {...}
+    }
+  ]
+}
+```
 
 ## How to Run
 
@@ -347,127 +254,144 @@ For detailed instructions on adding more evaluators, refer to [agent_evaluation_
 
 1. **Azure AI Foundry Setup**
    - Azure AI Foundry project configured
-   - Azure OpenAI deployment (GPT-4 recommended for evaluators)
-   - Environment variables set (see main README)
+   - Azure OpenAI deployment (GPT-4 recommended)
+   - Environment variables set:
+     ```bash
+     AZURE_OPENAI_ENDPOINT=<your-endpoint>
+     AZURE_OPENAI_DEPLOYMENT_NAME=<your-deployment>
+     APPLICATIONINSIGHTS_CONNECTION_STRING=<your-connection-string>
+     APPLICATION_INSIGHTS_WORKSPACE_ID=<your-workspace-id>
+     ```
 
-2. **Chat Server Running**
-   - Your agent/chat server must be running at the configured `base_url` (default: `http://localhost:8000` or other api endpoint)
-   - Server must accept POST requests to `/chat` endpoint
-   - Request format: `{"message": "...", "session_id": "..."}`
-   - Response format: `{"response": "..."}`
+2. **Azure Authentication**
+   - Run `az login` for Azure CLI credentials
+   - Ensure access to Azure OpenAI and Application Insights resources
 
-3. **Dataset Prepared**
-   - Input dataset in JSONL format with required fields
-   - Located at path specified in `experiment.yaml`
+3. **Python Dependencies**
+   ```bash
+   pip install azure-ai-evaluation azure-monitor-opentelemetry agent-framework
+   ```
 
 ### Running the Complete Pipeline
 
-Execute both inference and evaluation stages:
+Execute all three stages sequentially:
 
 ```bash
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/experiment_evaluation_pipeline/experiment.yaml
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_multi_tool_agent_evaluation/experiment.yaml
 ```
 
 **What Happens:**
-1. **Stage 1 (Experiment)**: 
-   - Reads queries from `agent_utterances.jsonl`
-   - Sends each query to chat server at `localhost:8000/chat`
-   - Collects responses in real-time
+
+1. **Stage 1 (Agent Inference)**:
+   - Loads queries from `agent_queries.json`
+   - Runs Multi-Tool Agent on each query
+   - Captures responses and trace IDs
    - Writes to `agent_responses.jsonl`
 
-2. **Stage 2 (Evaluation)**:
-   - Reads responses from `agent_responses.jsonl`
-   - Applies Relevance and Task Adherence evaluators
+2. **Stage 2 (Telemetry Extraction)**:
+   - Waits for App Insights data ingestion (configurable delay)
+   - Queries Application Insights for tool definitions and tool calls
+   - Enriches responses with telemetry data
+   - Writes to `agent_responses_enriched.jsonl`
+
+3. **Stage 3 (Evaluation)**:
+   - Loads enriched responses
+   - Applies Relevance, TaskAdherence, and ToolCallAccuracy evaluators
    - Generates evaluation report
-   - Saves to `report/Agent_Evaluation_Experiment.json`
-   - (Optional) Pushes to Azure AI Foundry dashboard if `run_local: False`
+   - Saves to `report/` directory
 
 ### Running Individual Stages
 
-**Run Only Inference (Skip Evaluation):**
-
-Comment out the evaluation stage in `experiment.yaml`:
+Edit `experiment.yaml` to comment out stages you want to skip:
 
 ```yaml
 pipeline:
-  - base_path: experiment
-    module: agent_inference.inference_main
-    config_key: experiment
-  # - base_path: evaluator
-  #   module: eval_main.eval_main
-  #   config_key: evaluation
+  # - base_path: agent_inference
+  #   module: multi_tool_agent.inference_main
+  #   config_key: agent_inference
+  # - base_path: agent_telemetry_extraction
+  #   module: trace_to_jsonl.get_trace_main
+  #   config_key: agent_telemetry_extraction
+  - base_path: evaluator
+    module: eval_main.eval_main
+    config_key: evaluation
 ```
 
-**Run Only Evaluation (Using Existing Responses):**
+### Running Stages Standalone
 
-Comment out the experiment stage:
+Each stage can also run independently:
 
+```bash
+# Stage 1: Agent Inference
+python -m src.evaluations.offline.pipeline_multi_tool_agent_evaluation.agent_inference.multi_tool_agent
 
-This is useful when you want to:
-- Re-run evaluation with different metrics
-- Evaluate pre-collected responses
-- Test evaluation configurations without calling the chat server
+# Stage 2: Telemetry Extraction
+python -m src.evaluations.offline.pipeline_multi_tool_agent_evaluation.agent_telemetry_extraction.trace_to_jsonl
+```
 
 ## Folder Structure
 
 ```
-experiment_evaluation_pipeline/
-├── experiment/                          # STAGE 1: Inference
-│   ├── agent_inference.py              # Main inference logic
-│   └── experiment_utils/               # Inference utilities
-│       ├── __init__.py
-│       └── http_client.py             # Chat server HTTP client
+pipeline_multi_tool_agent_evaluation/
+├── agent_inference/                    # STAGE 1: Agent Inference
+│   ├── __init__.py
+│   ├── multi_tool_agent.py            # Main inference logic (Microsoft Agent Framework)
+│   └── agent_tools.py                 # Tool function definitions
 │
-├── datasets/                           # Data storage
-│   ├── agent_utterances.jsonl         # INPUT: Queries + metadata
-│   └── agent_responses.jsonl          # OUTPUT: Queries + responses
+├── agent_telemetry_extraction/         # STAGE 2: Telemetry Extraction
+│   ├── __init__.py
+│   └── trace_to_jsonl.py              # App Insights query & enrichment
 │
-├── evaluator/                          # STAGE 2: Evaluation
+├── evaluator/                          # STAGE 3: Evaluation
 │   ├── eval_main.py                   # Main evaluation logic
-│   └── evaluator_repo/                # Evaluator implementations
-│       ├── evaluate_agent_invoked.py
+│   └── evaluator_repo/                # Custom evaluator implementations
 │       └── eval_utils/
 │
-├── report/                             # Evaluation results
-│   └── Agent_Evaluation_Experiment.json
+├── datasets/                           # Data storage
+│   ├── agent_queries.json             # INPUT: Test queries with expected tools
+│   ├── agent_responses.jsonl          # Stage 1 OUTPUT: query + response + trace_id
+│   ├── agent_responses_enriched.jsonl # Stage 2 OUTPUT: + tool_definitions, tool_calls
+│   └── agent_responses_enriched.json  # JSON format of enriched data
 │
-├── eval_factory.py                     # Evaluator factory
+├── report/                             # Evaluation results
+│   └── *.json                         # Evaluation reports
+│
+├── eval_factory.py                     # Evaluator factory (maps names to classes)
 ├── experiment.yaml                     # Pipeline configuration
 └── README.md                           # This file
 ```
 
-**Key Directories:**
-- **experiment/**: Contains all inference-related code (Stage 1)
-- **datasets/**: Stores input queries and output responses
-- **evaluator/**: Contains evaluation logic and evaluator implementations (Stage 2)
-- **report/**: Final evaluation reports (JSON format)
-
-**Configuration Files:**
-- **experiment.yaml**: Defines both experiment and evaluation stages, plus pipeline orchestration
+**Key Components:**
+- **agent_inference/**: Multi-tool agent using Microsoft Agent Framework with Azure OpenAI
+- **agent_telemetry_extraction/**: Queries Azure Application Insights for tool call telemetry
+- **evaluator/**: Runs Azure AI Foundry evaluators on enriched data
+- **datasets/**: Input queries and intermediate/output data files
+- **report/**: Final evaluation reports in JSON format
 
 ## Next Steps
 
-1. **Start Your Chat Server**: Ensure your agent is running at `http://localhost:8000`
-2. **Prepare Your Dataset**: Create `agent_utterances.jsonl` with your test queries
-3. **Configure Pipeline**: Update `experiment.yaml` with your paths and evaluators
-4. **Run Complete Pipeline**: Execute both inference and evaluation stages
-5. **Review Results**: Check the generated JSON report and Azure AI Foundry dashboard
-6. **Iterate**: Modify queries, add evaluators, or change agent configuration based on results
-7. **Extend Pipeline**: Add custom preprocessing or post-processing stages as needed
+1. **Configure Environment**: Set up Azure OpenAI and Application Insights environment variables
+2. **Prepare Your Dataset**: Create `agent_queries.json` with your test queries and expected tools
+3. **Run the Pipeline**: Execute all three stages to generate evaluation results
+4. **Review Results**: Analyze the evaluation report for relevance, task adherence, and tool accuracy
+5. **Iterate**: Modify agent tools, prompts, or evaluation metrics based on results
+6. **Extend**: Add custom evaluators or additional pipeline stages
+
+## Troubleshooting
+
+| Error | Solution |
+|-------|----------|
+| `KeyError: 'tool_definitions'` | Ensure telemetry extraction stage ran successfully |
+| `Azure authentication failed` | Run `az login` and verify credentials |
+| `APPLICATION_INSIGHTS_WORKSPACE_ID not set` | Set the environment variable with your Log Analytics workspace ID |
+| `No trace IDs found` | Verify `APPLICATIONINSIGHTS_CONNECTION_STRING` is set and agent inference ran |
+| `ImportError: ToolCallAccuracyEvaluator` | Update package: `pip install --upgrade azure-ai-evaluation` |
+| `agent_framework not found` | Install: `pip install agent-framework` |
 
 ## Resources
 
 - [Azure AI Foundry Evaluation Docs](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
 - [Built-in Evaluators Reference](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app#built-in-evaluators)
-- [Agent Evaluation Samples](https://github.com/Azure-Samples/azureai-samples/tree/main/scenarios/evaluate/Supported_Evaluation_Metrics/Agent_Evaluation)
-
-## Troubleshooting
-
-**Common Issues:**
-
-| Error | Solution |
-|-------|----------|
-| `KeyError: 'tool_definitions'` | Ensure dataset includes required fields for agent evaluators |
-| `Azure authentication failed` | Run `az login` and verify credentials |
-| `ImportError: ToolCallAccuracyEvaluator` | Update package: `pip install --upgrade azure-ai-evaluation` |
-| Chat server connection error | Verify server is running at configured `base_url` | 
+- [Microsoft Agent Framework](https://github.com/microsoft/agent-framework)
+- [Azure Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview)
+- [OpenTelemetry Python](https://opentelemetry.io/docs/instrumentation/python/) 

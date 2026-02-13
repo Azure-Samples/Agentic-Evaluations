@@ -272,6 +272,24 @@ Each pipeline stage is independently configurable—add, remove, or reorder stag
 
 ---
 
+## Cost Considerations
+
+> **Important:** Running evaluations with Azure OpenAI models incurs costs based on token usage. The LLM-as-Judge evaluators call the model for each row in your dataset, so larger datasets will result in higher costs. Monitor your Azure subscription spending regularly and set up [Azure Cost Management](https://learn.microsoft.com/en-us/azure/cost-management-billing/) alerts. See [Azure OpenAI pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/) for details.
+
+## Clean Up Resources
+
+When you are done experimenting, delete any Azure resources you created to avoid unnecessary charges:
+
+```bash
+az group delete --name <your-resource-group> --yes --no-wait
+```
+
+## Data Provenance
+
+All sample datasets included in this repository are **fully synthetic**. They use fictional entities (Northwind Health, Contoso) and simulated agent interactions (smart-home device controls, weather lookups). No real customer data, personally identifiable information, or production telemetry is included in any dataset.
+
+---
+
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.

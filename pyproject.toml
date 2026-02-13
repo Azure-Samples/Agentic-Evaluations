@@ -9,7 +9,7 @@ dependencies = [
     # Azure SDK dependencies
     "azure-identity>=1.25.0",
     "azure-ai-projects",
-    "azure-ai-evaluation==1.14.0",
+    "azure-ai-evaluation==1.15.0",
     "azure-ai-inference>=1.0.0b9",
     
     # Core Python packages

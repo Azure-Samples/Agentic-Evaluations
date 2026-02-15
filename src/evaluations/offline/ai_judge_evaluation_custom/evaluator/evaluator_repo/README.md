@@ -338,4 +338,8 @@ The framework includes these ready-to-use custom evaluators:
 - **Missing Prompty File**: Check file path and extension (.prompty)
 - **Score Extraction Failed**: Verify structured output format in prompty
 - **Import Errors**: Ensure evaluator is properly registered in eval_factory.py
-- **Column Mapping**: Verify data field names match experiment.yaml configuration 
+- **Column Mapping**: Verify data field names match experiment.yaml configuration
+
+## Data Provenance
+
+All sample datasets included in this repository are **fully synthetic**. They use fictional entities (Northwind Health, Contoso) and simulated agent interactions (smart-home device controls, weather lookups). No real customer data, personally identifiable information, or production telemetry is included in any dataset.

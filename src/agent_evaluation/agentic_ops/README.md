@@ -78,3 +78,7 @@ AZURE_SUBSCRIPTION_ID=your_subscription_id
 AZURE_RESOURCE_GROUP_NAME=your_resource_group
 AZURE_PROJECT_NAME=your_project_name
 ```
+
+## Data Provenance
+
+All sample datasets included in this repository are **fully synthetic**. They use fictional entities (Northwind Health, Contoso) and simulated agent interactions (smart-home device controls, weather lookups). No real customer data, personally identifiable information, or production telemetry is included in any dataset.

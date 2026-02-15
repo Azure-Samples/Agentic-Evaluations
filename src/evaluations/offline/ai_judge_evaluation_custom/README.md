@@ -291,4 +291,8 @@ The report includes:
 - **Base Infrastructure**: `src/agent_evaluation/agentic_ops/base_evaluator.py` provides the foundation
 - **Prompty-Driven**: All custom evaluators use `.prompty` files for consistency
 - **LLM Client**: `src/agent_evaluation/agentic_ops/client.py` handles Azure OpenAI interaction
-- **Extensible**: Add new evaluators by creating prompty files and evaluator classes 
+- **Extensible**: Add new evaluators by creating prompty files and evaluator classes
+
+## Data Provenance
+
+All sample datasets included in this repository are **fully synthetic**. They use fictional entities (Northwind Health, Contoso) and simulated agent interactions (smart-home device controls, weather lookups). No real customer data, personally identifiable information, or production telemetry is included in any dataset.

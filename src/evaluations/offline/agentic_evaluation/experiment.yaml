@@ -10,20 +10,27 @@ evaluation:
     user_id: "${data.conversation_id}"
   evaluators:
     relevance_score: "relevance_evaluator"
-    agents_invoked_eval: "custom_agents_invoked_evaluator"
+    custom_agents_invoked_accuracy_eval: "custom_agents_invoked_evaluator"
     task_adherence_score: "task_adherence_evaluator"
+    tool_call_accuracy_score: "tool_call_accuracy_evaluator"
   evaluator_config:
     relevance_score:
       column_mapping:
         query: "${data.query}"
         response: "${data.gt_agent_response}" 
-    agents_invoked_eval:
+    custom_agents_invoked_accuracy_eval:
       column_mapping:
         expected_agents_to_invoke: "${data.expected_agents_to_invoke}"
         predicted_agents_to_invoke: "${data.selected_agents}"
     task_adherence_score:
       column_mapping:
         query: "${data.query}"
+        response: "${data.response}"
+    tool_call_accuracy_score:
+      column_mapping:
+        query: "${data.query}"
+        tool_definitions: "${data.tool_definitions}"
+        tool_calls: "${data.tool_calls}"
         response: "${data.response}"
 
 pipeline:

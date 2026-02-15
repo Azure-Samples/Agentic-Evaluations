@@ -315,4 +315,8 @@ The report includes:
 4. **Single Turn Evaluation**: Assess agent performance on isolated, one-off user queries to ensure correct tool invocation and response quality in simple scenarios.
 5. **Multi-Turn Conversation Evaluation**: Evaluate agent behavior across multi-step dialogues, measuring consistency, memory usage, and correct tool selection throughout the conversation history.
 6. **Multi-Agent Conversation Evaluation**: Analyze scenarios involving multiple agents collaborating or interacting, focusing on coordination, correct delegation, and appropriate tool/plugin usage by each agent.
-7. **Regression Testing**: Ensure agent behavior remains consistent across updates 
+7. **Regression Testing**: Ensure agent behavior remains consistent across updates
+
+## Data Provenance
+
+All sample datasets included in this repository are **fully synthetic**. They use fictional entities (Northwind Health, Contoso) and simulated agent interactions (smart-home device controls, weather lookups). No real customer data, personally identifiable information, or production telemetry is included in any dataset.

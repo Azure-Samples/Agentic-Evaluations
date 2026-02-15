@@ -9,6 +9,9 @@ from ..eval_factory import EvaluatorFactory
 def get_logger(name: str):
     level = os.environ.get("LOG_LEVEL", "INFO").upper()
     logging.basicConfig(level=getattr(logging, level, logging.INFO))
+    # Suppress verbose fallback warnings from TaskAdherenceEvaluator
+    # (plain-string query/response is handled correctly via fallback)
+    logging.getLogger("azure.ai.evaluation._evaluators._task_adherence._task_adherence").setLevel(logging.ERROR)
     return logging.getLogger(name)
 
 logger = get_logger(__name__)

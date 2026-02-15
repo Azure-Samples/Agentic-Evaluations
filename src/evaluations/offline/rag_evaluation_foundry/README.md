@@ -237,4 +237,8 @@ genai_evaluation_foundry/
 
 - [Azure AI Foundry Evaluation Documentation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
 - [Built-in Evaluators Reference](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app#built-in-evaluators)
-- [Azure AI Foundry SDK](https://learn.microsoft.com/python/api/azure-ai-evaluation) 
+- [Azure AI Foundry SDK](https://learn.microsoft.com/python/api/azure-ai-evaluation)
+
+## Data Provenance
+
+All sample datasets included in this repository are **fully synthetic**. They use fictional entities (Northwind Health, Contoso) and simulated agent interactions (smart-home device controls, weather lookups). No real customer data, personally identifiable information, or production telemetry is included in any dataset.

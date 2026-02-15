@@ -38,8 +38,33 @@ This framework provides two core capabilities for rapid AI evaluation:
 
 ---
 
+## Folder Structure
+
+```text
+Agentic-Evaluations/
+├── src/
+│   ├── agent_evaluation/           # Core evaluation engine
+│   │   └── agentic_ops/            # Runner, client, base evaluator
+│   └── evaluations/
+│       └── offline/
+│           ├── agentic_evaluation/          # Agentic metrics (tool call accuracy, recall@k)
+│           ├── ai_judge_evaluation_custom/  # LLM-as-Judge with prompty templates
+│           ├── genai_evaluation_foundry/    # Built-in RAG evaluators (Relevance, Coherence)
+│           ├── pipeline_experiment_evaluation/ # Full pipeline (data → inference → eval)
+│           └── utils/                       # Shared constants and utilities
+├── assets/                         # Architecture diagrams
+├── .env.template                   # Environment variable template
+├── pyproject.toml                  # Python dependencies (uv)
+└── README.md
+```
+
+Each evaluation folder follows the same layout: `datasets/` for input data, `evaluator/` for evaluation logic, `report/` for output, and an `experiment.yaml` for configuration.
+
+---
+
 ## Table of Contents
 
+- [Folder Structure](#folder-structure)
 - [Getting Started](#getting-started)
 - [Samples](#samples)
 - [Configuration Guide](#configuration-guide)
@@ -89,10 +114,10 @@ python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/
 
 ## Samples
 
-### [`genai_evaluation_foundry`](./src/evaluations/offline/genai_evaluation_foundry/README.md)
+### [`rag_evaluation_foundry`](./src/evaluations/offline/genai_evaluation_foundry/README.md)
 **Standard GenAI/RAG** — Built-in evaluators (Relevance, Coherence, Fluency)
 ```bash
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/genai_evaluation_foundry/experiment.yaml
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/rag_evaluation_foundry/experiment.yaml
 ```
 
 ### [`agentic_evaluation`](./src/evaluations/offline/agentic_evaluation/README.md)
@@ -261,6 +286,8 @@ pipeline:
 ```
 
 Each pipeline stage is independently configurable—add, remove, or reorder stages as needed.
+
+---
 
 ---
 

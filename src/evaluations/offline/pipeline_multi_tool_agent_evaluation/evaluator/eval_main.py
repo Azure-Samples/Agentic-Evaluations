@@ -4,7 +4,7 @@ from src.agent_evaluation.agentic_ops.run_eval import execute_eval
 import logging
 from src.evaluations.offline.utils.constants import *
 from ..eval_factory import EvaluatorFactory
-from src.evaluations.offline.utils.blobFileUpload import upload_file_to_blob
+
 
 
 def get_logger(name: str):

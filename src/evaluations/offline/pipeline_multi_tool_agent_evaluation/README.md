@@ -388,6 +388,10 @@ pipeline_multi_tool_agent_evaluation/
 | `ImportError: ToolCallAccuracyEvaluator` | Update package: `pip install --upgrade azure-ai-evaluation` |
 | `agent_framework not found` | Install: `pip install agent-framework` |
 
+## Data Provenance
+
+All sample datasets included in this repository are **fully synthetic**. They use fictional entities (Northwind Health, Contoso) and simulated agent interactions (smart-home device controls, weather lookups). No real customer data, personally identifiable information, or production telemetry is included in any dataset.
+
 ## Resources
 
 - [Azure AI Foundry Evaluation Docs](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
@@ -395,3 +399,5 @@ pipeline_multi_tool_agent_evaluation/
 - [Microsoft Agent Framework](https://github.com/microsoft/agent-framework)
 - [Azure Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview)
 - [OpenTelemetry Python](https://opentelemetry.io/docs/instrumentation/python/) 
+
+

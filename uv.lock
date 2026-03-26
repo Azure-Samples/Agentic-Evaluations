@@ -330,7 +330,7 @@ requires-dist = [
     { name = "agent-framework", specifier = "==1.0.0b260116" },
     { name = "agent-framework-azure-ai", specifier = "==1.0.0b260116" },
     { name = "aiohttp", specifier = ">=3.13.2" },
-    { name = "azure-ai-evaluation", specifier = "==1.14.0" },
+    { name = "azure-ai-evaluation", specifier = "==1.15.0" },
     { name = "azure-ai-inference", specifier = ">=1.0.0b9" },
     { name = "azure-ai-projects" },
     { name = "azure-identity", specifier = ">=1.25.0" },
@@ -490,7 +490,7 @@ wheels = [
 
 [[package]]
 name = "azure-ai-evaluation"
-version = "1.14.0"
+version = "1.15.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -506,9 +506,9 @@ dependencies = [
     { name = "pyjwt" },
     { name = "ruamel-yaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/66/ab/62300008df848b210ef2a21b646480eee7c1bf3906afdc1351795343321c/azure_ai_evaluation-1.14.0.tar.gz", hash = "sha256:2a5681805b7cde65ad663f34d0f647d28498dd9395f7e2ce0789320c26664dae", size = 2196726, upload-time = "2026-01-09T21:25:25.948Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/21/ad/acb5093e50eeb59d8c633c1b8eeee36da24fcabd3dc4291d15c26e52fd9f/azure_ai_evaluation-1.15.0.tar.gz", hash = "sha256:87833f23df6d6f7a0444630d370217cfaa78d50fdb790e2a53450786d73da79c", size = 2214837, upload-time = "2026-02-06T16:57:49.539Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/96/68/1e0bd2123a5e681dbe474a3dda098c85704556e53ae24c7f4b3915d4e048/azure_ai_evaluation-1.14.0-py3-none-any.whl", hash = "sha256:1785f9be28517839ab9d30a03893951f7c9b530500d939d0ae51dde3aa1478b0", size = 1141136, upload-time = "2026-01-09T21:25:28.113Z" },
+    { url = "https://files.pythonhosted.org/packages/64/3e/8a5c092aa8d062044a963259675c9fa1ebb89da37047ef3a4ecfb2860105/azure_ai_evaluation-1.15.0-py3-none-any.whl", hash = "sha256:75126de43bb895d12096c76154adff9a46a1faff5a0173a3b7993125b86ed664", size = 1154500, upload-time = "2026-02-06T16:57:51.279Z" },
 ]
 
 [[package]]
@@ -2227,7 +2227,7 @@ wheels = [
 
 [[package]]
 name = "requests"
-version = "2.32.5"
+version = "2.33.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "certifi" },
@@ -2235,9 +2235,9 @@ dependencies = [
     { name = "idna" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c9/74/b3ff8e6c8446842c3f5c837e9c3dfcfe2018ea6ecef224c710c85ef728f4/requests-2.32.5.tar.gz", hash = "sha256:dbba0bac56e100853db0ea71b82b4dfd5fe2bf6d3754a8893c3af500cec7d7cf", size = 134517, upload-time = "2025-08-18T20:46:02.573Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/34/64/8860370b167a9721e8956ae116825caff829224fbca0ca6e7bf8ddef8430/requests-2.33.0.tar.gz", hash = "sha256:c7ebc5e8b0f21837386ad0e1c8fe8b829fa5f544d8df3b2253bff14ef29d7652", size = 134232, upload-time = "2026-03-25T15:10:41.586Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1e/db/4254e3eabe8020b458f1a747140d32277ec7a271daf1d235b70dc0b4e6e3/requests-2.32.5-py3-none-any.whl", hash = "sha256:2462f94637a34fd532264295e186976db0f5d453d1cdd31473c85a6a161affb6", size = 64738, upload-time = "2025-08-18T20:46:00.542Z" },
+    { url = "https://files.pythonhosted.org/packages/56/5d/c814546c2333ceea4ba42262d8c4d55763003e767fa169adc693bd524478/requests-2.33.0-py3-none-any.whl", hash = "sha256:3324635456fa185245e24865e810cecec7b4caf933d7eb133dcde67d48cee69b", size = 65017, upload-time = "2026-03-25T15:10:40.382Z" },
 ]
 
 [[package]]

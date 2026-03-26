@@ -1,0 +1,23 @@
+# Virtual environment
+.venv/
+
+# Environment variables
+.env
+
+# Compiled Python files
+__pycache__/
+*.pyc
+
+# Linter cache
+.ruff_cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
+
+# Evaluation output files (may contain sensitive Azure resource info)
+**/report/*.json
+!**/report/__init__.py

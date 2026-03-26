@@ -1,0 +1,39 @@
+app_name: Agentic-Evals
+version: 1.0.0
+experiment_name: Agentic_Evaluation_Experiment
+evaluation:
+  run_local: True
+  input_path: src/evaluations/offline/agentic_evaluation/datasets/
+  input_file: agent_response_sample_data.jsonl
+  output_path: src/evaluations/offline/agentic_evaluation/report/
+  column_mapping:
+    user_id: "${data.conversation_id}"
+  evaluators:
+    relevance_score: "relevance_evaluator"
+    custom_agents_invoked_accuracy_eval: "custom_agents_invoked_evaluator"
+    task_adherence_score: "task_adherence_evaluator"
+    tool_call_accuracy_score: "tool_call_accuracy_evaluator"
+  evaluator_config:
+    relevance_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.gt_agent_response}" 
+    custom_agents_invoked_accuracy_eval:
+      column_mapping:
+        expected_agents_to_invoke: "${data.expected_agents_to_invoke}"
+        predicted_agents_to_invoke: "${data.selected_agents}"
+    task_adherence_score:
+      column_mapping:
+        query: "${data.query}"
+        response: "${data.response}"
+    tool_call_accuracy_score:
+      column_mapping:
+        query: "${data.query}"
+        tool_definitions: "${data.tool_definitions}"
+        tool_calls: "${data.tool_calls}"
+        response: "${data.response}"
+
+pipeline:
+  - base_path: evaluator
+    module: eval_main.eval_main
+    config_key: evaluation

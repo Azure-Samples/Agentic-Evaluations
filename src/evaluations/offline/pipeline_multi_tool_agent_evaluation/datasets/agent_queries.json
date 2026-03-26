@@ -1,0 +1,138 @@
+{
+  "single_intent": [
+    {
+      "id": "single_001",
+      "query": "What is the weather in Seattle?",
+      "expected_tools": ["get_weather"],
+      "description": "Simple weather query for a single location"
+    },
+    {
+      "id": "single_002",
+      "query": "What's the current date and time?",
+      "expected_tools": ["get_current_datetime"],
+      "description": "Query for current datetime"
+    },
+    {
+      "id": "single_003",
+      "query": "Calculate the sum of 15, 25, 35, and 45.",
+      "expected_tools": ["calculate_sum"],
+      "description": "Sum calculation with multiple numbers"
+    },
+    {
+      "id": "single_004",
+      "query": "What is the product of 3, 7, and 11?",
+      "expected_tools": ["calculate_product"],
+      "description": "Product calculation"
+    },
+    {
+      "id": "single_005",
+      "query": "Convert 72 degrees Fahrenheit to Celsius.",
+      "expected_tools": ["convert_temperature"],
+      "description": "Temperature conversion F to C"
+    },
+    {
+      "id": "single_006",
+      "query": "Convert 25 degrees Celsius to Kelvin.",
+      "expected_tools": ["convert_temperature"],
+      "description": "Temperature conversion C to K"
+    },
+    {
+      "id": "single_007",
+      "query": "How many words are in this sentence: 'The quick brown fox jumps over the lazy dog'?",
+      "expected_tools": ["count_words"],
+      "description": "Word count query"
+    },
+    {
+      "id": "single_008",
+      "query": "Generate a unique identifier for me.",
+      "expected_tools": ["generate_uuid"],
+      "description": "UUID generation request"
+    },
+    {
+      "id": "single_009",
+      "query": "Please format this JSON nicely: {\"name\":\"Alice\",\"age\":28,\"skills\":[\"python\",\"javascript\"]}",
+      "expected_tools": ["format_json"],
+      "description": "JSON formatting request"
+    },
+    {
+      "id": "single_010",
+      "query": "What's the weather like in Tokyo right now?",
+      "expected_tools": ["get_weather"],
+      "description": "Weather query for international city"
+    },
+    {
+      "id": "single_011",
+      "query": "Add up these numbers: 100, 200, 300, 400, 500",
+      "expected_tools": ["calculate_sum"],
+      "description": "Sum with larger numbers"
+    },
+    {
+      "id": "single_012",
+      "query": "Convert 300 Kelvin to Fahrenheit.",
+      "expected_tools": ["convert_temperature"],
+      "description": "Temperature conversion K to F"
+    }
+  ],
+  "multi_intent": [
+    {
+      "id": "multi_001",
+      "query": "What's the weather in New York and also tell me the current time?",
+      "expected_tools": ["get_weather", "get_current_datetime"],
+      "description": "Weather + datetime query"
+    },
+    {
+      "id": "multi_002",
+      "query": "Calculate both the sum and product of 2, 4, 6, and 8.",
+      "expected_tools": ["calculate_sum", "calculate_product"],
+      "description": "Both sum and product calculations"
+    },
+    {
+      "id": "multi_003",
+      "query": "Convert 100 Celsius to both Fahrenheit and Kelvin.",
+      "expected_tools": ["convert_temperature"],
+      "description": "Multiple temperature conversions"
+    },
+    {
+      "id": "multi_004",
+      "query": "Generate a UUID and also tell me the current date and time.",
+      "expected_tools": ["generate_uuid", "get_current_datetime"],
+      "description": "UUID generation + datetime"
+    },
+    {
+      "id": "multi_005",
+      "query": "What's the weather in London and Paris?",
+      "expected_tools": ["get_weather"],
+      "description": "Weather for multiple cities"
+    },
+    {
+      "id": "multi_006",
+      "query": "Count the words in 'Hello world from the agent' and also format this JSON: {\"test\":\"value\"}",
+      "expected_tools": ["count_words", "format_json"],
+      "description": "Word count + JSON formatting"
+    },
+    {
+      "id": "multi_007",
+      "query": "What is the sum of 10, 20, 30 and what is 50 Fahrenheit in Celsius?",
+      "expected_tools": ["calculate_sum", "convert_temperature"],
+      "description": "Sum calculation + temperature conversion"
+    },
+    {
+      "id": "multi_008",
+      "query": "Get the weather for San Francisco, generate a UUID, and tell me the time.",
+      "expected_tools": ["get_weather", "generate_uuid", "get_current_datetime"],
+      "description": "Three different tool invocations"
+    },
+    {
+      "id": "multi_009",
+      "query": "Calculate 5 * 6 * 7 and also 5 + 6 + 7, then count words in 'math is fun'.",
+      "expected_tools": ["calculate_product", "calculate_sum", "count_words"],
+      "description": "Math operations + word count"
+    },
+    {
+      "id": "multi_010",
+      "query": "What's the weather in Berlin and Munich, and convert 20 Celsius to Fahrenheit?",
+      "expected_tools": ["get_weather", "convert_temperature"],
+      "description": "Multiple weather queries + conversion"
+    }
+  ]
+}

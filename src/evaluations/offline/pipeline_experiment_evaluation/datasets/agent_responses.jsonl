@@ -1,0 +1,4 @@
+{"query": "How is the weather in bangalore?", "session_id": "session-1", "response": "The device has been turned off."}
+{"query": "Turn on the air conditioner in the living room", "session_id": "session-2", "response": "The device has been turned off."}
+{"query": "Set the air conditioner temperature to 25 degrees Celsius.", "session_id": "session-3", "response": "The air conditioner has been turned on."}
+{"query": "Turn off air conditioner.", "session_id": "session-4", "response": "The weather forecast shows cloudy skies with a temperature of 58°F."}

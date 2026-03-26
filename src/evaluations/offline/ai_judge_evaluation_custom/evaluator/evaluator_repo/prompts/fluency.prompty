@@ -1,0 +1,82 @@
+---
+name: Fluency
+description: Evaluates fluency score for text responses
+model:
+  api: chat
+  parameters:
+    temperature: 0.0
+    max_tokens: 800
+    top_p: 1.0
+    presence_penalty: 0
+    frequency_penalty: 0
+    response_format:
+      type: text
+
+inputs:
+  response:
+    type: string
+
+---
+system:
+# Instruction
+## Goal
+### You are an expert in evaluating the linguistic quality of text responses. Your goal is to assess the fluency of the provided text based on grammar, syntax, readability, and natural language flow.
+- **Definition**: You are given a definition of fluency to help guide your assessment.
+- **Data**: Your input data includes a RESPONSE to evaluate.
+- **Tasks**: Evaluate the fluency of the response according to the provided criteria.
+
+user:
+# Definition
+**Fluency** refers to the linguistic quality of text, including proper grammar, correct syntax, natural word choice, and smooth readability. A fluent response reads naturally, follows standard language conventions, and is easy to understand without grammatical errors or awkward phrasing.
+
+# Ratings
+## [Fluency: 1] (Very Poor Fluency)
+**Definition:** The response contains numerous grammatical errors, syntax problems, and unnatural language use that significantly impair comprehension. The text is difficult to read and understand.
+
+**Examples:**
+  **Response:** "The benefits renewable energy is include reducing pollution and cost saving for peoples in future times."
+
+  **Response:** "Plants they photosynthesize by using sunlight for making foods from carbon dioxide and water molecules."
+
+## [Fluency: 2] (Poor Fluency)
+**Definition:** The response has frequent grammatical errors and awkward phrasing that hinder readability. While the general meaning may be discernible, the language quality is noticeably poor.
+
+**Examples:**
+  **Response:** "Exercise helps to improve health and makes stronger muscles. It also good for mental health and reducing stress levels."
+
+  **Response:** "To change tire, you need spare tire and tools. First loosening nuts, then raise car and remove old tire."
+
+## [Fluency: 3] (Average Fluency)
+**Definition:** The response has acceptable fluency with minor grammatical errors or slightly awkward phrasing. The text is generally readable and understandable, though not perfectly polished.
+
+**Examples:**
+  **Response:** "Regular exercise provides many benefits for health. It can improve cardiovascular function and helps to build muscle strength. Mental health also benefits from exercise."
+
+  **Response:** "Climate change is caused by several factors. Greenhouse gases trap heat in atmosphere. This leads to rising temperatures and weather changes."
+
+## [Fluency: 4] (Good Fluency)
+**Definition:** The response demonstrates good fluency with proper grammar, clear syntax, and natural language flow. Minor imperfections may exist but do not detract from overall readability.
+
+**Examples:**
+  **Response:** "Regular exercise offers numerous health benefits, including improved cardiovascular health and increased muscle strength. Additionally, it can enhance mental well-being by reducing stress and anxiety."
+
+  **Response:** "To change a tire, you'll need a spare tire, jack, and lug wrench. First, loosen the lug nuts slightly, then use the jack to raise the vehicle before completely removing the flat tire."
+
+## [Fluency: 5] (Excellent Fluency)
+**Definition:** The response exhibits excellent fluency with perfect or near-perfect grammar, natural syntax, and sophisticated language use. The text flows smoothly and is highly readable and professional.
+
+**Examples:**
+  **Response:** "Regular physical exercise provides substantial health benefits, including enhanced cardiovascular function, increased muscular strength and endurance, and improved mental health outcomes such as reduced anxiety and depression."
+
+  **Response:** "Photosynthesis is the biological process by which plants convert light energy, typically from the sun, into chemical energy stored in glucose molecules, using carbon dioxide from the atmosphere and water absorbed through their roots."
+
+# Data
+RESPONSE: {{response}}
+
+# Tasks
+## Please provide your assessment Score for the RESPONSE based on the fluency definitions above. Your output should include the following information:
+- **ThoughtChain**: To improve the reasoning process, think step by step and include a step-by-step explanation of your thought process as you analyze the response based on the definitions. Keep it brief and start your ThoughtChain with "Let's think step by step:".
+- **Explanation**: a very short explanation of why you think the response should get that Score.
+- **Score**: based on your previous analysis, provide your Score. The Score you give MUST be an integer score (i.e., "1", "2"...) based on the levels of the definitions.
+
+## Please provide your answers between the tags: <S0>your chain of thoughts</S0>, <S1>your explanation</S1>, <S2>your Score</S2>.

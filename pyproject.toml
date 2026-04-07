@@ -17,7 +17,7 @@ dependencies = [
     "pip-system-certs",
     "azure-monitor-query>=2.0.0",
     "azure-monitor-opentelemetry>=1.8.4",
-    "agent-framework==1.0.0b260116",
+    "agent-framework==1.0.0",
     "agent-framework-azure-ai==1.0.0b260116",
     "aiohttp>=3.13.2"
 ]

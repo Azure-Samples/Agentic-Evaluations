@@ -5,7 +5,7 @@ evaluation:
   run_local: True
   input_path: src/evaluations/offline/rag_evaluation_foundry/datasets/
   input_file: rag_sample.jsonl
-  output_path: src/evaluations/offline/rag_evaluation_foundry/report/
+  output_path: src/evaluations/offline/reports/
   column_mapping:
     user_id: "${data.query}"
   evaluators:

@@ -21,3 +21,7 @@ logs/
 # Evaluation output files (may contain sensitive Azure resource info)
 **/report/*.json
 !**/report/__init__.py
+src/evaluations/offline/reports/
+
+# Agent inference generated responses
+**/agent_responses*.*

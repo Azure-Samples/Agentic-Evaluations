@@ -13,13 +13,13 @@ import os
 import logging
 from datetime import datetime
 from pathlib import Path
-from agent_framework import ChatAgent
+from agent_framework import Agent, ChatOptions
 from agent_framework.observability import enable_instrumentation, get_tracer
 from azure.monitor.opentelemetry import configure_azure_monitor
 from opentelemetry import trace
 from opentelemetry.trace import SpanKind
 from opentelemetry.trace.span import format_trace_id
-from agent_framework.azure import AzureOpenAIChatClient
+from agent_framework.openai import OpenAIChatClient
 from azure.identity import AzureCliCredential
 
 # Handle both standalone and package execution
@@ -82,14 +82,14 @@ logger = get_logger(__name__)
 # =============================================================================
 # AGENT SETUP
 # =============================================================================
-def create_agent() -> ChatAgent:
+def create_agent() -> Agent:
     """Create and configure the multi-tool agent."""
-    client = AzureOpenAIChatClient(credential=AzureCliCredential())
+    client = OpenAIChatClient(credential=AzureCliCredential())
     
-    agent = ChatAgent(
-        name="MultiToolAgent",
+    agent = Agent(
+        client=client,
         instructions="You are a helpful assistant. Use available tools to help the user. Always be friendly and concise in your responses.",
-        chat_client=client,
+        name="MultiToolAgent",
         tools=[
             get_weather,
             get_current_datetime,
@@ -100,7 +100,7 @@ def create_agent() -> ChatAgent:
             generate_uuid,
             format_json
         ],
-        tool_choice="auto",
+        default_options=ChatOptions(tool_choice="auto"),
     )
     return agent
 
@@ -108,7 +108,7 @@ def create_agent() -> ChatAgent:
 # =============================================================================
 # QUERY PROCESSING
 # =============================================================================
-async def process_query(agent: ChatAgent, query: str, query_id: str) -> tuple[str, str]:
+async def process_query(agent: Agent, query: str, query_id: str) -> tuple[str, str]:
     """
     Process a single query with the agent and return response + trace_id.
     
@@ -247,5 +247,5 @@ if __name__ == "__main__":
     with open(config_path, 'r') as f:
         config = yaml.safe_load(f)
     
-    experiment_config = config.get('experiment', {})
+    experiment_config = config.get('agent_inference', {})
     inference_main(experiment_config)

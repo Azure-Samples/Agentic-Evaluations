@@ -1,4 +1,5 @@
 from azure.ai.evaluation import RelevanceEvaluator, TaskAdherenceEvaluator, ToolCallAccuracyEvaluator
+from .evaluator.evaluator_repo.evaluate_agent_invoked import EvaluateAgentsInvoked
 
 import os
 import logging
@@ -16,6 +17,9 @@ class EvaluatorFactory:
         "relevance_evaluator": RelevanceEvaluator,
         "task_adherence_evaluator": TaskAdherenceEvaluator,
         "tool_call_accuracy_evaluator": ToolCallAccuracyEvaluator,
+        "custom_agents_invoked_accuracy_eval": EvaluateAgentsInvoked,
+        "evaluate_agents_invoked": EvaluateAgentsInvoked,
+
     }
 
     @staticmethod

@@ -19,5 +19,7 @@ dependencies = [
     "azure-monitor-opentelemetry>=1.8.4",
     "aiohttp>=3.13.2",
     "agent-framework>=1.0.1",
+    "streamlit>=1.45.0",
+    "plotly>=6.1.0"
 ]
 

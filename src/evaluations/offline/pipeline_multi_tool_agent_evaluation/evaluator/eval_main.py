@@ -3,6 +3,7 @@ from pathlib import Path
 from src.agent_evaluation.agentic_ops.run_eval import execute_eval
 import logging
 from src.evaluations.offline.utils.constants import EVAL_NAME
+from src.evaluations.offline.utils.file_operations import get_next_run_id
 from ..eval_factory import EvaluatorFactory
 
 
@@ -27,7 +28,8 @@ def eval_main(config, args=None):
         eval_name = eval_config[EVAL_NAME]
         input_file_path = os.path.join(parent_dir, eval_config["input_path"], eval_config["input_file"])
         output_filename = eval_config.get('_eval_dir_name', eval_config[EVAL_NAME])
-        results_file_path = os.path.join(parent_dir, eval_config["output_path"], f"{output_filename}.json")
+        run_id = get_next_run_id(output_path)
+        results_file_path = os.path.join(parent_dir, eval_config["output_path"], f"{run_id}_{output_filename}.json")
         logger.info("[EVALUATION][EVAL MAIN] - Evaluation begin: input_file_path=%s, results_file_path=%s, eval_name=%s", input_file_path, results_file_path, eval_name)
         execute_eval(eval_name, input_file_path, results_file_path, eval_config, EvaluatorFactory)
         logger.info("[EVALUATION][EVAL MAIN] - Evaluation completed successfully.")

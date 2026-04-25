@@ -162,10 +162,10 @@ async def run_inference_async(config: dict) -> None:
     connection_string = os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
     if connection_string:
         configure_azure_monitor(connection_string=connection_string)
-        logger.info("[AGENT] Azure Monitor configured")
-    
-    # Enable Agent Framework instrumentation
-    enable_instrumentation()
+        enable_instrumentation()
+        logger.info("[AGENT] Azure Monitor configured with instrumentation")
+    else:
+        logger.warning("[AGENT] APPLICATIONINSIGHTS_CONNECTION_STRING not set — telemetry disabled")
     
     # Load dataset
     logger.info("[AGENT] Loading queries from: %s", input_file_path)

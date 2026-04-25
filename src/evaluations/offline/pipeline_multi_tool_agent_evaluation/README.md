@@ -8,6 +8,9 @@ This framework demonstrates a **complete end-to-end pipeline** for multi-tool AI
 2. **Telemetry Extraction**: Enrich responses with tool call data from Azure Application Insights
 3. **Evaluation**: Assess agent performance using Azure AI Foundry evaluators
 
+> [!IMPORTANT]
+> **Stage 1 (Agent Inference) requires [Microsoft Agent Framework](https://github.com/microsoft/agent-framework).** The multi-tool agent is built with this SDK. Install it before running the full pipeline: `pip install agent-framework`.
+
 This modular pipeline architecture allows you to:
 - **Separate concerns**: Keep inference, telemetry extraction, and evaluation independent
 - **Reuse evaluations**: Run evaluations on pre-collected responses without re-running inference

@@ -8,6 +8,9 @@ This framework demonstrates a **complete end-to-end pipeline** for multi-agent o
 2. **Telemetry Extraction**: Enrich responses with tool call and agent handoff data from Azure Application Insights
 3. **Evaluation**: Assess agent performance using Azure AI Foundry evaluators
 
+> [!IMPORTANT]
+> **Stage 1 (Agent Inference) requires [Microsoft Agent Framework](https://github.com/microsoft/agent-framework).** The orchestrator and all device agents are built with this SDK. Install it before running the full pipeline: `pip install agent-framework`.
+
 The orchestrator agent routes user requests to specialized device agents (AC, TV, Dishwasher) and combines their responses into a single coherent reply.
 
 ## Evaluation Pipeline Flow

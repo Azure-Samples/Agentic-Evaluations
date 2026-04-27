@@ -269,7 +269,7 @@ The prompty format ensures consistent, reproducible evaluations across different
 ## Output
 
 Results are saved to the configured output path:
-- **JSON Report**: `{output_path}/{experiment_name}.json`
+- **JSON Report**: `{output_path}/{run_id}_{eval_dir_name}.json`
 - **Azure AI Foundry Dashboard**: Automatic upload for visualization
 
 The report includes:

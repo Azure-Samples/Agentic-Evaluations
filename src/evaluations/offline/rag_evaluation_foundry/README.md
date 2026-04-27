@@ -155,7 +155,7 @@ evaluation:
 
 ### Output Location
 
-- **Local mode** (`run_local: True`): `report/Rag_Evaluation_Experiment.json`
+- **Local mode** (`run_local: True`): `src/evaluations/offline/reports/{run_id}_{eval_dir_name}.json`
 - **Azure mode** (`run_local: False`): Results pushed to AI Foundry dashboard + local JSON
 
 ### Result Structure
@@ -218,12 +218,12 @@ genai_evaluation_foundry/
 │   └── rag_sample.jsonl           # Sample evaluation dataset
 ├── evaluator/
 │   └── eval_main.py               # Evaluation execution logic
-├── report/                        # Evaluation results output
-│   └── __init__.py
 ├── eval_factory.py               # Evaluator factory (built-in only)
 ├── experiment.yaml               # Evaluation configuration
 └── README.md                     # This file
 ```
+
+Evaluation reports are saved to `src/evaluations/offline/reports/` using `{run_id}_{eval_dir_name}.json`.
 
 ## Next Steps
 

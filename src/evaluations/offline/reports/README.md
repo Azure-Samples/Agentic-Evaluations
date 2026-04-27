@@ -4,9 +4,9 @@ The Agentic Evaluation Dashboard is a [Streamlit](https://streamlit.io) app that
 
 ## Prerequisites
 
-- Python 3.10+
+- Python 3.12.x
 - Streamlit and Plotly installed (included in the project's `pyproject.toml`)
-- One or more report JSON files present in this directory, named using the pattern `{run_id}_{eval_name}.json` (e.g., `1_pipeline_multi_agent_evaluation.json`)
+- One or more report JSON files present in this directory, named using the pattern `{run_id}_{eval_dir_name}.json` (e.g., `1_pipeline_multi_agent_evaluation.json`)
 
 ## Running the Dashboard
 
@@ -23,13 +23,13 @@ The dashboard opens automatically in your default browser at `http://localhost:8
 The dashboard auto-discovers reports from the same directory as `dashboard.py`. Files must follow the naming pattern:
 
 ```
-{run_id}_{eval_name}.json
+{run_id}_{eval_dir_name}.json
 ```
 
 | Part | Description |
 |------|-------------|
 | `run_id` | A positive integer that determines ordering (e.g., `1`, `2`, `16`) |
-| `eval_name` | Snake-case pipeline name (e.g., `pipeline_multi_agent_evaluation`) |
+| `eval_dir_name` | Snake-case pipeline directory name (e.g., `pipeline_multi_agent_evaluation`) |
 
 Reports that do not match this pattern are silently ignored.
 
@@ -93,7 +93,7 @@ reports/
 ├── dashboard.py                          # Streamlit dashboard app
 ├── README.md                             # This file
 ├── 1_pipeline_multi_agent_evaluation.json   # Sample report (tracked)
-└── {run_id}_{eval_name}.json             # Additional reports (git-ignored)
+└── {run_id}_{eval_dir_name}.json         # Additional reports (git-ignored)
 ```
 
 > [!NOTE]

@@ -243,7 +243,7 @@ evaluators:
 
 ### Output Location
 
-- **Local mode** (`run_local: True`): `report/Agentic_Evaluation_Experiment.json`
+- **Local mode** (`run_local: True`): `src/evaluations/offline/reports/{run_id}_{eval_dir_name}.json`
 - **Azure mode** (`run_local: False`): Results pushed to AI Foundry dashboard + local JSON
 
 ### Result Structure
@@ -298,7 +298,7 @@ python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/
 ## Output
 
 Results are saved to the configured output path:
-- **JSON Report**: `{output_path}/{experiment_name}.json`
+- **JSON Report**: `{output_path}/{run_id}_{eval_dir_name}.json`
 - **Azure AI Foundry**: Results automatically uploaded for dashboard visualization
 
 The report includes:

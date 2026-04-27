@@ -132,10 +132,10 @@ def fetch_tool_data_from_app_insights(trace_ids: List[str]) -> Dict[str, Dict[st
 
     workspace_id = os.getenv("APPLICATION_INSIGHTS_WORKSPACE_ID")
     if not workspace_id:
-        print("ERROR: APPLICATION_INSIGHTS_WORKSPACE_ID environment variable is not set")
+        logger.error("APPLICATION_INSIGHTS_WORKSPACE_ID environment variable is not set")
         return tool_data_by_trace
 
-    print(f"Fetching tool data from App Insights for {len(trace_ids)} traces...")
+    logger.info("Fetching tool data from App Insights for %d traces", len(trace_ids))
 
     trace_ids_str = "', '".join(trace_ids)
     query = f"""
@@ -161,11 +161,20 @@ def fetch_tool_data_from_app_insights(trace_ids: List[str]) -> Dict[str, Dict[st
 
         if response.status == LogsQueryStatus.SUCCESS:
             table = response.tables[0]
-            print(f"App Insights returned {len(table.rows)} rows")
+            logger.info("App Insights returned %d rows", len(table.rows))
+
+            column_names = [column.name for column in table.columns]
 
             for row in table.rows:
-                operation_id = row["operation_id"]
-                operation_name = row["name"]
+                # azure-monitor-query rows are commonly sequence-like (aligned with table.columns)
+                # but may also be dict-like depending on client version/shape.
+                row_data = dict(zip(column_names, row)) if not isinstance(row, dict) else row
+
+                operation_id = row_data.get("operation_id")
+                operation_name = row_data.get("name", "")
+
+                if not operation_id:
+                    continue
 
                 if operation_id not in tool_data_by_trace:
                     tool_data_by_trace[operation_id] = {
@@ -176,9 +185,9 @@ def fetch_tool_data_from_app_insights(trace_ids: List[str]) -> Dict[str, Dict[st
                     }
 
                 custom_dims = {}
-                if row["custom_dimensions"]:
+                if row_data.get("custom_dimensions"):
                     try:
-                        custom_dims = json.loads(row["custom_dimensions"])
+                        custom_dims = json.loads(row_data["custom_dimensions"])
                     except json.JSONDecodeError:
                         pass
 
@@ -205,10 +214,10 @@ def fetch_tool_data_from_app_insights(trace_ids: List[str]) -> Dict[str, Dict[st
                     if tool_call["name"]:
                         tool_data_by_trace[operation_id]["tool_calls"].append(tool_call)
         else:
-            print(f"Partial error: {response.partial_error}")
+            logger.warning("Partial App Insights query error: %s", response.partial_error)
 
     except HttpResponseError as err:
-        print(f"HTTP error: {err}")
+        logger.error("HTTP error while querying App Insights: %s", err)
 
     return tool_data_by_trace
 

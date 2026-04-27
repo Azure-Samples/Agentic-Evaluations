@@ -58,7 +58,7 @@ Agentic-Evaluations/
 └── README.md
 ```
 
-Each evaluation folder follows the same layout: `datasets/` for input data, `evaluator/` for evaluation logic, `report/` for output, and an `experiment.yaml` for configuration.
+Each evaluation folder follows the same layout: `datasets/` for input data, `evaluator/` for evaluation logic, and an `experiment.yaml` for configuration. Evaluation outputs are written to the shared `src/evaluations/offline/reports/` directory.
 
 ---
 
@@ -109,7 +109,7 @@ cp .env.template .env
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/genai_evaluation_foundry/experiment.yaml
 ```
 
-**Results:** `src/evaluations/offline/<experiment_folder>/report/`
+**Results:** `src/evaluations/offline/reports/{run_id}_{eval_dir_name}.json`
 
 ---
 
@@ -143,7 +143,7 @@ python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/
 
 ## Visualization Dashboard
 
-All evaluation runs produce a JSON report saved to the pipeline's `report/` folder. The **Agentic Evaluation Dashboard** is a Streamlit app that reads these reports and renders them as interactive visualizations — no manual parsing required.
+All evaluation runs produce a JSON report in `src/evaluations/offline/reports/` using the naming pattern `{run_id}_{eval_dir_name}.json`. The **Agentic Evaluation Dashboard** is a Streamlit app that reads these reports and renders them as interactive visualizations - no manual parsing required.
 
 ```bash
 python -m streamlit run src/evaluations/offline/reports/dashboard.py
@@ -171,7 +171,7 @@ evaluation:
   run_local: True                    # Local execution (recommended)
   input_path: datasets/
   input_file: my_data.jsonl
-  output_path: report/
+  output_path: src/evaluations/offline/reports/
   
   evaluators:                        # Evaluators to run
     relevance: "relevance_evaluator"

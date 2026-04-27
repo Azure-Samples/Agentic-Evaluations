@@ -34,7 +34,7 @@ flowchart LR
     
     subgraph stage3["STAGE 3: EVALUATION"]
         F --> G["📊 Azure AI Foundry Evaluators<br/>evaluator/eval_main.py"]
-        G --> H["📈 Evaluation Report<br/>report/*.json"]
+      G --> H["📈 Evaluation Report<br/>reports/{run_id}_{eval_dir_name}.json"]
     end
 
     style A fill:#e3f2fd
@@ -301,7 +301,7 @@ python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/
    - Loads enriched responses
    - Applies Relevance, TaskAdherence, and ToolCallAccuracy evaluators
    - Generates evaluation report
-   - Saves to `report/` directory
+  - Saves to `src/evaluations/offline/reports/` as `{run_id}_{eval_dir_name}.json`
 
 ### Running Individual Stages
 
@@ -364,19 +364,21 @@ pipeline_multi_tool_agent_evaluation/
 └── README.md                           # This file
 ```
 
+Evaluation reports are written to `src/evaluations/offline/reports/` with file names in the format `{run_id}_{eval_dir_name}.json`.
+
 **Key Components:**
 - **agent_inference/**: Multi-tool agent using Microsoft Agent Framework with Azure OpenAI
 - **agent_telemetry_extraction/**: Queries Azure Application Insights for tool call telemetry
 - **evaluator/**: Runs Azure AI Foundry evaluators on enriched data
 - **datasets/**: Input queries and intermediate/output data files
-- **report/**: Final evaluation reports in JSON format
+- **src/evaluations/offline/reports/**: Shared report output directory for all offline sample pipelines
 
 ## Next Steps
 
 1. **Configure Environment**: Set up Azure OpenAI and Application Insights environment variables
 2. **Prepare Your Dataset**: Create `agent_queries.json` with your test queries and expected tools
 3. **Run the Pipeline**: Execute all three stages to generate evaluation results
-4. **Review Results**: Analyze the evaluation report for relevance, task adherence, and tool accuracy
+4. **Review Results**: Analyze the generated report in `src/evaluations/offline/reports/{run_id}_{eval_dir_name}.json`
 5. **Iterate**: Modify agent tools, prompts, or evaluation metrics based on results
 6. **Extend**: Add custom evaluators or additional pipeline stages
 

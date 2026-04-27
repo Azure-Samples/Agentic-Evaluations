@@ -35,7 +35,7 @@ flowchart LR
 
     subgraph stage3["STAGE 3: EVALUATION"]
         F --> G["📊 Azure AI Foundry Evaluators<br/>evaluator/eval_main.py"]
-        G --> H["📈 Evaluation Report<br/>report/*.json"]
+      G --> H["📈 Evaluation Report<br/>reports/{run_id}_{eval_dir_name}.json"]
     end
 
     style A fill:#e3f2fd
@@ -138,6 +138,8 @@ evaluation:
         tool_calls: "${data.tool_calls}"
         response: "${data.response}"
 ```
+
+      Evaluation output files are written to `src/evaluations/offline/reports/` using the naming pattern `{run_id}_{eval_dir_name}.json`.
 
 #### 4. Pipeline Configuration
 

@@ -113,7 +113,7 @@ def extract_metric_columns(row: dict, prefix: str) -> dict:
     return {
         k.split(".")[-1]: v
         for k, v in row.items()
-        if k.startswith(prefix) and isinstance(v, (int, float))
+        if k.startswith(prefix) and _is_finite_number(v)
     }
 
 
@@ -122,7 +122,7 @@ def get_score_columns(rows: list[dict]) -> list[str]:
     cols = set()
     for row in rows:
         for k, v in row.items():
-            if k.startswith("outputs.") and isinstance(v, (int, float)) and not _is_hidden(k):
+            if k.startswith("outputs.") and _is_finite_number(v) and not _is_hidden(k):
                 cols.add(k)
     return sorted(cols)
 
@@ -442,7 +442,7 @@ def render_row_detail(row: dict, idx: int) -> None:
                 if not k.startswith("outputs.") or _is_hidden(k):
                     continue
                 short = k.replace("outputs.", "")
-                if isinstance(v, (int, float)):
+                if _is_finite_number(v):
                     scores[short] = v
                 elif isinstance(v, str) and ("reason" in k or "details" in k):
                     reasons[short] = v

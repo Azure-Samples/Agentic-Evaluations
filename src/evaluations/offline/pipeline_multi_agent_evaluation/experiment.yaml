@@ -50,9 +50,9 @@ evaluation:
         predicted_agents_to_invoke: "${data.agents_invoked}"      
 # Pipeline stages (executed in order)
 pipeline:
-  # - base_path: agent_inference
-  #   module: multi_agent_orchestrator.inference_main
-  #   config_key: agent_inference
+  - base_path: agent_inference
+    module: multi_agent_orchestrator.inference_main
+    config_key: agent_inference
   - base_path: agent_telemetry_extraction
     module: trace_to_jsonl.get_trace_main
     config_key: agent_telemetry_extraction

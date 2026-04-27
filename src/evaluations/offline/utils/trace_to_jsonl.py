@@ -111,19 +111,10 @@ def extract_tool_call_from_span(custom_dims: Dict[str, Any], operation_name: str
     }
 
 
-def extract_agent_handoffs(custom_dims: Dict[str, Any], operation_name: str) -> Dict[str, Any]:
-    """Extract agent handoff info from invoke_agent spans."""
-    agent_name = custom_dims.get("gen_ai.agent.name", "")
-    return {
-        "type": "agent_handoff",
-        "agent_name": agent_name,
-        "operation": operation_name,
-    }
-
 
 def fetch_tool_data_from_app_insights(trace_ids: List[str]) -> Dict[str, Dict[str, Any]]:
     """
-    Fetch tool_definitions, tool_calls, and agent handoffs from Application Insights.
+    Fetch tool_definitions, tool_calls from Application Insights.
 
     Returns:
         Dict mapping trace_id to {tool_definitions: [...], tool_calls: [...], agent_name: "...", agents_invoked: [...]}
@@ -185,10 +176,13 @@ def fetch_tool_data_from_app_insights(trace_ids: List[str]) -> Dict[str, Dict[st
                     }
 
                 custom_dims = {}
-                if row_data.get("custom_dimensions"):
+                custom_dimensions = row_data.get("custom_dimensions")
+                if isinstance(custom_dimensions, dict):
+                    custom_dims = custom_dimensions
+                elif isinstance(custom_dimensions, str):
                     try:
-                        custom_dims = json.loads(row_data["custom_dimensions"])
-                    except json.JSONDecodeError:
+                        custom_dims = json.loads(custom_dimensions)
+                    except (json.JSONDecodeError, TypeError):
                         pass
 
                 # Extract tool_definitions from invoke_agent spans

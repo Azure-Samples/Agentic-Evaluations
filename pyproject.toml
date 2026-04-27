@@ -20,6 +20,7 @@ dependencies = [
     "aiohttp>=3.13.2",
     "agent-framework>=1.0.1",
     "streamlit>=1.45.0",
+    "pandas>=2.2.3",
     "plotly>=6.1.0"
 ]
 

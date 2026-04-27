@@ -72,6 +72,35 @@ def extract_tool_definitions(custom_dimensions: Dict[str, Any]) -> List[Dict[str
     return tool_definitions
 
 
+def merge_tool_definitions(existing: List[Dict[str, Any]], new: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Merge tool definitions, de-duplicating by tool name/id.
+
+    If a tool with the same name already exists, the new definition is skipped
+    (keeping the first encountered definition).
+
+    Args:
+        existing: Current list of tool definitions
+        new: New tool definitions to merge in
+
+    Returns:
+        Merged list with duplicates removed by name
+    """
+    if not new:
+        return existing
+
+    # Create a dict keyed by tool name for quick lookup
+    by_name = {tool.get("name"): tool for tool in existing}
+
+    # Add new tools if name doesn't already exist
+    for tool in new:
+        tool_name = tool.get("name")
+        if tool_name and tool_name not in by_name:
+            by_name[tool_name] = tool
+
+    return list(by_name.values())
+
+
 def extract_tool_call_from_span(custom_dims: Dict[str, Any], operation_name: str) -> Dict[str, Any]:
     """Extract tool call info from execute_tool span."""
     tool_name = operation_name.replace("execute_tool ", "") if operation_name.startswith("execute_tool ") else ""
@@ -115,8 +144,9 @@ def fetch_tool_data_from_app_insights(trace_ids: List[str]) -> Dict[str, Dict[st
     | project
         operation_id=OperationId,
         name=Name,
-        custom_dimensions=Properties
-    | order by operation_id asc
+        custom_dimensions=Properties,
+        timestamp=TimeGenerated
+    | order by operation_id asc, timestamp asc
     """
 
     try:
@@ -155,8 +185,12 @@ def fetch_tool_data_from_app_insights(trace_ids: List[str]) -> Dict[str, Dict[st
                 # Extract tool_definitions from invoke_agent spans
                 if operation_name.startswith("invoke_agent"):
                     tool_defs = extract_tool_definitions(custom_dims)
-                    if tool_defs and not tool_data_by_trace[operation_id]["tool_definitions"]:
-                        tool_data_by_trace[operation_id]["tool_definitions"] = tool_defs
+                    if tool_defs:
+                        # Accumulate and de-duplicate tool definitions across all agents
+                        tool_data_by_trace[operation_id]["tool_definitions"] = merge_tool_definitions(
+                            tool_data_by_trace[operation_id]["tool_definitions"],
+                            tool_defs
+                        )
 
                     agent_name = custom_dims.get("gen_ai.agent.name", "")
                     if agent_name:

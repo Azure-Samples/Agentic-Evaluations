@@ -36,4 +36,10 @@ def eval_main(config, args=None):
         logger.error("[EVALUATION][EVAL MAIN] - Error in eval_main: %s", e, exc_info=True)
 
 if __name__ == "__main__":
-    eval_main()
+    import yaml
+
+    config_path = Path(__file__).resolve().parent.parent / "experiment.yaml"
+    with open(config_path, "r", encoding="utf-8") as file:
+        config = yaml.safe_load(file)
+
+    eval_main(config.get("evaluation", {}))

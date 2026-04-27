@@ -115,7 +115,7 @@ evaluation:
   run_local: True
   input_path: src/evaluations/offline/pipeline_multi_agent_evaluation/datasets/
   input_file: agent_responses_enriched.jsonl
-  output_path: src/evaluations/offline/pipeline_multi_agent_evaluation/report/
+  output_path: src/evaluations/offline/reports/
 
   evaluators:
     relevance_score: "relevance_evaluator"

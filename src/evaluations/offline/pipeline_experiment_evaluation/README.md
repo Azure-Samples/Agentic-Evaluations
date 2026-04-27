@@ -121,7 +121,7 @@ evaluation:
   run_local: False  # True = local only, False = push to Azure AI Foundry
   input_path: src/evaluations/offline/pipeline_experiment_evaluation/datasets/
   input_file: agent_responses.jsonl
-  output_path: src/evaluations/offline/pipeline_experiment_evaluation/report/
+  output_path: src/evaluations/offline/reports/
   
   evaluators:
     relevance_score: "relevance_evaluator"

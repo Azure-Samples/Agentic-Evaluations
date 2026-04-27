@@ -191,7 +191,7 @@ evaluation:
   run_local: True  # Set False to push to Azure AI Foundry dashboard
   input_path: src/evaluations/offline/agentic_evaluation/datasets/
   input_file: agent_response_sample_data.jsonl
-  output_path: src/evaluations/offline/agentic_evaluation/report/
+  output_path: src/evaluations/offline/reports/
   
   column_mapping:
     user_id: "${data.conversation_id}"

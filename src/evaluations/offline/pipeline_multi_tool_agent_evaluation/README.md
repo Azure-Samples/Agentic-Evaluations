@@ -108,7 +108,7 @@ evaluation:
   run_local: True                         # True = local, False = Azure AI Foundry
   input_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
   input_file: agent_responses_enriched.jsonl   # From Stage 2
-  output_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/report/
+  output_path: src/evaluations/offline/reports/
   
   evaluators:
     relevance_score: "relevance_evaluator"

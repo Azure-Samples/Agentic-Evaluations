@@ -311,7 +311,7 @@ def render_agent_routing(rows: list[dict]) -> None:
 
     # Routing table
     routing_df = pd.DataFrame(records)
-    st.dataframe(routing_df, width="stretch", hide_index=True)
+    st.dataframe(routing_df, use_container_width=True, hide_index=True)
 
 
 def render_pass_fail(rows: list[dict], score_cols: list[str], key_prefix: str = "pf") -> None:
@@ -506,7 +506,7 @@ def render_overview(
                         "{:.2f}",
                         subset=[c for c in run_df.columns if c != "Rows"],
                     ),
-                    width="stretch",
+                    use_container_width=True,
                     hide_index=False,
                 )
 
@@ -535,7 +535,7 @@ def render_run_comparison(eval_name: str, runs: list[dict]) -> None:
         return
 
     run_df = pd.DataFrame(records).set_index("Run")
-    st.dataframe(run_df.style.format("{:.2f}"), width="stretch")
+    st.dataframe(run_df.style.format("{:.2f}"), use_container_width=True)
 
     score_metric_cols = [
         c for c in run_df.columns
@@ -579,7 +579,7 @@ def render_single_report(name: str, report: dict) -> None:
     st.divider()
     summary_df = build_summary_df(rows, score_cols)
     st.subheader("Results Table")
-    st.dataframe(summary_df, width="stretch", hide_index=True)
+    st.dataframe(summary_df, use_container_width=True, hide_index=True)
 
     st.divider()
     st.subheader("Detailed Row Explorer")

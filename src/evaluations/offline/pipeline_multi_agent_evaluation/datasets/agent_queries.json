@@ -1,0 +1,138 @@
+{
+  "single_agent": [
+    {
+      "id": "single_001",
+      "query": "Turn on my AC.",
+      "expected_agents": ["ACAgent"],
+      "description": "Simple AC power on request"
+    },
+    {
+      "id": "single_002",
+      "query": "Set the AC temperature to 72 degrees.",
+      "expected_agents": ["ACAgent"],
+      "description": "AC temperature adjustment"
+    },
+    {
+      "id": "single_003",
+      "query": "Switch the AC to cooling mode.",
+      "expected_agents": ["ACAgent"],
+      "description": "AC mode change"
+    },
+    {
+      "id": "single_004",
+      "query": "What is the current status of my AC?",
+      "expected_agents": ["ACAgent"],
+      "description": "AC status check"
+    },
+    {
+      "id": "single_005",
+      "query": "Turn off the TV.",
+      "expected_agents": ["TVAgent"],
+      "description": "Simple TV power off request"
+    },
+    {
+      "id": "single_006",
+      "query": "Change the TV to channel 42.",
+      "expected_agents": ["TVAgent"],
+      "description": "TV channel change"
+    },
+    {
+      "id": "single_007",
+      "query": "Set the TV volume to 25.",
+      "expected_agents": ["TVAgent"],
+      "description": "TV volume adjustment"
+    },
+    {
+      "id": "single_008",
+      "query": "What is the TV status?",
+      "expected_agents": ["TVAgent"],
+      "description": "TV status check"
+    },
+    {
+      "id": "single_009",
+      "query": "Start the dishwasher on a heavy cycle.",
+      "expected_agents": ["DishwasherAgent"],
+      "description": "Dishwasher start with specific cycle"
+    },
+    {
+      "id": "single_010",
+      "query": "Stop the dishwasher.",
+      "expected_agents": ["DishwasherAgent"],
+      "description": "Dishwasher stop request"
+    },
+    {
+      "id": "single_011",
+      "query": "What is the dishwasher status?",
+      "expected_agents": ["DishwasherAgent"],
+      "description": "Dishwasher status check"
+    },
+    {
+      "id": "single_012",
+      "query": "Set a delayed start for the dishwasher in 3 hours.",
+      "expected_agents": ["DishwasherAgent"],
+      "description": "Dishwasher delayed start"
+    }
+  ],
+  "multi_agent": [
+    {
+      "id": "multi_001",
+      "query": "Switch my AC on and turn off the TV.",
+      "expected_agents": ["ACAgent", "TVAgent"],
+      "description": "AC power on + TV power off"
+    },
+    {
+      "id": "multi_002",
+      "query": "Set the AC to 68 degrees and change the TV to channel 5.",
+      "expected_agents": ["ACAgent", "TVAgent"],
+      "description": "AC temperature + TV channel change"
+    },
+    {
+      "id": "multi_003",
+      "query": "Turn on the TV and start the dishwasher on a quick cycle.",
+      "expected_agents": ["TVAgent", "DishwasherAgent"],
+      "description": "TV power on + dishwasher start"
+    },
+    {
+      "id": "multi_004",
+      "query": "Turn off the AC and stop the dishwasher.",
+      "expected_agents": ["ACAgent", "DishwasherAgent"],
+      "description": "AC power off + dishwasher stop"
+    },
+    {
+      "id": "multi_005",
+      "query": "Turn on the AC, switch the TV to channel 100, and start the dishwasher.",
+      "expected_agents": ["ACAgent", "TVAgent", "DishwasherAgent"],
+      "description": "All three agents: AC on + TV channel + dishwasher start"
+    },
+    {
+      "id": "multi_006",
+      "query": "Set the AC to heat mode at 75 degrees and set the TV volume to 50.",
+      "expected_agents": ["ACAgent", "TVAgent"],
+      "description": "AC mode+temp + TV volume"
+    },
+    {
+      "id": "multi_007",
+      "query": "Get the status of the AC and the dishwasher.",
+      "expected_agents": ["ACAgent", "DishwasherAgent"],
+      "description": "Status check for two devices"
+    },
+    {
+      "id": "multi_008",
+      "query": "Turn off everything. Turn off the AC, TV, and stop the dishwasher.",
+      "expected_agents": ["ACAgent", "TVAgent", "DishwasherAgent"],
+      "description": "All three agents: power off everything"
+    },
+    {
+      "id": "multi_009",
+      "query": "Set the dishwasher to start in 2 hours and turn on the TV to channel 7.",
+      "expected_agents": ["DishwasherAgent", "TVAgent"],
+      "description": "Dishwasher delay + TV on with channel"
+    },
+    {
+      "id": "multi_010",
+      "query": "What is the status of the AC, TV, and dishwasher?",
+      "expected_agents": ["ACAgent", "TVAgent", "DishwasherAgent"],
+      "description": "Status check for all three devices"
+    }
+  ]
+}

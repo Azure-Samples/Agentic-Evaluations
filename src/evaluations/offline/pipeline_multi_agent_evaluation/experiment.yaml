@@ -1,32 +1,34 @@
-app_name: MultiTool-Agent-Evals
+app_name: MultiAgent-Orchestrator-Evals
 version: 1.0.0
-experiment_name: MultiTool_Agent_Evaluation
+experiment_name: MultiAgent_Orchestrator_Evaluation
 
-# Stage 1: Agent Inference - runs agent on queries, generates responses
+# Stage 1: Agent Inference - runs orchestrator agent on queries, generates responses
 agent_inference:
-  input_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
+  input_path: src/evaluations/offline/pipeline_multi_agent_evaluation/datasets/
   input_file: agent_queries.json
-  output_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
+  output_path: src/evaluations/offline/pipeline_multi_agent_evaluation/datasets/
   output_file: agent_responses.jsonl
 
 # Stage 2: Telemetry Extraction - enriches with App Insights data (tool_definitions, tool_calls)
 agent_telemetry_extraction:
   delay_seconds: 60
-  input_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
+  input_path: src/evaluations/offline/pipeline_multi_agent_evaluation/datasets/
   input_file: agent_responses.jsonl
-  output_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
+  output_path: src/evaluations/offline/pipeline_multi_agent_evaluation/datasets/
   output_file: agent_responses_enriched.jsonl
 
 # Stage 3: Evaluation
 evaluation:
   run_local: True
-  input_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
+  input_path: src/evaluations/offline/pipeline_multi_agent_evaluation/datasets/
   input_file: agent_responses_enriched.jsonl
   output_path: src/evaluations/offline/reports/
   evaluators:
     relevance_score: "relevance_evaluator"
     task_adherence_score: "task_adherence_evaluator"
     tool_call_accuracy_score: "tool_call_accuracy_evaluator"
+    custom_agents_invoked_accuracy_eval: "evaluate_agents_invoked"
+
   evaluator_config:
     relevance_score:
       column_mapping:
@@ -41,12 +43,15 @@ evaluation:
         query: "${data.query}"
         tool_definitions: "${data.tool_definitions}"
         tool_calls: "${data.tool_calls}"
-        response: "${data.response}"
-
+        response: "${data.response}"  
+    custom_agents_invoked_accuracy_eval:
+      column_mapping:
+        expected_agents_to_invoke: "${data.expected_agents}"
+        predicted_agents_to_invoke: "${data.agents_invoked}"      
 # Pipeline stages (executed in order)
 pipeline:
   - base_path: agent_inference
-    module: multi_tool_agent.inference_main
+    module: multi_agent_orchestrator.inference_main
     config_key: agent_inference
   - base_path: agent_telemetry_extraction
     module: trace_to_jsonl.get_trace_main

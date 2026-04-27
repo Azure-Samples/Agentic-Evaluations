@@ -1,6 +1,5 @@
-
 """
-Trace enrichment for multi-tool agent evaluation pipeline.
+Trace enrichment for multi-agent evaluation pipeline.
 
 Delegates to the shared trace_to_jsonl module in utils/.
 """
@@ -16,21 +15,20 @@ if __name__ == "__main__":
     if config_path.exists():
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
-        enrich_config = config.get('enrich', {})
+        enrich_config = config.get('agent_telemetry_extraction', {})
 
         if not enrich_config:
-            exp_config = config.get('experiment', {})
             enrich_config = {
-                'input_path': exp_config.get('output_path', 'src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/'),
-                'input_file': exp_config.get('output_file', 'agent_responses.jsonl'),
-                'output_path': exp_config.get('output_path', 'src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/'),
+                'input_path': 'src/evaluations/offline/pipeline_multi_agent_evaluation/datasets/',
+                'input_file': 'agent_responses.jsonl',
+                'output_path': 'src/evaluations/offline/pipeline_multi_agent_evaluation/datasets/',
                 'output_file': 'agent_responses_enriched.jsonl'
             }
     else:
         enrich_config = {
-            'input_path': 'src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/',
+            'input_path': 'src/evaluations/offline/pipeline_multi_agent_evaluation/datasets/',
             'input_file': 'agent_responses.jsonl',
-            'output_path': 'src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/',
+            'output_path': 'src/evaluations/offline/pipeline_multi_agent_evaluation/datasets/',
             'output_file': 'agent_responses_enriched.jsonl'
         }
 

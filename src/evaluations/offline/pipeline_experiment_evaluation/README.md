@@ -39,7 +39,7 @@ flowchart LR
     A["📁 Input Dataset<br/>agent_utterances.jsonl"] --> B["🔬 Agent Inference<br/>agent_inference.py"]
     B --> C["📄 Responses<br/>agent_responses.jsonl"]
     C --> D["📊 Evaluators<br/>eval_main.py"]
-    D --> E["📈 Report<br/>Agent_Eval.json"]
+  D --> E["📈 Report<br/>reports/{run_id}_{eval_dir_name}.json"]
 ```
 
 ## Quick Start
@@ -121,7 +121,7 @@ evaluation:
   run_local: False  # True = local only, False = push to Azure AI Foundry
   input_path: src/evaluations/offline/pipeline_experiment_evaluation/datasets/
   input_file: agent_responses.jsonl
-  output_path: src/evaluations/offline/pipeline_experiment_evaluation/report/
+  output_path: src/evaluations/offline/reports/
   
   evaluators:
     relevance_score: "relevance_evaluator"
@@ -195,9 +195,10 @@ pipeline_experiment_evaluation/
 │   └── experiment_utils/         # Helper functions
 ├── datasets/                      # Input/output data
 ├── evaluator/                     # Stage 2: Evaluation
-├── report/                        # Generated reports
 └── experiment.yaml               # Pipeline configuration
 ```
+
+Generated reports are saved to `src/evaluations/offline/reports/` using `{run_id}_{eval_dir_name}.json`.
 
 ## Resources
 

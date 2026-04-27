@@ -74,6 +74,7 @@ def run_pipeline(config_file: Optional[str] = None, args: Optional[argparse.Name
                 step_config = config[config_key]
                 experiment_name = config.get("experiment_name", "default_experiment")
                 step_config['experiment_name'] = experiment_name
+                step_config['_eval_dir_name'] = eval_dir.name
                 logger.debug(f"STEP config: {step_config}")
 
                 if isinstance(target, type):

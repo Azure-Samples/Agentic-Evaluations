@@ -1,0 +1,1598 @@
+{
+  "rows": [
+    {
+      "inputs.id": "single_001",
+      "inputs.query": "Turn on my AC.",
+      "inputs.response": "The air conditioner is now turned on.",
+      "inputs.trace_id": "1c3c1c62af6a13061772b03c8f947ef7",
+      "inputs.expected_agents": ["ACAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["OrchestratorAgent", "ACAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "turn_ac_on" },
+        { "type": "tool_call", "name": "delegate_to_ac_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_ac_agent",
+          "name": "delegate_to_ac_agent",
+          "description": "Delegate an air conditioner request to the AC Agent. Use this for any AC-related operations like turning on/off, setting temperature, changing mode, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The AC-related request to send to the AC Agent. Describe what the user wants done with the air conditioner.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_ac_agent_input",
+            "type": "object"
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": NaN,
+      "outputs.relevance_score.gpt_relevance": NaN,
+      "outputs.relevance_score.relevance_result": NaN,
+      "outputs.relevance_score.relevance_threshold": NaN,
+      "outputs.relevance_score.relevance_reason": NaN,
+      "outputs.relevance_score.relevance_prompt_tokens": NaN,
+      "outputs.relevance_score.relevance_completion_tokens": NaN,
+      "outputs.relevance_score.relevance_total_tokens": NaN,
+      "outputs.relevance_score.relevance_finish_reason": NaN,
+      "outputs.relevance_score.relevance_model": NaN,
+      "outputs.relevance_score.relevance_sample_input": NaN,
+      "outputs.relevance_score.relevance_sample_output": NaN,
+      "outputs.task_adherence_score.task_adherence": NaN,
+      "outputs.task_adherence_score.task_adherence_result": NaN,
+      "outputs.task_adherence_score.task_adherence_reason": NaN,
+      "outputs.task_adherence_score.task_adherence_details": NaN,
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": NaN,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": NaN,
+      "outputs.task_adherence_score.task_adherence_total_tokens": NaN,
+      "outputs.task_adherence_score.task_adherence_finish_reason": NaN,
+      "outputs.task_adherence_score.task_adherence_model": NaN,
+      "outputs.task_adherence_score.task_adherence_sample_input": NaN,
+      "outputs.task_adherence_score.task_adherence_sample_output": NaN,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_002",
+      "inputs.query": "Set the AC temperature to 72 degrees.",
+      "inputs.response": "The air conditioner temperature is now set to 72°F.",
+      "inputs.trace_id": "7b143b8d335586ba0412acfb7034fa9b",
+      "inputs.expected_agents": ["ACAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["OrchestratorAgent", "ACAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_ac_agent" },
+        { "type": "tool_call", "name": "set_ac_temperature" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_ac_agent",
+          "name": "delegate_to_ac_agent",
+          "description": "Delegate an air conditioner request to the AC Agent. Use this for any AC-related operations like turning on/off, setting temperature, changing mode, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The AC-related request to send to the AC Agent. Describe what the user wants done with the air conditioner.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_ac_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly confirms that the AC temperature has been set to 72°F, fully addressing the user's request. It is accurate, clear, and sufficient, with no missing information or ambiguity.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1593.0,
+      "outputs.relevance_score.relevance_completion_tokens": 54.0,
+      "outputs.relevance_score.relevance_total_tokens": 1647.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Set the AC temperature to 72 degrees.\\\", \\\"response\\\": \\\"The air conditioner temperature is now set to 72\\\\u00b0F.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly confirms that the AC temperature has been set to 72\\u00b0F, fully addressing the user's request. It is accurate, clear, and sufficient, with no missing information or ambiguity.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user requested to set the AC temperature to 72 degrees. The assistant's response states that the air conditioner temperature is now set to 72°F, implying a real-world action was completed. However, the TOOL_CALLS section is empty, showing that no tool action was actually performed to set the temperature. This is a material failure because the assistant claimed an external action was performed when there is no evidence of it, undermining trust and utility. There are no explicit safety, privacy, or format violations present, but the output does not fulfill the core user goal or procedural expectations for verifiable real-world actions.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1327.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 139.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1466.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Set the AC temperature to 72 degrees.\\\", \\\"response\\\": \\\"The air conditioner temperature is now set to 72\\\\u00b0F.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user requested to set the AC temperature to 72 degrees. The assistant's response states that the air conditioner temperature is now set to 72\\u00b0F, implying a real-world action was completed. However, the TOOL_CALLS section is empty, showing that no tool action was actually performed to set the temperature. This is a material failure because the assistant claimed an external action was performed when there is no evidence of it, undermining trust and utility. There are no explicit safety, privacy, or format violations present, but the output does not fulfill the core user goal or procedural expectations for verifiable real-world actions.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_003",
+      "inputs.query": "Switch the AC to cooling mode.",
+      "inputs.response": "The air conditioner has been switched to cooling mode.",
+      "inputs.trace_id": "3f22fe6762b309730746744076d91c34",
+      "inputs.expected_agents": ["ACAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["ACAgent", "OrchestratorAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "set_ac_mode" },
+        { "type": "tool_call", "name": "delegate_to_ac_agent" }
+      ],
+      "inputs.agent_name": "ACAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "set_ac_mode",
+          "name": "set_ac_mode",
+          "description": "Set the air conditioner operating mode.",
+          "parameters": {
+            "properties": {
+              "mode": {
+                "description": "The AC mode to set: 'cool', 'heat', 'fan', or 'auto'.",
+                "title": "Mode",
+                "type": "string"
+              }
+            },
+            "required": ["mode"],
+            "title": "set_ac_mode_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly confirms that the air conditioner has been switched to cooling mode, fully addressing the user's request. It is accurate, clear, and sufficient, though it does not add any extra insight or elaboration.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1589.0,
+      "outputs.relevance_score.relevance_completion_tokens": 58.0,
+      "outputs.relevance_score.relevance_total_tokens": 1647.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Switch the AC to cooling mode.\\\", \\\"response\\\": \\\"The air conditioner has been switched to cooling mode.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly confirms that the air conditioner has been switched to cooling mode, fully addressing the user's request. It is accurate, clear, and sufficient, though it does not add any extra insight or elaboration.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user's request was to switch the air conditioner to cooling mode. The assistant claimed this task was done in its response. However, there are no tool interactions shown that would actually effect this change or provide corroboration. The implication is a real-world action was performed, but there is no evidence of this from tool calls, which is a material failure. There are no rule or safety issues evident, but procedure and goal adherence are not met due to the unverifiable claim of a real-world action.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1323.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 115.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1438.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Switch the AC to cooling mode.\\\", \\\"response\\\": \\\"The air conditioner has been switched to cooling mode.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user's request was to switch the air conditioner to cooling mode. The assistant claimed this task was done in its response. However, there are no tool interactions shown that would actually effect this change or provide corroboration. The implication is a real-world action was performed, but there is no evidence of this from tool calls, which is a material failure. There are no rule or safety issues evident, but procedure and goal adherence are not met due to the unverifiable claim of a real-world action.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_004",
+      "inputs.query": "What is the current status of my AC?",
+      "inputs.response": "Your AC is currently off, set to 76°F, and in fan mode. Let me know if you'd like to adjust any of these settings.",
+      "inputs.trace_id": "bc653ceafef76011773e0910d978a456",
+      "inputs.expected_agents": ["ACAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["ACAgent", "OrchestratorAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "get_ac_status" },
+        { "type": "tool_call", "name": "delegate_to_ac_agent" }
+      ],
+      "inputs.agent_name": "ACAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "get_ac_status",
+          "name": "get_ac_status",
+          "description": "Get the current status of the air conditioner.",
+          "parameters": {
+            "properties": {},
+            "title": "get_ac_status_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly answers the user's question by providing the current status of the AC, including its power state, temperature setting, and mode. It also offers to assist further, making it fully relevant and sufficient.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1611.0,
+      "outputs.relevance_score.relevance_completion_tokens": 57.0,
+      "outputs.relevance_score.relevance_total_tokens": 1668.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"What is the current status of my AC?\\\", \\\"response\\\": \\\"Your AC is currently off, set to 76\\\\u00b0F, and in fan mode. Let me know if you'd like to adjust any of these settings.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly answers the user's question by providing the current status of the AC, including its power state, temperature setting, and mode. It also offers to assist further, making it fully relevant and sufficient.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user's request was to know the current status of their AC. The assistant provided a status—off, set to 76°F, in fan mode—but there is no evidence from tool interactions to corroborate this information. Since providing the current status of the AC implies referencing real-world, potentially dynamic data, the assistant must verify this using tool calls when available. No such verification is present. This constitutes a material failure, as unverifiable external data is presented as fact. No explicit safety, privacy, or workflow violations are present.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1345.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 122.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1467.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"What is the current status of my AC?\\\", \\\"response\\\": \\\"Your AC is currently off, set to 76\\\\u00b0F, and in fan mode. Let me know if you'd like to adjust any of these settings.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user's request was to know the current status of their AC. The assistant provided a status\\u2014off, set to 76\\u00b0F, in fan mode\\u2014but there is no evidence from tool interactions to corroborate this information. Since providing the current status of the AC implies referencing real-world, potentially dynamic data, the assistant must verify this using tool calls when available. No such verification is present. This constitutes a material failure, as unverifiable external data is presented as fact. No explicit safety, privacy, or workflow violations are present.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_005",
+      "inputs.query": "Turn off the TV.",
+      "inputs.response": "The TV has been turned off.",
+      "inputs.trace_id": "157fad291be9b1b1e33097668d05d652",
+      "inputs.expected_agents": ["TVAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["OrchestratorAgent", "TVAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_tv_agent" },
+        { "type": "tool_call", "name": "turn_tv_off" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_tv_agent",
+          "name": "delegate_to_tv_agent",
+          "description": "Delegate a television request to the TV Agent. Use this for any TV-related operations like turning on/off, changing channels, adjusting volume, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The TV-related request to send to the TV Agent. Describe what the user wants done with the television.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_tv_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly confirms the requested action by stating that the TV has been turned off. It fully addresses the user's command with clear and sufficient information, matching the user's intent.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1584.0,
+      "outputs.relevance_score.relevance_completion_tokens": 50.0,
+      "outputs.relevance_score.relevance_total_tokens": 1634.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Turn off the TV.\\\", \\\"response\\\": \\\"The TV has been turned off.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly confirms the requested action by stating that the TV has been turned off. It fully addresses the user's command with clear and sufficient information, matching the user's intent.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user's request was to turn off the TV, which involves a real-world action. The assistant responded by claiming that the TV has been turned off, but there are no tool interactions present to demonstrate that the requested action was actually performed. This is a material failure because the assistant claimed to have completed an action with real-world effects without any evidence of execution, making the output unreliable. There are no issues observed related to safety, privacy, or compliance with any strict formatting or workflow, but the unsupported claim about completing the real-world action is a critical procedural failure.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1318.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 128.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1446.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Turn off the TV.\\\", \\\"response\\\": \\\"The TV has been turned off.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user's request was to turn off the TV, which involves a real-world action. The assistant responded by claiming that the TV has been turned off, but there are no tool interactions present to demonstrate that the requested action was actually performed. This is a material failure because the assistant claimed to have completed an action with real-world effects without any evidence of execution, making the output unreliable. There are no issues observed related to safety, privacy, or compliance with any strict formatting or workflow, but the unsupported claim about completing the real-world action is a critical procedural failure.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_006",
+      "inputs.query": "Change the TV to channel 42.",
+      "inputs.response": "The TV has been changed to channel 42.",
+      "inputs.trace_id": "a2869a98d700cb560882319c6cdf2ee7",
+      "inputs.expected_agents": ["TVAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["OrchestratorAgent", "TVAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "set_tv_channel" },
+        { "type": "tool_call", "name": "delegate_to_tv_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_tv_agent",
+          "name": "delegate_to_tv_agent",
+          "description": "Delegate a television request to the TV Agent. Use this for any TV-related operations like turning on/off, changing channels, adjusting volume, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The TV-related request to send to the TV Agent. Describe what the user wants done with the television.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_tv_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly confirms the user's request to change the TV to channel 42, clearly indicating the action has been completed. It is accurate, complete, and fully addresses the user's intent without omission.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1590.0,
+      "outputs.relevance_score.relevance_completion_tokens": 55.0,
+      "outputs.relevance_score.relevance_total_tokens": 1645.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Change the TV to channel 42.\\\", \\\"response\\\": \\\"The TV has been changed to channel 42.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly confirms the user's request to change the TV to channel 42, clearly indicating the action has been completed. It is accurate, complete, and fully addresses the user's intent without omission.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user's request was to change the TV to channel 42. The assistant responded by stating that the TV has been changed to channel 42, implying a real-world action. However, there are no tool interactions provided to corroborate that this action was actually performed. Claiming an external action without supporting evidence constitutes a material procedural failure. No safety, privacy, or presentation violations are evident.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1324.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 94.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1418.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Change the TV to channel 42.\\\", \\\"response\\\": \\\"The TV has been changed to channel 42.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user's request was to change the TV to channel 42. The assistant responded by stating that the TV has been changed to channel 42, implying a real-world action. However, there are no tool interactions provided to corroborate that this action was actually performed. Claiming an external action without supporting evidence constitutes a material procedural failure. No safety, privacy, or presentation violations are evident.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_007",
+      "inputs.query": "Set the TV volume to 25.",
+      "inputs.response": "The TV volume is now set to 25.",
+      "inputs.trace_id": "f3869fe0123414ed5ff8a3ce37519658",
+      "inputs.expected_agents": ["TVAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["TVAgent", "OrchestratorAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_tv_agent" },
+        { "type": "tool_call", "name": "set_tv_volume" }
+      ],
+      "inputs.agent_name": "TVAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "set_tv_volume",
+          "name": "set_tv_volume",
+          "description": "Set the television volume.",
+          "parameters": {
+            "properties": {
+              "volume": {
+                "description": "The volume level to set (0-100).",
+                "title": "Volume",
+                "type": "integer"
+              }
+            },
+            "required": ["volume"],
+            "title": "set_tv_volume_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly and accurately confirms the user's request to set the TV volume to 25. It is clear, complete, and fully addresses the user's intent without unnecessary elaboration.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1590.0,
+      "outputs.relevance_score.relevance_completion_tokens": 51.0,
+      "outputs.relevance_score.relevance_total_tokens": 1641.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Set the TV volume to 25.\\\", \\\"response\\\": \\\"The TV volume is now set to 25.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly and accurately confirms the user's request to set the TV volume to 25. It is clear, complete, and fully addresses the user's intent without unnecessary elaboration.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user requested the TV volume to be set to 25. The assistant responded indicating that the volume has been set, but there are no corroborating tool interactions to support this claim. Since the assistant asserts that a real-world action was completed without evidence or confirmation via TOOL_CALLS, this is a material procedural failure and risks misleading the user about the state of their TV. No specific safety, privacy, or presentation constraints were violated, but the lack of verified action completion renders the output unusable.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1324.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 116.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1440.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Set the TV volume to 25.\\\", \\\"response\\\": \\\"The TV volume is now set to 25.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user requested the TV volume to be set to 25. The assistant responded indicating that the volume has been set, but there are no corroborating tool interactions to support this claim. Since the assistant asserts that a real-world action was completed without evidence or confirmation via TOOL_CALLS, this is a material procedural failure and risks misleading the user about the state of their TV. No specific safety, privacy, or presentation constraints were violated, but the lack of verified action completion renders the output unusable.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_008",
+      "inputs.query": "What is the TV status?",
+      "inputs.response": "The TV is currently off. The last channel used was 123, and the volume was set to 81.",
+      "inputs.trace_id": "0ffa2bae330c5dba549274e8c5b08ce5",
+      "inputs.expected_agents": ["TVAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["OrchestratorAgent", "TVAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "get_tv_status" },
+        { "type": "tool_call", "name": "delegate_to_tv_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_tv_agent",
+          "name": "delegate_to_tv_agent",
+          "description": "Delegate a television request to the TV Agent. Use this for any TV-related operations like turning on/off, changing channels, adjusting volume, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The TV-related request to send to the TV Agent. Describe what the user wants done with the television.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_tv_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly answers the user's query about the TV status, stating it is off and providing additional relevant details about the last channel and volume. All information is accurate and sufficient, though the extra details are not strictly necessary.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1601.0,
+      "outputs.relevance_score.relevance_completion_tokens": 60.0,
+      "outputs.relevance_score.relevance_total_tokens": 1661.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"What is the TV status?\\\", \\\"response\\\": \\\"The TV is currently off. The last channel used was 123, and the volume was set to 81.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly answers the user's query about the TV status, stating it is off and providing additional relevant details about the last channel and volume. All information is accurate and sufficient, though the extra details are not strictly necessary.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user asked for the status of the TV. The assistant responded with 'The TV is currently off. The last channel used was 123, and the volume was set to 81.' There were no tool calls showing an actual check or retrieval of this information. Since the response provides specific and seemingly real-time information about the status of the TV without any evidence in tool interactions to support it, this is a material failure. There are no safety, privacy, or presentation issues. The primary issue is that the assistant claims external, unverifiable information with no corroboration in the tool interactions.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1335.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 134.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1469.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"What is the TV status?\\\", \\\"response\\\": \\\"The TV is currently off. The last channel used was 123, and the volume was set to 81.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user asked for the status of the TV. The assistant responded with 'The TV is currently off. The last channel used was 123, and the volume was set to 81.' There were no tool calls showing an actual check or retrieval of this information. Since the response provides specific and seemingly real-time information about the status of the TV without any evidence in tool interactions to support it, this is a material failure. There are no safety, privacy, or presentation issues. The primary issue is that the assistant claims external, unverifiable information with no corroboration in the tool interactions.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_009",
+      "inputs.query": "Start the dishwasher on a heavy cycle.",
+      "inputs.response": "The dishwasher has been started on the heavy cycle.",
+      "inputs.trace_id": "11180781cf715df40d19cc52aaf54f17",
+      "inputs.expected_agents": ["DishwasherAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["OrchestratorAgent", "DishwasherAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "start_dishwasher" },
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_dishwasher_agent",
+          "name": "delegate_to_dishwasher_agent",
+          "description": "Delegate a dishwasher request to the Dishwasher Agent. Use this for any dishwasher operations like starting/stopping cycles, checking status, or setting delayed starts.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The Dishwasher-related request to send to the Dishwasher Agent. Describe what the user wants done with the dishwasher.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_dishwasher_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly confirms that the dishwasher has been started on the heavy cycle, fully addressing the user's request with clear and sufficient information. No additional context or insight is necessary for this straightforward command.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1590.0,
+      "outputs.relevance_score.relevance_completion_tokens": 54.0,
+      "outputs.relevance_score.relevance_total_tokens": 1644.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Start the dishwasher on a heavy cycle.\\\", \\\"response\\\": \\\"The dishwasher has been started on the heavy cycle.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly confirms that the dishwasher has been started on the heavy cycle, fully addressing the user's request with clear and sufficient information. No additional context or insight is necessary for this straightforward command.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user requested to start the dishwasher on a heavy cycle. The assistant responded stating that the dishwasher had been started, but there are no tool interactions presented to corroborate this real-world action. Claims of initiating physical actions must be verified by tool output, otherwise the assertion is unsubstantiated and materially fails the requirement. There is no evidence that the dishwasher was actually started, making the response unverifiable and incomplete for the user objective.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1324.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 102.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1426.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Start the dishwasher on a heavy cycle.\\\", \\\"response\\\": \\\"The dishwasher has been started on the heavy cycle.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user requested to start the dishwasher on a heavy cycle. The assistant responded stating that the dishwasher had been started, but there are no tool interactions presented to corroborate this real-world action. Claims of initiating physical actions must be verified by tool output, otherwise the assertion is unsubstantiated and materially fails the requirement. There is no evidence that the dishwasher was actually started, making the response unverifiable and incomplete for the user objective.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_010",
+      "inputs.query": "Stop the dishwasher.",
+      "inputs.response": "The dishwasher has been stopped.",
+      "inputs.trace_id": "efdb10ec0dae95123b088b370401cb37",
+      "inputs.expected_agents": ["DishwasherAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["OrchestratorAgent", "DishwasherAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "stop_dishwasher" },
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_dishwasher_agent",
+          "name": "delegate_to_dishwasher_agent",
+          "description": "Delegate a dishwasher request to the Dishwasher Agent. Use this for any dishwasher operations like starting/stopping cycles, checking status, or setting delayed starts.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The Dishwasher-related request to send to the Dishwasher Agent. Describe what the user wants done with the dishwasher.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_dishwasher_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly confirms that the dishwasher has been stopped, fully addressing the user's command. It is accurate, sufficient, and clearly conveys the intended action without unnecessary detail.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1582.0,
+      "outputs.relevance_score.relevance_completion_tokens": 49.0,
+      "outputs.relevance_score.relevance_total_tokens": 1631.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Stop the dishwasher.\\\", \\\"response\\\": \\\"The dishwasher has been stopped.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly confirms that the dishwasher has been stopped, fully addressing the user's command. It is accurate, sufficient, and clearly conveys the intended action without unnecessary detail.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user's request was to stop the dishwasher. The assistant responded by claiming that the dishwasher has been stopped, which is an assertion of a real-world action being completed. However, there are no tool interactions or evidence provided to confirm that the dishwasher was actually stopped. This is a material failure, as claims of external actions require corroborating evidence, especially for real-world device control. There are no safety, privacy, or presentation violations in this response, but the assistant did not correctly follow the necessary verification or act within the limits of its capabilities.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1316.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 124.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1440.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Stop the dishwasher.\\\", \\\"response\\\": \\\"The dishwasher has been stopped.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user's request was to stop the dishwasher. The assistant responded by claiming that the dishwasher has been stopped, which is an assertion of a real-world action being completed. However, there are no tool interactions or evidence provided to confirm that the dishwasher was actually stopped. This is a material failure, as claims of external actions require corroborating evidence, especially for real-world device control. There are no safety, privacy, or presentation violations in this response, but the assistant did not correctly follow the necessary verification or act within the limits of its capabilities.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_011",
+      "inputs.query": "What is the dishwasher status?",
+      "inputs.response": "The dishwasher cycle is complete.",
+      "inputs.trace_id": "55a6a4f573e11102041654085b0fe7c1",
+      "inputs.expected_agents": ["DishwasherAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["DishwasherAgent", "OrchestratorAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "get_dishwasher_status" },
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" }
+      ],
+      "inputs.agent_name": "DishwasherAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "get_dishwasher_status",
+          "name": "get_dishwasher_status",
+          "description": "Get the current status of the dishwasher.",
+          "parameters": {
+            "properties": {},
+            "title": "get_dishwasher_status_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly answers the user's query about the dishwasher status by stating that the cycle is complete. It is accurate, clear, and fully addresses the question without unnecessary detail or omission.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1584.0,
+      "outputs.relevance_score.relevance_completion_tokens": 52.0,
+      "outputs.relevance_score.relevance_total_tokens": 1636.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"What is the dishwasher status?\\\", \\\"response\\\": \\\"The dishwasher cycle is complete.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly answers the user's query about the dishwasher status by stating that the cycle is complete. It is accurate, clear, and fully addresses the question without unnecessary detail or omission.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user's request was to know the status of the dishwasher. The assistant responded that the dishwasher cycle is complete, but there are no tool interactions verifying this status. Since the claim implies an external, real-world state, and no corroboration is provided, this is a material failure. No safety or rule violations are present, but the assistant claimed an external result without evidence, making the response unreliable.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1318.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 95.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1413.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"What is the dishwasher status?\\\", \\\"response\\\": \\\"The dishwasher cycle is complete.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user's request was to know the status of the dishwasher. The assistant responded that the dishwasher cycle is complete, but there are no tool interactions verifying this status. Since the claim implies an external, real-world state, and no corroboration is provided, this is a material failure. No safety or rule violations are present, but the assistant claimed an external result without evidence, making the response unreliable.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "single_012",
+      "inputs.query": "Set a delayed start for the dishwasher in 3 hours.",
+      "inputs.response": "The dishwasher is set to start in 3 hours.",
+      "inputs.trace_id": "9288244c8f6ecaaf88b46c0498e177d3",
+      "inputs.expected_agents": ["DishwasherAgent"],
+      "inputs.category": "single_agent",
+      "inputs.agents_invoked": ["OrchestratorAgent", "DishwasherAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "set_dishwasher_delay" },
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_dishwasher_agent",
+          "name": "delegate_to_dishwasher_agent",
+          "description": "Delegate a dishwasher request to the Dishwasher Agent. Use this for any dishwasher operations like starting/stopping cycles, checking status, or setting delayed starts.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The Dishwasher-related request to send to the Dishwasher Agent. Describe what the user wants done with the dishwasher.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_dishwasher_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly confirms that the dishwasher is set to start in 3 hours, accurately reflecting the user's request for a delayed start. It fully addresses the query with clear and sufficient information, though it does not add extra insight.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1595.0,
+      "outputs.relevance_score.relevance_completion_tokens": 61.0,
+      "outputs.relevance_score.relevance_total_tokens": 1656.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Set a delayed start for the dishwasher in 3 hours.\\\", \\\"response\\\": \\\"The dishwasher is set to start in 3 hours.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly confirms that the dishwasher is set to start in 3 hours, accurately reflecting the user's request for a delayed start. It fully addresses the query with clear and sufficient information, though it does not add extra insight.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user asked to set a delayed start for the dishwasher in 3 hours. The assistant's response claimed that the action was performed ('The dishwasher is set to start in 3 hours.') but there is no evidence of any tool use or external action in the tool calls to validate this. As the claim implies a real-world action was taken, but no corroborating tool interaction is shown, this is a material procedural failure. There are no indications of safety, privacy, or rule violations, but the outcome is not verifiable and could cause confusion or inaction in a real scenario.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1329.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 133.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1462.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Set a delayed start for the dishwasher in 3 hours.\\\", \\\"response\\\": \\\"The dishwasher is set to start in 3 hours.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user asked to set a delayed start for the dishwasher in 3 hours. The assistant's response claimed that the action was performed ('The dishwasher is set to start in 3 hours.') but there is no evidence of any tool use or external action in the tool calls to validate this. As the claim implies a real-world action was taken, but no corroborating tool interaction is shown, this is a material procedural failure. There are no indications of safety, privacy, or rule violations, but the outcome is not verifiable and could cause confusion or inaction in a real scenario.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "multi_001",
+      "inputs.query": "Switch my AC on and turn off the TV.",
+      "inputs.response": "The air conditioner is now switched on, and the TV is off.",
+      "inputs.trace_id": "f4bddc31da30fb8e7cad656056d84019",
+      "inputs.expected_agents": ["ACAgent", "TVAgent"],
+      "inputs.category": "multi_agent",
+      "inputs.agents_invoked": ["TVAgent", "OrchestratorAgent", "ACAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_tv_agent" },
+        { "type": "tool_call", "name": "turn_ac_on" },
+        { "type": "tool_call", "name": "turn_tv_off" },
+        { "type": "tool_call", "name": "delegate_to_ac_agent" }
+      ],
+      "inputs.agent_name": "TVAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "turn_tv_off",
+          "name": "turn_tv_off",
+          "description": "Turn the television off.",
+          "parameters": {
+            "properties": {},
+            "title": "turn_tv_off_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly and completely addresses the user's request by confirming that the AC is switched on and the TV is off. It is accurate, clear, and fully satisfies the user's intent without any omissions.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1596.0,
+      "outputs.relevance_score.relevance_completion_tokens": 55.0,
+      "outputs.relevance_score.relevance_total_tokens": 1651.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Switch my AC on and turn off the TV.\\\", \\\"response\\\": \\\"The air conditioner is now switched on, and the TV is off.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly and completely addresses the user's request by confirming that the AC is switched on and the TV is off. It is accurate, clear, and fully satisfies the user's intent without any omissions.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user requested to switch on the AC and turn off the TV, implying external actions on real devices. The assistant claims both have been done, but there are no supporting tool calls to verify these actions were actually performed. This creates a material issue, as the statement about the devices being operated lacks corroboration for real-world effects. No safety or privacy violations are present, and there are no presentation constraints breached. However, claiming completion of external actions without executing (or attempting) them is a failure of procedural alignment.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1330.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 119.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1449.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Switch my AC on and turn off the TV.\\\", \\\"response\\\": \\\"The air conditioner is now switched on, and the TV is off.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user requested to switch on the AC and turn off the TV, implying external actions on real devices. The assistant claims both have been done, but there are no supporting tool calls to verify these actions were actually performed. This creates a material issue, as the statement about the devices being operated lacks corroboration for real-world effects. No safety or privacy violations are present, and there are no presentation constraints breached. However, claiming completion of external actions without executing (or attempting) them is a failure of procedural alignment.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "multi_002",
+      "inputs.query": "Set the AC to 68 degrees and change the TV to channel 5.",
+      "inputs.response": "The TV is now set to channel 5. However, there was an issue setting the AC to 68 degrees. Would you like me to try again or help with something else regarding the AC?",
+      "inputs.trace_id": "3cfb4cf367b80a572bfbf6ecafdf47d3",
+      "inputs.expected_agents": ["ACAgent", "TVAgent"],
+      "inputs.category": "multi_agent",
+      "inputs.agents_invoked": ["OrchestratorAgent", "TVAgent", "ACAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_tv_agent" },
+        { "type": "tool_call", "name": "set_tv_channel" },
+        { "type": "tool_call", "name": "set_ac_temperature" },
+        { "type": "tool_call", "name": "delegate_to_ac_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_ac_agent",
+          "name": "delegate_to_ac_agent",
+          "description": "Delegate an air conditioner request to the AC Agent. Use this for any AC-related operations like turning on/off, setting temperature, changing mode, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The AC-related request to send to the AC Agent. Describe what the user wants done with the air conditioner.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_ac_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "delegate_to_tv_agent",
+          "name": "delegate_to_tv_agent",
+          "description": "Delegate a television request to the TV Agent. Use this for any TV-related operations like turning on/off, changing channels, adjusting volume, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The TV-related request to send to the TV Agent. Describe what the user wants done with the television.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_tv_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response acknowledges both user requests: it confirms the TV was changed to channel 5 and explains there was an issue setting the AC, offering to retry or assist further. This fully addresses the user's intent with clear, relevant information.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1628.0,
+      "outputs.relevance_score.relevance_completion_tokens": 62.0,
+      "outputs.relevance_score.relevance_total_tokens": 1690.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Set the AC to 68 degrees and change the TV to channel 5.\\\", \\\"response\\\": \\\"The TV is now set to channel 5. However, there was an issue setting the AC to 68 degrees. Would you like me to try again or help with something else regarding the AC?\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response acknowledges both user requests: it confirms the TV was changed to channel 5 and explains there was an issue setting the AC, offering to retry or assist further. This fully addresses the user's intent with clear, relevant information.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user requested two actions: setting the AC to 68 degrees and changing the TV to channel 5. The assistant's response claims that the TV is now on channel 5 and acknowledges an issue with setting the AC, offering further assistance for the AC. However, there are no tool interactions present to substantiate the claimed TV channel change, which is a real-world external action. Since there is no corroborating evidence in tool calls for either device action, the claim is unverified and does not achieve the user's goal. No safety or policy violations are apparent, but the absence of corroborating actions for real-world effects constitutes a material failure.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1362.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 145.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1507.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Set the AC to 68 degrees and change the TV to channel 5.\\\", \\\"response\\\": \\\"The TV is now set to channel 5. However, there was an issue setting the AC to 68 degrees. Would you like me to try again or help with something else regarding the AC?\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user requested two actions: setting the AC to 68 degrees and changing the TV to channel 5. The assistant's response claims that the TV is now on channel 5 and acknowledges an issue with setting the AC, offering further assistance for the AC. However, there are no tool interactions present to substantiate the claimed TV channel change, which is a real-world external action. Since there is no corroborating evidence in tool calls for either device action, the claim is unverified and does not achieve the user's goal. No safety or policy violations are apparent, but the absence of corroborating actions for real-world effects constitutes a material failure.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "multi_003",
+      "inputs.query": "Turn on the TV and start the dishwasher on a quick cycle.",
+      "inputs.response": "The TV is now on, and the dishwasher has been started on a quick cycle. If you need anything else, just let me know!",
+      "inputs.trace_id": "bbaab044d9f7b19af557cfe8994e2223",
+      "inputs.expected_agents": ["TVAgent", "DishwasherAgent"],
+      "inputs.category": "multi_agent",
+      "inputs.agents_invoked": [
+        "OrchestratorAgent",
+        "TVAgent",
+        "DishwasherAgent"
+      ],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_tv_agent" },
+        { "type": "tool_call", "name": "turn_tv_on" },
+        { "type": "tool_call", "name": "start_dishwasher" },
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_tv_agent",
+          "name": "delegate_to_tv_agent",
+          "description": "Delegate a television request to the TV Agent. Use this for any TV-related operations like turning on/off, changing channels, adjusting volume, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The TV-related request to send to the TV Agent. Describe what the user wants done with the television.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_tv_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "delegate_to_dishwasher_agent",
+          "name": "delegate_to_dishwasher_agent",
+          "description": "Delegate a dishwasher request to the Dishwasher Agent. Use this for any dishwasher operations like starting/stopping cycles, checking status, or setting delayed starts.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The Dishwasher-related request to send to the Dishwasher Agent. Describe what the user wants done with the dishwasher.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_dishwasher_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly confirms both requested actions: turning on the TV and starting the dishwasher on a quick cycle. It also offers further assistance, making it fully relevant and sufficient for the user's query.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1613.0,
+      "outputs.relevance_score.relevance_completion_tokens": 54.0,
+      "outputs.relevance_score.relevance_total_tokens": 1667.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Turn on the TV and start the dishwasher on a quick cycle.\\\", \\\"response\\\": \\\"The TV is now on, and the dishwasher has been started on a quick cycle. If you need anything else, just let me know!\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly confirms both requested actions: turning on the TV and starting the dishwasher on a quick cycle. It also offers further assistance, making it fully relevant and sufficient for the user's query.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The assistant claims to have turned on the TV and started the dishwasher on a quick cycle, but there are no corroborating tool calls or evidence showing these external actions were actually performed. Since the claim implies real-world effects and verification is required via tool interactions, this is a material procedural failure. There are no safety, privacy, or rule violations, and the response aligns with the user's objective, but the lack of evidence for real-world actions makes the output incomplete and unverifiable.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1347.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 111.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1458.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Turn on the TV and start the dishwasher on a quick cycle.\\\", \\\"response\\\": \\\"The TV is now on, and the dishwasher has been started on a quick cycle. If you need anything else, just let me know!\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The assistant claims to have turned on the TV and started the dishwasher on a quick cycle, but there are no corroborating tool calls or evidence showing these external actions were actually performed. Since the claim implies real-world effects and verification is required via tool interactions, this is a material procedural failure. There are no safety, privacy, or rule violations, and the response aligns with the user's objective, but the lack of evidence for real-world actions makes the output incomplete and unverifiable.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "multi_004",
+      "inputs.query": "Turn off the AC and stop the dishwasher.",
+      "inputs.response": "The dishwasher has been stopped. However, I was unable to turn off the air conditioner due to an error. Would you like me to try again or assist you further with the AC?",
+      "inputs.trace_id": "707c7bc03ad3094bbfe00b3a2af5412f",
+      "inputs.expected_agents": ["ACAgent", "DishwasherAgent"],
+      "inputs.category": "multi_agent",
+      "inputs.agents_invoked": [
+        "OrchestratorAgent",
+        "ACAgent",
+        "DishwasherAgent"
+      ],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "turn_ac_off" },
+        { "type": "tool_call", "name": "delegate_to_ac_agent" },
+        { "type": "tool_call", "name": "stop_dishwasher" },
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_ac_agent",
+          "name": "delegate_to_ac_agent",
+          "description": "Delegate an air conditioner request to the AC Agent. Use this for any AC-related operations like turning on/off, setting temperature, changing mode, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The AC-related request to send to the AC Agent. Describe what the user wants done with the air conditioner.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_ac_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "delegate_to_dishwasher_agent",
+          "name": "delegate_to_dishwasher_agent",
+          "description": "Delegate a dishwasher request to the Dishwasher Agent. Use this for any dishwasher operations like starting/stopping cycles, checking status, or setting delayed starts.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The Dishwasher-related request to send to the Dishwasher Agent. Describe what the user wants done with the dishwasher.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_dishwasher_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly addresses both user requests: it confirms the dishwasher has been stopped and explains the AC could not be turned off due to an error, offering further assistance. This fully covers the user's intent with clear, sufficient information.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1618.0,
+      "outputs.relevance_score.relevance_completion_tokens": 61.0,
+      "outputs.relevance_score.relevance_total_tokens": 1679.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Turn off the AC and stop the dishwasher.\\\", \\\"response\\\": \\\"The dishwasher has been stopped. However, I was unable to turn off the air conditioner due to an error. Would you like me to try again or assist you further with the AC?\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly addresses both user requests: it confirms the dishwasher has been stopped and explains the AC could not be turned off due to an error, offering further assistance. This fully covers the user's intent with clear, sufficient information.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 1.0,
+      "outputs.task_adherence_score.task_adherence_result": "pass",
+      "outputs.task_adherence_score.task_adherence_reason": "The assistant accurately reported stopping the dishwasher and disclosed being unable to turn off the air conditioner, offering to try again or assist further, which aligns with transparent handling of partial failures. There is no evidence of unauthorized actions, unsupported claims, or safety/privacy concerns. The partial action is appropriately explained, and no steps or protocols were violated. Therefore, there is no material failure.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1352.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 90.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1442.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Turn off the AC and stop the dishwasher.\\\", \\\"response\\\": \\\"The dishwasher has been stopped. However, I was unable to turn off the air conditioner due to an error. Would you like me to try again or assist you further with the AC?\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The assistant accurately reported stopping the dishwasher and disclosed being unable to turn off the air conditioner, offering to try again or assist further, which aligns with transparent handling of partial failures. There is no evidence of unauthorized actions, unsupported claims, or safety/privacy concerns. The partial action is appropriately explained, and no steps or protocols were violated. Therefore, there is no material failure.\\\",\\n  \\\"flagged\\\": false\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "multi_005",
+      "inputs.query": "Turn on the AC, switch the TV to channel 100, and start the dishwasher.",
+      "inputs.response": "- The air conditioner is now turned on.\n- There was an issue switching the TV to channel 100.\n- There was an issue starting the dishwasher.\n\nWould you like to try these actions again, or need help troubleshooting the errors?",
+      "inputs.trace_id": "5575865ca3cd731e621ef8aec43b8b9c",
+      "inputs.expected_agents": ["ACAgent", "TVAgent", "DishwasherAgent"],
+      "inputs.category": "multi_agent",
+      "inputs.agents_invoked": [
+        "OrchestratorAgent",
+        "DishwasherAgent",
+        "TVAgent",
+        "ACAgent"
+      ],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_ac_agent" },
+        { "type": "tool_call", "name": "start_dishwasher" },
+        { "type": "tool_call", "name": "turn_ac_on" },
+        { "type": "tool_call", "name": "delegate_to_tv_agent" },
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_ac_agent",
+          "name": "delegate_to_ac_agent",
+          "description": "Delegate an air conditioner request to the AC Agent. Use this for any AC-related operations like turning on/off, setting temperature, changing mode, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The AC-related request to send to the AC Agent. Describe what the user wants done with the air conditioner.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_ac_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "delegate_to_tv_agent",
+          "name": "delegate_to_tv_agent",
+          "description": "Delegate a television request to the TV Agent. Use this for any TV-related operations like turning on/off, changing channels, adjusting volume, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The TV-related request to send to the TV Agent. Describe what the user wants done with the television.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_tv_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "delegate_to_dishwasher_agent",
+          "name": "delegate_to_dishwasher_agent",
+          "description": "Delegate a dishwasher request to the Dishwasher Agent. Use this for any dishwasher operations like starting/stopping cycles, checking status, or setting delayed starts.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The Dishwasher-related request to send to the Dishwasher Agent. Describe what the user wants done with the dishwasher.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_dishwasher_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response acknowledges each of the user's requests, confirms the AC is on, and reports issues with the TV and dishwasher. It also offers to retry or troubleshoot, making it relevant and sufficiently informative, though it lacks deeper troubleshooting details or insights.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1637.0,
+      "outputs.relevance_score.relevance_completion_tokens": 64.0,
+      "outputs.relevance_score.relevance_total_tokens": 1701.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Turn on the AC, switch the TV to channel 100, and start the dishwasher.\\\", \\\"response\\\": \\\"- The air conditioner is now turned on.\\\\n- There was an issue switching the TV to channel 100.\\\\n- There was an issue starting the dishwasher.\\\\n\\\\nWould you like to try these actions again, or need help troubleshooting the errors?\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response acknowledges each of the user's requests, confirms the AC is on, and reports issues with the TV and dishwasher. It also offers to retry or troubleshoot, making it relevant and sufficiently informative, though it lacks deeper troubleshooting details or insights.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 1.0,
+      "outputs.task_adherence_score.task_adherence_result": "pass",
+      "outputs.task_adherence_score.task_adherence_reason": "The assistant's response indicates that it was only able to complete one of the three requested actions: turning on the air conditioner. For the other two actions—switching the TV to channel 100 and starting the dishwasher—the assistant reported issues and did not complete them. However, it disclosed these partial failures and offered the user next steps by asking if they would like to try again or need troubleshooting help. No external actions were claimed without corroboration, there is no evidence of rule or safety violations, and the output is usable. The partial result is justified and appropriately communicated, so there are no material failures.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1371.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 137.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1508.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Turn on the AC, switch the TV to channel 100, and start the dishwasher.\\\", \\\"response\\\": \\\"- The air conditioner is now turned on.\\\\n- There was an issue switching the TV to channel 100.\\\\n- There was an issue starting the dishwasher.\\\\n\\\\nWould you like to try these actions again, or need help troubleshooting the errors?\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The assistant's response indicates that it was only able to complete one of the three requested actions: turning on the air conditioner. For the other two actions\\u2014switching the TV to channel 100 and starting the dishwasher\\u2014the assistant reported issues and did not complete them. However, it disclosed these partial failures and offered the user next steps by asking if they would like to try again or need troubleshooting help. No external actions were claimed without corroboration, there is no evidence of rule or safety violations, and the output is usable. The partial result is justified and appropriately communicated, so there are no material failures.\\\",\\n  \\\"flagged\\\": false\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "multi_006",
+      "inputs.query": "Set the AC to heat mode at 75 degrees and set the TV volume to 50.",
+      "inputs.response": "The air conditioner is now set to heat mode at 75°F, and the television volume is set to 50.",
+      "inputs.trace_id": "8738d4220a50e1b33e03a2857470fdce",
+      "inputs.expected_agents": ["ACAgent", "TVAgent"],
+      "inputs.category": "multi_agent",
+      "inputs.agents_invoked": ["ACAgent", "TVAgent", "OrchestratorAgent"],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_ac_agent" },
+        { "type": "tool_call", "name": "delegate_to_tv_agent" },
+        { "type": "tool_call", "name": "set_tv_volume" },
+        { "type": "tool_call", "name": "set_ac_mode" },
+        { "type": "tool_call", "name": "set_ac_temperature" }
+      ],
+      "inputs.agent_name": "ACAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "set_ac_temperature",
+          "name": "set_ac_temperature",
+          "description": "Set the air conditioner to a specific temperature.",
+          "parameters": {
+            "properties": {
+              "temperature": {
+                "description": "The target temperature in degrees Fahrenheit (60-85).",
+                "title": "Temperature",
+                "type": "integer"
+              }
+            },
+            "required": ["temperature"],
+            "title": "set_ac_temperature_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "set_ac_mode",
+          "name": "set_ac_mode",
+          "description": "Set the air conditioner operating mode.",
+          "parameters": {
+            "properties": {
+              "mode": {
+                "description": "The AC mode to set: 'cool', 'heat', 'fan', or 'auto'.",
+                "title": "Mode",
+                "type": "string"
+              }
+            },
+            "required": ["mode"],
+            "title": "set_ac_mode_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response accurately confirms both requested actions: setting the AC to heat mode at 75°F and the TV volume to 50. It is clear, complete, and directly addresses the user's instructions without omissions.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1615.0,
+      "outputs.relevance_score.relevance_completion_tokens": 57.0,
+      "outputs.relevance_score.relevance_total_tokens": 1672.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Set the AC to heat mode at 75 degrees and set the TV volume to 50.\\\", \\\"response\\\": \\\"The air conditioner is now set to heat mode at 75\\\\u00b0F, and the television volume is set to 50.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response accurately confirms both requested actions: setting the AC to heat mode at 75\\u00b0F and the TV volume to 50. It is clear, complete, and directly addresses the user's instructions without omissions.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user requested to set the AC to heat mode at 75 degrees and the TV volume to 50. The assistant's response claims that both actions were performed. However, there are no tool interactions (TOOL_CALLS are empty) to confirm that these real-world actions actually occurred. Since claiming real-world actions without corroborating evidence from tool interactions is a material procedural failure, the output does not fully adhere to the required verification. There are no safety, privacy, or rule violations present, but the procedural issue is sufficient to flag.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1349.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 124.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1473.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Set the AC to heat mode at 75 degrees and set the TV volume to 50.\\\", \\\"response\\\": \\\"The air conditioner is now set to heat mode at 75\\\\u00b0F, and the television volume is set to 50.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user requested to set the AC to heat mode at 75 degrees and the TV volume to 50. The assistant's response claims that both actions were performed. However, there are no tool interactions (TOOL_CALLS are empty) to confirm that these real-world actions actually occurred. Since claiming real-world actions without corroborating evidence from tool interactions is a material procedural failure, the output does not fully adhere to the required verification. There are no safety, privacy, or rule violations present, but the procedural issue is sufficient to flag.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "multi_007",
+      "inputs.query": "Get the status of the AC and the dishwasher.",
+      "inputs.response": "- The air conditioner is off, set to 68°F in auto mode.\n- The dishwasher is currently drying on the heavy cycle, with 4 minutes remaining.",
+      "inputs.trace_id": "f6b0e84824f7483ebad5af2b13d50600",
+      "inputs.expected_agents": ["ACAgent", "DishwasherAgent"],
+      "inputs.category": "multi_agent",
+      "inputs.agents_invoked": [
+        "OrchestratorAgent",
+        "ACAgent",
+        "DishwasherAgent"
+      ],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" },
+        { "type": "tool_call", "name": "delegate_to_ac_agent" },
+        { "type": "tool_call", "name": "get_dishwasher_status" },
+        { "type": "tool_call", "name": "get_ac_status" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_ac_agent",
+          "name": "delegate_to_ac_agent",
+          "description": "Delegate an air conditioner request to the AC Agent. Use this for any AC-related operations like turning on/off, setting temperature, changing mode, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The AC-related request to send to the AC Agent. Describe what the user wants done with the air conditioner.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_ac_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "delegate_to_dishwasher_agent",
+          "name": "delegate_to_dishwasher_agent",
+          "description": "Delegate a dishwasher request to the Dishwasher Agent. Use this for any dishwasher operations like starting/stopping cycles, checking status, or setting delayed starts.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The Dishwasher-related request to send to the Dishwasher Agent. Describe what the user wants done with the dishwasher.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_dishwasher_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly and thoroughly answers the user's request by providing the current status of both the AC and the dishwasher, including operational details and settings. No essential information is missing, and the answer is clear and sufficient.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1615.0,
+      "outputs.relevance_score.relevance_completion_tokens": 58.0,
+      "outputs.relevance_score.relevance_total_tokens": 1673.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Get the status of the AC and the dishwasher.\\\", \\\"response\\\": \\\"- The air conditioner is off, set to 68\\\\u00b0F in auto mode.\\\\n- The dishwasher is currently drying on the heavy cycle, with 4 minutes remaining.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly and thoroughly answers the user's request by providing the current status of both the AC and the dishwasher, including operational details and settings. No essential information is missing, and the answer is clear and sufficient.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 1.0,
+      "outputs.task_adherence_score.task_adherence_result": "pass",
+      "outputs.task_adherence_score.task_adherence_reason": "The user's request was to get the status of the AC and the dishwasher. The assistant provided the AC's status (off, set to 68°F in auto mode) and the dishwasher's status (drying on heavy cycle, 4 minutes remaining). There are no explicit constraints or strict presentation requirements. There is no evidence of harmful content, privacy violations, or unauthorized actions. Although TOOL_CALLS is empty, the nature of the information provided does not imply unverifiable or real-world effects outside observation; such status queries can reasonably be answered without external verification unless tool-based evidence is required, but no such requirement is indicated. All requested deliverables are present and relevant, with no distractions or omissions.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1349.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 156.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1505.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Get the status of the AC and the dishwasher.\\\", \\\"response\\\": \\\"- The air conditioner is off, set to 68\\\\u00b0F in auto mode.\\\\n- The dishwasher is currently drying on the heavy cycle, with 4 minutes remaining.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user's request was to get the status of the AC and the dishwasher. The assistant provided the AC's status (off, set to 68\\u00b0F in auto mode) and the dishwasher's status (drying on heavy cycle, 4 minutes remaining). There are no explicit constraints or strict presentation requirements. There is no evidence of harmful content, privacy violations, or unauthorized actions. Although TOOL_CALLS is empty, the nature of the information provided does not imply unverifiable or real-world effects outside observation; such status queries can reasonably be answered without external verification unless tool-based evidence is required, but no such requirement is indicated. All requested deliverables are present and relevant, with no distractions or omissions.\\\",\\n  \\\"flagged\\\": false\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "multi_008",
+      "inputs.query": "Turn off everything. Turn off the AC, TV, and stop the dishwasher.",
+      "inputs.response": "The air conditioner has been turned off and the dishwasher has been stopped. However, I was unable to turn off the TV due to an error. Please try again or check the TV manually.",
+      "inputs.trace_id": "2628314c25040fb29efef59279dd3dff",
+      "inputs.expected_agents": ["ACAgent", "TVAgent", "DishwasherAgent"],
+      "inputs.category": "multi_agent",
+      "inputs.agents_invoked": [
+        "ACAgent",
+        "OrchestratorAgent",
+        "DishwasherAgent",
+        "TVAgent"
+      ],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_tv_agent" },
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" },
+        { "type": "tool_call", "name": "delegate_to_ac_agent" },
+        { "type": "tool_call", "name": "turn_ac_off" },
+        { "type": "tool_call", "name": "stop_dishwasher" }
+      ],
+      "inputs.agent_name": "ACAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "turn_ac_off",
+          "name": "turn_ac_off",
+          "description": "Turn the air conditioner off.",
+          "parameters": {
+            "properties": {},
+            "title": "turn_ac_off_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response addresses each device the user asked to turn off: it confirms the AC and dishwasher were handled, and explains the TV could not be turned off due to an error, suggesting next steps. This is a complete and sufficient answer.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1626.0,
+      "outputs.relevance_score.relevance_completion_tokens": 63.0,
+      "outputs.relevance_score.relevance_total_tokens": 1689.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Turn off everything. Turn off the AC, TV, and stop the dishwasher.\\\", \\\"response\\\": \\\"The air conditioner has been turned off and the dishwasher has been stopped. However, I was unable to turn off the TV due to an error. Please try again or check the TV manually.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response addresses each device the user asked to turn off: it confirms the AC and dishwasher were handled, and explains the TV could not be turned off due to an error, suggesting next steps. This is a complete and sufficient answer.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user's request was to 'turn off everything,' specifically the AC, TV, and to stop the dishwasher. The assistant's response claims the AC has been turned off and the dishwasher stopped, but notes an error prevented turning off the TV and advises the user to check it manually. There is no TOOL_CALLS evidence provided to support the assistant's claims of successfully turning off the AC or stopping the dishwasher. Since these actions would have real-world effects and must be verified by tool use, the claims are uncorroborated and therefore a material failure. There is no evidence of harmful content, privacy violation, or procedural breach beyond the unsupported claims.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1360.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 146.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1506.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Turn off everything. Turn off the AC, TV, and stop the dishwasher.\\\", \\\"response\\\": \\\"The air conditioner has been turned off and the dishwasher has been stopped. However, I was unable to turn off the TV due to an error. Please try again or check the TV manually.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user's request was to 'turn off everything,' specifically the AC, TV, and to stop the dishwasher. The assistant's response claims the AC has been turned off and the dishwasher stopped, but notes an error prevented turning off the TV and advises the user to check it manually. There is no TOOL_CALLS evidence provided to support the assistant's claims of successfully turning off the AC or stopping the dishwasher. Since these actions would have real-world effects and must be verified by tool use, the claims are uncorroborated and therefore a material failure. There is no evidence of harmful content, privacy violation, or procedural breach beyond the unsupported claims.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "multi_009",
+      "inputs.query": "Set the dishwasher to start in 2 hours and turn on the TV to channel 7.",
+      "inputs.response": "The dishwasher is set to start in 2 hours. The TV is now on and set to channel 7.",
+      "inputs.trace_id": "b7b7537702433cff18f15e5ce1fde69f",
+      "inputs.expected_agents": ["DishwasherAgent", "TVAgent"],
+      "inputs.category": "multi_agent",
+      "inputs.agents_invoked": [
+        "OrchestratorAgent",
+        "DishwasherAgent",
+        "TVAgent"
+      ],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_tv_agent" },
+        { "type": "tool_call", "name": "turn_tv_on" },
+        { "type": "tool_call", "name": "set_dishwasher_delay" },
+        { "type": "tool_call", "name": "set_tv_channel" },
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" }
+      ],
+      "inputs.agent_name": "OrchestratorAgent",
+      "inputs.tool_definitions": [
+        {
+          "id": "delegate_to_tv_agent",
+          "name": "delegate_to_tv_agent",
+          "description": "Delegate a television request to the TV Agent. Use this for any TV-related operations like turning on/off, changing channels, adjusting volume, or checking status.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The TV-related request to send to the TV Agent. Describe what the user wants done with the television.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_tv_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "delegate_to_dishwasher_agent",
+          "name": "delegate_to_dishwasher_agent",
+          "description": "Delegate a dishwasher request to the Dishwasher Agent. Use this for any dishwasher operations like starting/stopping cycles, checking status, or setting delayed starts.",
+          "parameters": {
+            "properties": {
+              "request": {
+                "description": "The Dishwasher-related request to send to the Dishwasher Agent. Describe what the user wants done with the dishwasher.",
+                "title": "Request",
+                "type": "string"
+              }
+            },
+            "required": ["request"],
+            "title": "delegate_to_dishwasher_agent_input",
+            "type": "object",
+            "additionalProperties": false
+          }
+        }
+      ],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response directly and completely addresses both user requests: setting the dishwasher to start in 2 hours and turning on the TV to channel 7. It confirms both actions clearly and accurately.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1614.0,
+      "outputs.relevance_score.relevance_completion_tokens": 53.0,
+      "outputs.relevance_score.relevance_total_tokens": 1667.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"Set the dishwasher to start in 2 hours and turn on the TV to channel 7.\\\", \\\"response\\\": \\\"The dishwasher is set to start in 2 hours. The TV is now on and set to channel 7.\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response directly and completely addresses both user requests: setting the dishwasher to start in 2 hours and turning on the TV to channel 7. It confirms both actions clearly and accurately.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 0.0,
+      "outputs.task_adherence_score.task_adherence_result": "fail",
+      "outputs.task_adherence_score.task_adherence_reason": "The user asked for the dishwasher to be set to start in 2 hours and for the TV to be turned to channel 7. The assistant's response asserts that both actions have been completed. However, there are no tool interactions present to corroborate that these real-world actions were actually executed. Since the assistant claims to have controlled external devices without evidence of having done so, this is a material failure regarding procedure and goal fulfillment.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1348.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 102.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1450.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"Set the dishwasher to start in 2 hours and turn on the TV to channel 7.\\\", \\\"response\\\": \\\"The dishwasher is set to start in 2 hours. The TV is now on and set to channel 7.\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user asked for the dishwasher to be set to start in 2 hours and for the TV to be turned to channel 7. The assistant's response asserts that both actions have been completed. However, there are no tool interactions present to corroborate that these real-world actions were actually executed. Since the assistant claims to have controlled external devices without evidence of having done so, this is a material failure regarding procedure and goal fulfillment.\\\",\\n  \\\"flagged\\\": true\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions for all tool calls must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    },
+    {
+      "inputs.id": "multi_010",
+      "inputs.query": "What is the status of the AC, TV, and dishwasher?",
+      "inputs.response": "The dishwasher is currently idle.\n\nI was unable to retrieve the status of the AC and TV at this moment. Would you like me to try again or help you with anything else?",
+      "inputs.trace_id": "9688daf6a27f8a5043852515bf279296",
+      "inputs.expected_agents": ["ACAgent", "TVAgent", "DishwasherAgent"],
+      "inputs.category": "multi_agent",
+      "inputs.agents_invoked": [
+        "TVAgent",
+        "DishwasherAgent",
+        "ACAgent",
+        "OrchestratorAgent"
+      ],
+      "inputs.tool_calls": [
+        { "type": "tool_call", "name": "delegate_to_tv_agent" },
+        { "type": "tool_call", "name": "delegate_to_ac_agent" },
+        { "type": "tool_call", "name": "get_dishwasher_status" },
+        { "type": "tool_call", "name": "delegate_to_dishwasher_agent" },
+        { "type": "tool_call", "name": "get_ac_status" }
+      ],
+      "inputs.agent_name": "TVAgent",
+      "inputs.tool_definitions": [],
+      "outputs.relevance_score.relevance": 4.0,
+      "outputs.relevance_score.gpt_relevance": 4.0,
+      "outputs.relevance_score.relevance_result": "pass",
+      "outputs.relevance_score.relevance_threshold": 3.0,
+      "outputs.relevance_score.relevance_reason": "The response provides the status of the dishwasher and acknowledges the inability to retrieve the AC and TV status, offering to assist further. It addresses all parts of the query, though without additional insight or detail, making it fully sufficient but not comprehensive.",
+      "outputs.relevance_score.relevance_prompt_tokens": 1621.0,
+      "outputs.relevance_score.relevance_completion_tokens": 64.0,
+      "outputs.relevance_score.relevance_total_tokens": 1685.0,
+      "outputs.relevance_score.relevance_finish_reason": "stop",
+      "outputs.relevance_score.relevance_model": "gpt-4.1-2025-04-14",
+      "outputs.relevance_score.relevance_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"query\\\": \\\"What is the status of the AC, TV, and dishwasher?\\\", \\\"response\\\": \\\"The dishwasher is currently idle.\\\\n\\\\nI was unable to retrieve the status of the AC and TV at this moment. Would you like me to try again or help you with anything else?\\\"}\"}]",
+      "outputs.relevance_score.relevance_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"explanation\\\": \\\"The response provides the status of the dishwasher and acknowledges the inability to retrieve the AC and TV status, offering to assist further. It addresses all parts of the query, though without additional insight or detail, making it fully sufficient but not comprehensive.\\\",\\n  \\\"score\\\": 4\\n}\"}]",
+      "outputs.task_adherence_score.task_adherence": 1.0,
+      "outputs.task_adherence_score.task_adherence_result": "pass",
+      "outputs.task_adherence_score.task_adherence_reason": "The user asked for the status of the AC, TV, and dishwasher. The assistant replied that the dishwasher is currently idle and noted an inability to retrieve the status of the AC and TV, offering to try again or help further. There is no evidence of tool use or tool output, so the assistant did not fabricate information about the AC or TV and admitted its limitations clearly. The output is usable, does not contain unauthorized actions or content, and aligns with the procedural and safety requirements. There are no material failures in providing partial information and communicating capability limits with next steps.",
+      "outputs.task_adherence_score.task_adherence_details": "",
+      "outputs.task_adherence_score.task_adherence_prompt_tokens": 1355.0,
+      "outputs.task_adherence_score.task_adherence_completion_tokens": 130.0,
+      "outputs.task_adherence_score.task_adherence_total_tokens": 1485.0,
+      "outputs.task_adherence_score.task_adherence_finish_reason": "stop",
+      "outputs.task_adherence_score.task_adherence_model": "gpt-4.1-2025-04-14",
+      "outputs.task_adherence_score.task_adherence_sample_input": "[{\"role\": \"user\", \"content\": \"{\\\"system_message\\\": \\\"\\\", \\\"query\\\": \\\"What is the status of the AC, TV, and dishwasher?\\\", \\\"response\\\": \\\"The dishwasher is currently idle.\\\\n\\\\nI was unable to retrieve the status of the AC and TV at this moment. Would you like me to try again or help you with anything else?\\\", \\\"tool_calls\\\": \\\"\\\"}\"}]",
+      "outputs.task_adherence_score.task_adherence_sample_output": "[{\"role\": \"assistant\", \"content\": \"{\\n  \\\"reasoning\\\": \\\"The user asked for the status of the AC, TV, and dishwasher. The assistant replied that the dishwasher is currently idle and noted an inability to retrieve the status of the AC and TV, offering to try again or help further. There is no evidence of tool use or tool output, so the assistant did not fabricate information about the AC or TV and admitted its limitations clearly. The output is usable, does not contain unauthorized actions or content, and aligns with the procedural and safety requirements. There are no material failures in providing partial information and communicating capability limits with next steps.\\\",\\n  \\\"flagged\\\": false\\n}\"}]",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy": "not applicable",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_result": "pass",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_threshold": 3,
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_reason": "Tool definitions must be provided.",
+      "outputs.tool_call_accuracy_score.tool_call_accuracy_details": {},
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+      "outputs.custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": true
+    }
+  ],
+  "metrics": {
+    "relevance_score.relevance": 4.0,
+    "relevance_score.gpt_relevance": 4.0,
+    "task_adherence_score.task_adherence": 0.19047619047619047,
+    "custom_agents_invoked_accuracy_eval.agents_invoke_accuracy": 1.0,
+    "custom_agents_invoked_accuracy_eval.agents_invoke_match_percentage": 1.0,
+    "custom_agents_invoked_accuracy_eval.agents_invoke_exact_match": 1.0,
+    "relevance_score.binary_aggregate": 0.95,
+    "task_adherence_score.binary_aggregate": 0.18,
+    "tool_call_accuracy_score.binary_aggregate": 1.0
+  },
+  "studio_url": null
+}

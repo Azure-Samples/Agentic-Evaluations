@@ -1,6 +1,7 @@
 """Streamlit dashboard for Agentic Evaluation Reports."""
 
 import json
+import math
 import re
 from pathlib import Path
 
@@ -27,6 +28,13 @@ def _is_hidden(key: str) -> bool:
     """Return True if this output key should be hidden from the UI."""
     suffix = key.rsplit(".", 1)[-1] if "." in key else key
     return suffix in _HIDDEN_SUFFIXES
+
+
+def _is_finite_number(value: object) -> bool:
+    """Return True for finite numeric values, excluding bool."""
+    if isinstance(value, bool):
+        return False
+    return isinstance(value, (int, float)) and math.isfinite(float(value))
 
 
 def pretty_name(eval_name: str) -> str:
@@ -201,7 +209,7 @@ def render_aggregate_metrics(report: dict, key_prefix: str = "agg") -> None:
 
     display_metrics = {
         k: v for k, v in metrics.items()
-        if isinstance(v, (int, float)) and not _is_hidden(k)
+        if _is_finite_number(v) and not _is_hidden(k)
     }
     if not display_metrics:
         return
@@ -213,7 +221,7 @@ def render_aggregate_metrics(report: dict, key_prefix: str = "agg") -> None:
 
         # Some aggregate metrics are ratios in [0, 1] and should be displayed as percentages.
         is_ratio_metric = (
-            isinstance(value, (int, float))
+            _is_finite_number(value)
             and 0.0 <= float(value) <= 1.0
             and (
                 "binary" in name

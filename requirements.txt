@@ -1,0 +1,20 @@
+# Pinned to versions previously locked by uv (uv.lock) for reproducible runs.
+# Update only after validating all sample pipelines.
+
+# Azure SDK dependencies
+azure-identity>=1.26.0b2
+azure-ai-projects==2.0.1
+azure-ai-evaluation==1.15.0
+azure-ai-inference>=1.0.0b9
+
+# Core Python packages
+python-dotenv>=1.2.1
+pyyaml>=6.0.3
+pip-system-certs>=5.3
+azure-monitor-query>=2.0.0
+azure-monitor-opentelemetry>=1.8.6
+aiohttp>=3.13.3
+agent-framework==1.0.1
+streamlit>=1.56.0
+pandas>=2.3.3
+plotly>=6.7.0

@@ -21,7 +21,7 @@ from typing import Dict, List, Any
 from datetime import timedelta
 from azure.monitor.query import LogsQueryClient, LogsQueryStatus
 from azure.identity import DefaultAzureCredential
-from azure.core.exceptions import HttpResponseError
+from azure.core.exceptions import HttpResponseError, ServiceRequestError, ServiceResponseError
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -144,17 +144,38 @@ def fetch_tool_data_from_app_insights(trace_ids: List[str]) -> Dict[str, Dict[st
         credential = DefaultAzureCredential()
         client = LogsQueryClient(credential)
 
-        response = client.query_workspace(
-            workspace_id=workspace_id,
-            query=query,
-            timespan=timedelta(days=7),
-        )
+        max_attempts = 4
+        backoff = 2.0
+        last_exc = None
+        response = None
+        for attempt in range(1, max_attempts + 1):
+            try:
+                response = client.query_workspace(
+                    workspace_id=workspace_id,
+                    query=query,
+                    timespan=timedelta(days=7),
+                )
+                break
+            except (ServiceResponseError, ServiceRequestError) as exc:
+                last_exc = exc
+                if attempt == max_attempts:
+                    logger.error("App Insights query failed after %d attempts: %s", attempt, exc)
+                    raise
+                sleep_for = backoff * (2 ** (attempt - 1))
+                logger.warning(
+                    "Transient App Insights query error (attempt %d/%d): %s. Retrying in %.1fs",
+                    attempt, max_attempts, exc, sleep_for,
+                )
+                time.sleep(sleep_for)
 
         if response.status == LogsQueryStatus.SUCCESS:
             table = response.tables[0]
             logger.info("App Insights returned %d rows", len(table.rows))
 
-            column_names = [column.name for column in table.columns]
+            column_names = [
+                column if isinstance(column, str) else column.name
+                for column in table.columns
+            ]
 
             for row in table.rows:
                 # azure-monitor-query rows are commonly sequence-like (aligned with table.columns)

@@ -54,7 +54,8 @@ Agentic-Evaluations/
 │           └── utils/                       # Shared constants and utilities
 ├── assets/                         # Architecture diagrams
 ├── .env.template                   # Environment variable template
-├── pyproject.toml                  # Python dependencies (uv)
+├── requirements.txt                # Python dependencies
+├── pyproject.toml                  # Project metadata
 └── README.md
 ```
 
@@ -90,9 +91,10 @@ Each evaluation folder follows the same layout: `datasets/` for input data, `eva
 # 1. Clone and install
 git clone https://github.com/Azure-Samples/Agentic-Evaluations.git
 cd Agentic-Evaluations
-uv sync
+python -m venv .venv
 .venv\Scripts\activate  # Windows PowerShell
 # source .venv/bin/activate  # Linux/macOS
+pip install -r requirements.txt
 
 # 2. Azure login
 az login

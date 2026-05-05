@@ -55,7 +55,6 @@ Agentic-Evaluations/
 ├── assets/                         # Architecture diagrams
 ├── .env.template                   # Environment variable template
 ├── requirements.txt                # Python dependencies
-├── pyproject.toml                  # Project metadata
 └── README.md
 ```
 

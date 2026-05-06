@@ -70,7 +70,7 @@ Your evaluation dataset should be in JSONL format:
 
 1. **Azure Setup**: AI Foundry project with GPT-4o deployment
 2. **Environment**: `.env` file configured (see main README)
-3. **Installation**: Dependencies installed (`uv sync`)
+3. **Installation**: Dependencies installed (`pip install -r requirements.txt`)
 
 ### Run with Sample Data
 

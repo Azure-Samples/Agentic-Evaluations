@@ -1,10 +1,10 @@
-# Evaluation Framework using Azure AI Foundry
+# Evaluation Framework using Microsoft Foundry
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![Azure](https://img.shields.io/badge/Azure-AI%20Foundry-blue.svg)](https://azure.microsoft.com/en-us/products/ai-foundry)
 
-A config-driven evaluation framework for **agentic systems** and **GenAI applications** built on Azure AI Foundry SDK. Get started in minutes with YAML-based experiment configuration.
+A config-driven evaluation framework for **agentic systems** and **GenAI applications** built on Microsoft Foundry SDK. Get started in minutes with YAML-based experiment configuration.
 
 Whether you're evaluating RAG applications, multi-agent systems, or custom GenAI workflows, this framework reduces boilerplate and accelerates iteration.
 
@@ -28,10 +28,10 @@ flowchart LR
 
 This framework provides two core capabilities for rapid AI evaluation:
 
-1. **Simplified Evaluation SDK Integration** — Easily add both built-in Azure AI Foundry evaluators and custom metrics with minimal code
+1. **Simplified Evaluation SDK Integration** — Easily add both built-in Microsoft Foundry evaluators and custom metrics with minimal code
 2. **Pipeline-Based Architecture** — Connect your experiments, inference modules, and data loaders through a configurable pipeline defined in YAML
 
-> **Note:** Pushing evaluation results to Azure AI Foundry dashboard is not currently supported, as the evaluation SDK requires key-based authentication. All evaluations run locally with results saved to JSON files.
+> **Note:** Pushing evaluation results to Microsoft Foundry dashboard is not currently supported, as the evaluation SDK requires key-based authentication. All evaluations run locally with results saved to JSON files.
 
 
 ![Evaluation Pipeline](./assets/Eval-pipeline.png)
@@ -82,7 +82,7 @@ Each evaluation folder follows the same layout: `datasets/` for input data, `eva
 
 - Python 3.11+ and Git
 - Azure CLI installed and authenticated
-- Azure AI Foundry project with GPT-4o deployment
+- Microsoft Foundry project with GPT-4o deployment
 
 ### Quick Start
 
@@ -101,7 +101,7 @@ az account set --subscription "<your-subscription-id>"
 
 # 3. Configure environment
 cp .env.template .env
-# Edit .env with your Azure AI Foundry credentials:
+# Edit .env with your Microsoft Foundry credentials:
 #   EVAL_AZURE_OPENAI_ENDPOINT=https://<your-resource>.openai.azure.com/
 #   EVAL_AZURE_OPENAI_MODEL=<your-deployment-name>
 #   EVAL_AZURE_OPENAI_VERSION=2024-12-01-preview
@@ -249,7 +249,7 @@ Register in `eval_factory.py` and add to your `experiment.yaml`.
 
 For AI Foundry's evaluators for Agentic and RAG see the official documentation:
 
-📖 [Azure AI Foundry Evaluator Reference](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)
+📖 [Microsoft Foundry Evaluator Reference](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)
 
 ---
 
@@ -314,7 +314,7 @@ Each pipeline stage is independently configurable—add, remove, or reorder stag
 ## References
 
 - [Azure AI Evaluation SDK](https://learn.microsoft.com/en-us/python/api/overview/azure/ai-evaluation-readme?view=azure-python)
-- [Azure AI Foundry Documentation](https://learn.microsoft.com/en-us/azure/ai-foundry/what-is-ai-foundry)
+- [Microsoft Foundry Documentation](https://learn.microsoft.com/en-us/azure/ai-foundry/what-is-ai-foundry)
 - [Agentic Evaluation Guide](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/agent-evaluate-sdk)
 
 ---

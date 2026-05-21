@@ -6,7 +6,7 @@ This framework demonstrates a **complete end-to-end pipeline** for multi-tool AI
 
 1. **Agent Inference**: Run a multi-tool agent on queries using Microsoft Agent Framework
 2. **Telemetry Extraction**: Enrich responses with tool call data from Azure Application Insights
-3. **Evaluation**: Assess agent performance using Azure AI Foundry evaluators
+3. **Evaluation**: Assess agent performance using Microsoft Foundry evaluators
 
 > [!IMPORTANT]
 > **Stage 1 (Agent Inference) requires [Microsoft Agent Framework](https://github.com/microsoft/agent-framework).** The multi-tool agent is built with this SDK. Install it before running the full pipeline: `pip install agent-framework`.
@@ -33,7 +33,7 @@ flowchart LR
     end
     
     subgraph stage3["STAGE 3: EVALUATION"]
-        F --> G["📊 Azure AI Foundry Evaluators<br/>evaluator/eval_main.py"]
+        F --> G["📊 Microsoft Foundry Evaluators<br/>evaluator/eval_main.py"]
       G --> H["📈 Evaluation Report<br/>reports/{run_id}_{eval_dir_name}.json"]
     end
 
@@ -46,7 +46,7 @@ flowchart LR
 **Pipeline Flow:**
 1. **Agent Inference** → Runs multi-tool agent on queries, captures responses and trace IDs
 2. **Telemetry Extraction** → Queries Application Insights to extract tool definitions and tool calls
-3. **Evaluation** → Applies Azure AI Foundry evaluators (Relevance, TaskAdherence, ToolCallAccuracy)
+3. **Evaluation** → Applies Microsoft Foundry evaluators (Relevance, TaskAdherence, ToolCallAccuracy)
 
 ## Why Build Pipelines?
 
@@ -76,7 +76,7 @@ Runs the multi-tool agent on queries from the input dataset, capturing responses
 Queries Azure Application Insights to extract tool definitions and tool calls for each trace, enriching the response data.
 
 #### Stage 3: Evaluation
-Applies Azure AI Foundry evaluators to assess the quality of responses and tool call accuracy.
+Applies Microsoft Foundry evaluators to assess the quality of responses and tool call accuracy.
 
 ### Configuring `experiment.yaml`
 
@@ -105,7 +105,7 @@ agent_telemetry_extraction:
 
 ```yaml
 evaluation:
-  run_local: True                         # True = local, False = Azure AI Foundry
+  run_local: True                         # True = local, False = Microsoft Foundry
   input_path: src/evaluations/offline/pipeline_multi_tool_agent_evaluation/datasets/
   input_file: agent_responses_enriched.jsonl   # From Stage 2
   output_path: src/evaluations/offline/reports/
@@ -166,7 +166,7 @@ The agent uses **Azure OpenAI** as the chat client and instruments all calls wit
 
 ## Evaluation Metrics
 
-This pipeline uses Azure AI Foundry evaluators configured in `eval_factory.py`:
+This pipeline uses Microsoft Foundry evaluators configured in `eval_factory.py`:
 
 ### Available Evaluators
 
@@ -255,8 +255,8 @@ class EvaluatorFactory:
 
 ### Prerequisites
 
-1. **Azure AI Foundry Setup**
-   - Azure AI Foundry project configured
+1. **Microsoft Foundry Setup**
+   - Microsoft Foundry project configured
    - Azure OpenAI deployment (GPT-4 recommended)
    - Environment variables set:
      ```bash
@@ -369,7 +369,7 @@ Evaluation reports are written to `src/evaluations/offline/reports/` with file n
 **Key Components:**
 - **agent_inference/**: Multi-tool agent using Microsoft Agent Framework with Azure OpenAI
 - **agent_telemetry_extraction/**: Queries Azure Application Insights for tool call telemetry
-- **evaluator/**: Runs Azure AI Foundry evaluators on enriched data
+- **evaluator/**: Runs Microsoft Foundry evaluators on enriched data
 - **datasets/**: Input queries and intermediate/output data files
 - **src/evaluations/offline/reports/**: Shared report output directory for all offline sample pipelines
 
@@ -399,7 +399,7 @@ All sample datasets included in this repository are **fully synthetic**. They us
 
 ## Resources
 
-- [Azure AI Foundry Evaluation Docs](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
+- [Microsoft Foundry Evaluation Docs](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
 - [Built-in Evaluators Reference](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app#built-in-evaluators)
 - [Microsoft Agent Framework](https://github.com/microsoft/agent-framework)
 - [Azure Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview)

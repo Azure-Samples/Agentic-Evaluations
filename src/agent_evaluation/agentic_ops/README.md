@@ -7,7 +7,7 @@ This folder contains the core infrastructure components for the agentic evaluati
 ### Core Infrastructure Files
 
 - **`runner.py`** - Pipeline orchestration and execution framework
-- **`run_eval.py`** - Evaluation execution engine for Azure AI Foundry
+- **`run_eval.py`** - Evaluation execution engine for Microsoft Foundry
 - **`base_evaluator.py`** - Base class for all custom evaluators
 - **`client.py`** - LLM client utilities for Azure OpenAI interaction
 
@@ -57,7 +57,7 @@ response = client.get_llm_response_with_prompty(messages)
 ## Dependencies
 
 - **Azure OpenAI**: For LLM interactions
-- **Azure AI Foundry**: For evaluation orchestration  
+- **Microsoft Foundry**: For evaluation orchestration  
 - **Python-dotenv**: For environment configuration
 - **OpenAI SDK**: For Azure OpenAI client functionality
 
@@ -72,7 +72,7 @@ EVAL_AZURE_OPENAI_KEY=your_key
 EVAL_AZURE_OPENAI_MODEL=your_deployment_name
 EVAL_AZURE_OPENAI_VERSION=your_api_version
 
-# Azure AI Foundry Configuration  
+# Microsoft Foundry Configuration  
 EVAL_AZURE_FOUNDRY_PROJECT_ENDPOINT=your_project_endpoint
 AZURE_SUBSCRIPTION_ID=your_subscription_id
 AZURE_RESOURCE_GROUP_NAME=your_resource_group

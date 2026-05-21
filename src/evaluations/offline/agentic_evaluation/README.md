@@ -10,7 +10,7 @@ This evaluation framework assesses **agentic systems** - AI agents that invoke t
 - They form chat histories/threads/trajectories through multi-turn conversations
 - Systems range from single agents with tool calling to complex multi-agent architectures
 
-This evaluation measures both **agent behavior** (tool/agent selection accuracy) and **response quality** (relevance, task adherence) using Azure AI Foundry.
+This evaluation measures both **agent behavior** (tool/agent selection accuracy) and **response quality** (relevance, task adherence) using Microsoft Foundry.
 
 ## What's Included
 
@@ -21,7 +21,7 @@ This evaluation measures both **agent behavior** (tool/agent selection accuracy)
 
 **Pre-configured Evaluators:**
 - **Custom Agentic Metrics**: Invocation Accuracy, Recall@K, Agent Hallucination
-- **Azure AI Foundry Metrics**: Relevance, Task Adherence
+- **Microsoft Foundry Metrics**: Relevance, Task Adherence
 
 **Ready to Run:** Execute immediately with sample data or swap in your own dataset.
 
@@ -49,7 +49,7 @@ Example Result:
 }
 ```
 
-### Built-in Metrics (Azure AI Foundry SDK)
+### Built-in Metrics (Microsoft Foundry SDK)
 
 | Evaluator | Required Fields | Score Range | What It Measures |
 |-----------|----------------|-------------|------------------|
@@ -188,7 +188,7 @@ version: 1.0.0
 experiment_name: Agentic_Evaluation_Experiment
 
 evaluation:
-  run_local: True  # Set False to push to Azure AI Foundry dashboard
+  run_local: True  # Set False to push to Microsoft Foundry dashboard
   input_path: src/evaluations/offline/agentic_evaluation/datasets/
   input_file: agent_response_sample_data.jsonl
   output_path: src/evaluations/offline/reports/
@@ -299,7 +299,7 @@ python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/
 
 Results are saved to the configured output path:
 - **JSON Report**: `{output_path}/{run_id}_{eval_dir_name}.json`
-- **Azure AI Foundry**: Results automatically uploaded for dashboard visualization
+- **Microsoft Foundry**: Results automatically uploaded for dashboard visualization
 
 The report includes:
 - Per-sample evaluation scores

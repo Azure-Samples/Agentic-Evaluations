@@ -16,11 +16,11 @@ This evaluation provides **AI-as-a-Judge** evaluations using custom prompty temp
 - Evaluates subjective aspects like coherence, fluency, and relevance
 - Combines the scalability of automated evaluation with the nuance of human assessment
 
-This framework supports both **Azure AI Foundry built-in evaluators** and **custom evaluators** powered by prompty templates, allowing you to define your own evaluation criteria and scoring rubrics.
+This framework supports both **Microsoft Foundry built-in evaluators** and **custom evaluators** powered by prompty templates, allowing you to define your own evaluation criteria and scoring rubrics.
 
 ## Evaluation Metrics
 
-### Built-in Metrics (Azure AI Foundry SDK)
+### Built-in Metrics (Microsoft Foundry SDK)
 
 | Metric | Description | Score Range | Use Case |
 |--------|-------------|-------------|----------|
@@ -241,7 +241,7 @@ evaluation:
 
 ### Prerequisites
 
-1. Azure AI Foundry project configured
+1. Microsoft Foundry project configured
 2. Azure OpenAI deployment (GPT-4 recommended for judge evaluations)
 3. Environment variables set (see main README)
 4. Dataset prepared in JSONL format
@@ -270,7 +270,7 @@ The prompty format ensures consistent, reproducible evaluations across different
 
 Results are saved to the configured output path:
 - **JSON Report**: `{output_path}/{run_id}_{eval_dir_name}.json`
-- **Azure AI Foundry Dashboard**: Automatic upload for visualization
+- **Microsoft Foundry Dashboard**: Automatic upload for visualization
 
 The report includes:
 - Per-sample scores for each evaluator

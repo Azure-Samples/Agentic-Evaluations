@@ -6,7 +6,7 @@ This framework demonstrates a **complete end-to-end pipeline** for multi-agent o
 
 1. **Agent Inference**: Run a multi-agent orchestrator on queries using Microsoft Agent Framework
 2. **Telemetry Extraction**: Enrich responses with tool call and agent handoff data from Azure Application Insights
-3. **Evaluation**: Assess agent performance using Azure AI Foundry evaluators
+3. **Evaluation**: Assess agent performance using Microsoft Foundry evaluators
 
 > [!IMPORTANT]
 > **Stage 1 (Agent Inference) requires [Microsoft Agent Framework](https://github.com/microsoft/agent-framework).** The orchestrator and all device agents are built with this SDK. Install it before running the full pipeline: `pip install agent-framework`.
@@ -34,7 +34,7 @@ flowchart LR
     end
 
     subgraph stage3["STAGE 3: EVALUATION"]
-        F --> G["📊 Azure AI Foundry Evaluators<br/>evaluator/eval_main.py"]
+        F --> G["📊 Microsoft Foundry Evaluators<br/>evaluator/eval_main.py"]
       G --> H["📈 Evaluation Report<br/>reports/{run_id}_{eval_dir_name}.json"]
     end
 
@@ -48,7 +48,7 @@ flowchart LR
 
 1. **Agent Inference** → Runs orchestrator on queries; orchestrator delegates to device agents and combines responses
 2. **Telemetry Extraction** → Queries Application Insights to extract tool definitions, tool calls, and agent handoffs
-3. **Evaluation** → Applies Azure AI Foundry evaluators (Relevance, TaskAdherence, ToolCallAccuracy)
+3. **Evaluation** → Applies Microsoft Foundry evaluators (Relevance, TaskAdherence, ToolCallAccuracy)
 
 ## Architecture
 
@@ -83,7 +83,7 @@ Queries Azure Application Insights to extract tool definitions, tool calls, and 
 
 #### Stage 3: Evaluation
 
-Applies Azure AI Foundry evaluators to assess the quality of responses and tool call accuracy.
+Applies Microsoft Foundry evaluators to assess the quality of responses and tool call accuracy.
 
 ### Configuring `experiment.yaml`
 
@@ -158,7 +158,7 @@ pipeline:
 
 ## Evaluation Metrics
 
-This pipeline uses Azure AI Foundry evaluators configured in `eval_factory.py`:
+This pipeline uses Microsoft Foundry evaluators configured in `eval_factory.py`:
 
 ### Available Evaluators
 

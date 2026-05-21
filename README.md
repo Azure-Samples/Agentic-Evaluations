@@ -31,7 +31,7 @@ This framework provides two core capabilities for rapid AI evaluation:
 1. **Simplified Evaluation SDK Integration** — Easily add both built-in Microsoft Foundry evaluators and custom metrics with minimal code
 2. **Pipeline-Based Architecture** — Connect your experiments, inference modules, and data loaders through a configurable pipeline defined in YAML
 
-> **Note:** Pushing evaluation results to Microsoft Foundry dashboard is not currently supported, as the evaluation SDK requires key-based authentication. All evaluations run locally with results saved to JSON files.
+> **Note:** Evaluations can run either locally or be uploaded to the Microsoft Foundry dashboard. Local runs save results to JSON files. To upload results, configure the runner with `run_local: false`, provide the required `azure_ai_project` settings, and authenticate with Azure using `DefaultAzureCredential` (for example, via Azure CLI login, managed identity, or environment-based credentials).
 
 
 ![Evaluation Pipeline](./assets/Eval-pipeline.png)

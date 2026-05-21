@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
-[![Azure](https://img.shields.io/badge/Azure-AI%20Foundry-blue.svg)](https://azure.microsoft.com/en-us/products/ai-foundry)
+[![Microsoft Foundry](https://img.shields.io/badge/Microsoft-Foundry-blue.svg)](https://azure.microsoft.com/en-us/products/ai-foundry)
 
 A config-driven evaluation framework for **agentic systems** and **GenAI applications** built on Microsoft Foundry SDK. Get started in minutes with YAML-based experiment configuration.
 

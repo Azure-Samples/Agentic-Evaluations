@@ -72,7 +72,8 @@ EVAL_AZURE_OPENAI_KEY=your_key
 EVAL_AZURE_OPENAI_MODEL=your_deployment_name
 EVAL_AZURE_OPENAI_VERSION=your_api_version
 
-# Microsoft Foundry Configuration  
+# Microsoft Foundry Configuration
+# Note: these environment variable names remain Azure-prefixed for compatibility.
 EVAL_AZURE_FOUNDRY_PROJECT_ENDPOINT=your_project_endpoint
 AZURE_SUBSCRIPTION_ID=your_subscription_id
 AZURE_RESOURCE_GROUP_NAME=your_resource_group

@@ -25,7 +25,7 @@ This pattern is useful for:
 This framework demonstrates a **complete end-to-end pipeline** for AI agent experimentation and evaluation:
 
 1. **Experiment Stage (Inference)**: Generate agent responses for test queries
-2. **Evaluation Stage**: Assess responses using Azure AI Foundry evaluators
+2. **Evaluation Stage**: Assess responses using Microsoft Foundry evaluators
 
 **Key Benefits:**
 - **Modular**: Inference and evaluation are independent stages
@@ -118,7 +118,7 @@ experiment:
 
 # Stage 2: Evaluation settings
 evaluation:
-  run_local: False  # True = local only, False = push to Azure AI Foundry
+  run_local: False  # True = local only, False = push to Microsoft Foundry
   input_path: src/evaluations/offline/pipeline_experiment_evaluation/datasets/
   input_file: agent_responses.jsonl
   output_path: src/evaluations/offline/reports/
@@ -166,7 +166,7 @@ pipeline:
 
 **Other available evaluators:** Tool Call Accuracy, Intent Resolution, Coherence, Groundedness, Fluency, Similarity, F1 Score
 
-> See [Azure AI Foundry documentation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app) for complete evaluator list.
+> See [Microsoft Foundry documentation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app) for complete evaluator list.
 
 ## Dataset Format
 
@@ -182,7 +182,7 @@ pipeline:
 
 ## Prerequisites
 
-1. **Azure AI Foundry** - Project configured with Azure OpenAI deployment
+1. **Microsoft Foundry** - Project configured with Azure OpenAI deployment
 2. **Environment variables** - See main README
 3. **Dataset** - Input JSONL file at configured path
 
@@ -202,7 +202,7 @@ Generated reports are saved to `src/evaluations/offline/reports/` using `{run_id
 
 ## Resources
 
-- [Azure AI Foundry Evaluation Docs](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
+- [Microsoft Foundry Evaluation Docs](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
 - [Built-in Evaluators Reference](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app#built-in-evaluators)
 
 ## Data Provenance

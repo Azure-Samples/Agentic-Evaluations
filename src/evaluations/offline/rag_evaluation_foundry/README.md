@@ -1,8 +1,8 @@
-# GenAI Evaluation using Azure AI Foundry Built-in Evaluators
+# GenAI Evaluation using Microsoft Foundry Built-in Evaluators
 
 ## Overview
 
-This evaluation demonstrates how to use **Azure AI Foundry's built-in evaluators** to assess GenAI and RAG (Retrieval-Augmented Generation) systems. Built-in evaluators are production-ready, pre-configured metrics that require no custom code or prompty templates.
+This evaluation demonstrates how to use **Microsoft Foundry's built-in evaluators** to assess GenAI and RAG (Retrieval-Augmented Generation) systems. Built-in evaluators are production-ready, pre-configured metrics that require no custom code or prompty templates.
 
 **What's Included:**
 - **Sample Dataset**: 4 simple query-response examples in JSONL format
@@ -14,7 +14,6 @@ This evaluation demonstrates how to use **Azure AI Foundry's built-in evaluators
 - **Production-Ready**: Tested and optimized by Azure AI team
 - **Consistent Results**: Standardized scoring across different projects
 - **Quick Start**: Evaluate your GenAI system in minutes without custom implementation
-- **Azure Integration**: Seamless integration with Azure AI Foundry dashboard and tracking
 
 ## Evaluation Metrics
 
@@ -27,7 +26,7 @@ This evaluation demonstrates how to use **Azure AI Foundry's built-in evaluators
 
 ### Additional Built-in Evaluators Available
 
-You can easily add more built-in evaluators from Azure AI Foundry:
+You can easily add more built-in evaluators from Microsoft Foundry:
 
 | Evaluator | Measures | Requires Ground Truth? |
 |-----------|----------|------------------------|
@@ -36,7 +35,7 @@ You can easily add more built-in evaluators from Azure AI Foundry:
 | **Similarity** | Semantic similarity to reference | Yes |
 | **F1 Score** | Token-level overlap | Yes |
 
-See the [Azure AI Foundry documentation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app) for the complete list of available evaluators.
+See the [Microsoft Foundry documentation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app) for the complete list of available evaluators.
 
 ## Dataset Format
 
@@ -156,7 +155,6 @@ evaluation:
 ### Output Location
 
 - **Local mode** (`run_local: True`): `src/evaluations/offline/reports/{run_id}_{eval_dir_name}.json`
-- **Azure mode** (`run_local: False`): Results pushed to AI Foundry dashboard + local JSON
 
 ### Result Structure
 
@@ -230,14 +228,13 @@ Evaluation reports are saved to `src/evaluations/offline/reports/` using `{run_i
 1. **Run the Default Configuration**: Test with the provided sample data
 2. **Add Your Dataset**: Replace `rag_sample.jsonl` with your own data
 3. **Add More Evaluators**: Follow Step 1 and 2 above to add additional built-in evaluators
-4. **View Results**: Check Azure AI Foundry dashboard for detailed visualizations
-5. **Explore Custom Evaluators**: If you need custom metrics, see the `ai_judge_evaluation_custom` folder
+4. **Explore Custom Evaluators**: If you need custom metrics, see the `ai_judge_evaluation_custom` folder
 
 ## Resources
 
-- [Azure AI Foundry Evaluation Documentation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
+- [Microsoft Foundry Evaluation Documentation](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
 - [Built-in Evaluators Reference](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app#built-in-evaluators)
-- [Azure AI Foundry SDK](https://learn.microsoft.com/python/api/azure-ai-evaluation)
+- [Microsoft Foundry SDK](https://learn.microsoft.com/python/api/azure-ai-evaluation)
 
 ## Data Provenance
 

@@ -14,7 +14,6 @@ This evaluation demonstrates how to use **Microsoft Foundry's built-in evaluator
 - **Production-Ready**: Tested and optimized by Azure AI team
 - **Consistent Results**: Standardized scoring across different projects
 - **Quick Start**: Evaluate your GenAI system in minutes without custom implementation
-- **Azure Integration**: Seamless integration with Microsoft Foundry dashboard and tracking
 
 ## Evaluation Metrics
 
@@ -156,7 +155,6 @@ evaluation:
 ### Output Location
 
 - **Local mode** (`run_local: True`): `src/evaluations/offline/reports/{run_id}_{eval_dir_name}.json`
-- **Azure mode** (`run_local: False`): Results pushed to AI Foundry dashboard + local JSON
 
 ### Result Structure
 
@@ -230,8 +228,7 @@ Evaluation reports are saved to `src/evaluations/offline/reports/` using `{run_i
 1. **Run the Default Configuration**: Test with the provided sample data
 2. **Add Your Dataset**: Replace `rag_sample.jsonl` with your own data
 3. **Add More Evaluators**: Follow Step 1 and 2 above to add additional built-in evaluators
-4. **View Results**: Check Microsoft Foundry dashboard for detailed visualizations
-5. **Explore Custom Evaluators**: If you need custom metrics, see the `ai_judge_evaluation_custom` folder
+4. **Explore Custom Evaluators**: If you need custom metrics, see the `ai_judge_evaluation_custom` folder
 
 ## Resources
 

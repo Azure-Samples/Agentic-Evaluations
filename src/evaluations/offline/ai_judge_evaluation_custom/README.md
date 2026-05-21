@@ -270,7 +270,6 @@ The prompty format ensures consistent, reproducible evaluations across different
 
 Results are saved to the configured output path:
 - **JSON Report**: `{output_path}/{run_id}_{eval_dir_name}.json`
-- **Microsoft Foundry Dashboard**: Automatic upload for visualization
 
 The report includes:
 - Per-sample scores for each evaluator

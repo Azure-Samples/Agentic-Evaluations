@@ -1,7 +1,7 @@
 # Azure SDK dependencies
 azure-identity>=1.25.3
-azure-ai-projects>=2.1.0
-azure-ai-evaluation==1.16.8
+azure-ai-projects>=2.2.0
+azure-ai-evaluation==1.16.9
 azure-ai-inference>=1.0.0b9
 # Core Python packages
 python-dotenv>=1.2.2
@@ -10,7 +10,7 @@ pip-system-certs>=5.3
 azure-monitor-query>=2.0.0
 azure-monitor-opentelemetry>=1.8.8
 aiohttp>=3.13.5
-agent-framework==1.5.0
-streamlit>=1.57.0
+agent-framework==1.7.0
+streamlit>=1.58.0
 pandas==2.3.3
 plotly>=6.7.0

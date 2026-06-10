@@ -16,7 +16,7 @@ from pathlib import Path
 from agent_framework import Agent, ChatOptions
 from agent_framework.observability import enable_instrumentation, get_tracer
 from azure.monitor.opentelemetry import configure_azure_monitor
-from opentelemetry import trace
+from opentelemetry import context as otel_context
 from opentelemetry.trace import SpanKind
 from opentelemetry.trace.span import format_trace_id
 from agent_framework.openai import OpenAIChatClient
@@ -79,12 +79,33 @@ def get_logger(name: str):
 logger = get_logger(__name__)
 
 
+def resolve_chat_model_name() -> str | None:
+    """Resolve chat model/deployment name across supported env variable variants."""
+    return (
+        os.getenv("AZURE_OPENAI_CHAT_MODEL")
+        or os.getenv("AZURE_OPENAI_MODEL")
+        or os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
+        or os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME")
+    )
+
+
 # =============================================================================
 # AGENT SETUP
 # =============================================================================
 def create_agent() -> Agent:
     """Create and configure the multi-tool agent."""
-    client = OpenAIChatClient(credential=AzureCliCredential())
+    model_name = resolve_chat_model_name()
+    if not model_name:
+        raise ValueError(
+            "Azure OpenAI model/deployment not found. Set one of: "
+            "AZURE_OPENAI_CHAT_MODEL, AZURE_OPENAI_MODEL, "
+            "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME, or AZURE_OPENAI_DEPLOYMENT_NAME."
+        )
+
+    client = OpenAIChatClient(
+        credential=AzureCliCredential(),
+        model=model_name,
+    )
     
     agent = Agent(
         client=client,
@@ -120,17 +141,17 @@ async def process_query(agent: Agent, query: str, query_id: str) -> tuple[str, s
     Returns:
         Tuple of (response, trace_id)
     """
-    # Create a new root span to get a unique trace ID
-    with trace.use_span(trace.NonRecordingSpan(trace.SpanContext(
-        trace_id=0,
-        span_id=0,
-        is_remote=False,
-        trace_flags=trace.TraceFlags(0)
-    )), end_on_exit=False):
-        with get_tracer().start_as_current_span(f"Query: {query_id}", kind=SpanKind.CLIENT) as span:
-            trace_id = format_trace_id(span.get_span_context().trace_id)
-            response = await agent.run(query)
-            return str(response), trace_id
+    # Start each query as a brand-new root trace by passing an empty Context.
+    # This avoids inheriting any ambient span state and prevents a NonRecordingSpan
+    # from leaking into agent_framework's instrumentation downstream.
+    with get_tracer().start_as_current_span(
+        f"Query: {query_id}",
+        kind=SpanKind.CLIENT,
+        context=otel_context.Context(),
+    ) as span:
+        trace_id = format_trace_id(span.get_span_context().trace_id)
+        response = await agent.run(query)
+        return str(response), trace_id
 
 
 async def run_inference_async(config: dict) -> None:
@@ -163,6 +184,21 @@ async def run_inference_async(config: dict) -> None:
     if connection_string:
         configure_azure_monitor(connection_string=connection_string)
         enable_instrumentation()
+        # Workaround: enable_instrumentation() activates azure-ai-projects'
+        # ResponsesInstrumentor, which crashes with
+        # "'NonRecordingSpan' object has no attribute 'attributes'" when a
+        # single OpenAI Responses call carries multiple tool-result messages
+        # (parallel tool calls). The data needed for evaluation
+        # (gen_ai.tool.definitions / tool calls) is emitted by
+        # agent_framework's own spans, so disabling just this instrumentor
+        # is safe.
+        try:
+            from azure.ai.projects.telemetry._responses_instrumentor import ResponsesInstrumentor
+            if ResponsesInstrumentor().is_instrumented():
+                ResponsesInstrumentor().uninstrument()
+                logger.info("[AGENT] Disabled azure-ai-projects ResponsesInstrumentor (parallel-tool-call bug workaround)")
+        except Exception as ex:  # pragma: no cover - best-effort workaround
+            logger.warning("[AGENT] Could not uninstrument ResponsesInstrumentor: %s", ex)
         logger.info("[AGENT] Azure Monitor configured with instrumentation")
     else:
         logger.warning("[AGENT] APPLICATIONINSIGHTS_CONNECTION_STRING not set — telemetry disabled")

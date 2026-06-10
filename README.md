@@ -153,6 +153,18 @@ New samples added to `src/evaluations/offline/` are automatically discovered as 
 | [`pipeline_multi_agent_evaluation`](./src/evaluations/offline/pipeline_multi_agent_evaluation/README.md) | **Multi-Agent Orchestrator** — Inference → Telemetry extraction → Evaluation for multi-agent systems | `python -m agent_evals run pipeline_multi_agent_evaluation` |
 | [`pipeline_multi_tool_agent_evaluation`](./src/evaluations/offline/pipeline_multi_tool_agent_evaluation/README.md) | **Multi-Tool Agent** — Inference → Telemetry extraction → Evaluation for multi-tool agents | `python -m agent_evals run pipeline_multi_tool_agent_evaluation` |
 
+### [`pipeline_multi_agent_evaluation`](./src/evaluations/offline/pipeline_multi_agent_evaluation/README.md)
+**Multi-Agent Orchestrator** — Agent inference → Telemetry extraction → Evaluation with handoff tracking
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_multi_agent_evaluation/experiment.yaml
+```
+
+### [`pipeline_multi_tool_agent_evaluation`](./src/evaluations/offline/pipeline_multi_tool_agent_evaluation/README.md)
+**Multi-Tool Agent** — Agent inference → Telemetry extraction → Tool call accuracy evaluation
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_multi_tool_agent_evaluation/experiment.yaml
+```
+
 ---
 
 ## Visualization Dashboard

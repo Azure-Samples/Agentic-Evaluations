@@ -9,6 +9,7 @@ and response parsing.
 import json
 import logging
 from openai import AzureOpenAI
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 import os
 from dotenv import load_dotenv
 import time
@@ -20,7 +21,6 @@ logger = logging.getLogger(__name__)
 
 # Azure OpenAI Configuration
 AZURE_ENDPOINT = os.getenv("EVAL_AZURE_OPENAI_ENDPOINT")
-API_KEY = os.getenv("EVAL_AZURE_OPENAI_KEY")
 API_VERSION = os.getenv("EVAL_AZURE_OPENAI_VERSION")
 DEPLOYMENT_NAME = os.getenv("EVAL_AZURE_OPENAI_MODEL")
 
@@ -32,17 +32,22 @@ DEFAULT_RETRY_DELAY = 5
 
 
 def get_llm_client_instance():
-    """Get an instance of the Azure OpenAI client."""
-    if not all([AZURE_ENDPOINT, API_KEY, API_VERSION]):
+    """Get an instance of the Azure OpenAI client using DefaultAzureCredential."""
+    if not all([AZURE_ENDPOINT, API_VERSION]):
         raise ValueError(
             "Missing required Azure OpenAI configuration. "
-            "Please check EVAL_AZURE_OPENAI_ENDPOINT, EVAL_AZURE_OPENAI_KEY, "
+            "Please check EVAL_AZURE_OPENAI_ENDPOINT "
             "and EVAL_AZURE_OPENAI_VERSION environment variables."
         )
-    
+
+    credential = DefaultAzureCredential()
+    token_provider = get_bearer_token_provider(
+        credential, "https://cognitiveservices.azure.com/.default"
+    )
+
     return AzureOpenAI(
         azure_endpoint=AZURE_ENDPOINT,
-        api_key=API_KEY,
+        azure_ad_token_provider=token_provider,
         api_version=API_VERSION,
     )
 

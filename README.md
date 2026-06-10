@@ -139,6 +139,18 @@ python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_experiment_evaluation/experiment.yaml
 ```
 
+### [`pipeline_multi_agent_evaluation`](./src/evaluations/offline/pipeline_multi_agent_evaluation/README.md)
+**Multi-Agent Orchestrator** — Agent inference → Telemetry extraction → Evaluation with handoff tracking
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_multi_agent_evaluation/experiment.yaml
+```
+
+### [`pipeline_multi_tool_agent_evaluation`](./src/evaluations/offline/pipeline_multi_tool_agent_evaluation/README.md)
+**Multi-Tool Agent** — Agent inference → Telemetry extraction → Tool call accuracy evaluation
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_multi_tool_agent_evaluation/experiment.yaml
+```
+
 ---
 
 ## Visualization Dashboard

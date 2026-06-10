@@ -108,6 +108,16 @@ def get_logger(name: str):
 logger = get_logger(__name__)
 
 
+def resolve_chat_model_name() -> str | None:
+    """Resolve chat model/deployment name across supported env variable variants."""
+    return (
+        os.getenv("AZURE_OPENAI_CHAT_MODEL")
+        or os.getenv("AZURE_OPENAI_MODEL")
+        or os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
+        or os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME")
+    )
+
+
 # =============================================================================
 # MODULE-LEVEL DEVICE AGENT REFERENCES
 # =============================================================================
@@ -310,7 +320,18 @@ async def run_inference_async(config: dict) -> None:
         dataset = json.load(f)
 
     # Create device agents and orchestrator
-    client = OpenAIChatClient(credential=AzureCliCredential())
+    model_name = resolve_chat_model_name()
+    if not model_name:
+        raise ValueError(
+            "Azure OpenAI model/deployment not found. Set one of: "
+            "AZURE_OPENAI_CHAT_MODEL, AZURE_OPENAI_MODEL, "
+            "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME, or AZURE_OPENAI_DEPLOYMENT_NAME."
+        )
+
+    client = OpenAIChatClient(
+        credential=AzureCliCredential(),
+        model=model_name,
+    )
     orchestrator = create_agents(client)
 
     logger.info("[AGENT] Orchestrator created with device agents: ACAgent, TVAgent, DishwasherAgent")

@@ -95,6 +95,12 @@ def simulate_agent_response(query: str) -> str:
 
 ### 3. Run the Pipeline
 
+**Using the CLI (recommended):**
+```bash
+python -m agent_evals run pipeline_experiment_evaluation
+```
+
+**Alternatively, run directly:**
 ```bash
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_experiment_evaluation/experiment.yaml
 ```

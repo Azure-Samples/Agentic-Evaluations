@@ -69,14 +69,14 @@ Your evaluation dataset should be in JSONL format:
 
 ### Run with Sample Data
 
-**Run Directly:**
+**Using the CLI (recommended):**
 ```bash
-# Activate virtual environment
-.venv\Scripts\activate  # Windows
-source .venv/bin/activate  # Linux/macOS
+python -m agent_evals run rag_evaluation_foundry
+```
 
-# Run evaluation with sample data
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/genai_evaluation_foundry/experiment.yaml
+**Alternatively, run directly:**
+```bash
+python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/rag_evaluation_foundry/experiment.yaml
 ```
 
 ### Run with Your Data

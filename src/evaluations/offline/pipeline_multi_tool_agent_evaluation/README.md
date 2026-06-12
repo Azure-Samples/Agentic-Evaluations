@@ -279,6 +279,12 @@ class EvaluatorFactory:
 
 Execute all three stages sequentially:
 
+**Using the CLI (recommended):**
+```bash
+python -m agent_evals run pipeline_multi_tool_agent_evaluation
+```
+
+**Alternatively, run directly:**
 ```bash
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_multi_tool_agent_evaluation/experiment.yaml
 ```

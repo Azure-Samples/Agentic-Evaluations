@@ -224,6 +224,12 @@ Each line contains:
 
 ### Run Full Pipeline
 
+**Using the CLI (recommended):**
+```bash
+python -m agent_evals run pipeline_multi_agent_evaluation
+```
+
+**Alternatively, run directly:**
 ```bash
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_multi_agent_evaluation/experiment.yaml
 ```

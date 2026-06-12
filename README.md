@@ -146,7 +146,7 @@ New samples added to `src/evaluations/offline/` are automatically discovered as 
 
 | Sample | Description | Command |
 |--------|-------------|---------|
-| [`rag_evaluation_foundry`](./src/evaluations/offline/genai_evaluation_foundry/README.md) | **Standard GenAI/RAG** — Built-in evaluators (Relevance, Coherence, Fluency) | `python -m agent_evals run rag_evaluation_foundry` |
+| [`rag_evaluation_foundry`](./src/evaluations/offline/rag_evaluation_foundry/README.md) | **Standard GenAI/RAG** — Built-in evaluators (Relevance, Coherence, Fluency) | `python -m agent_evals run rag_evaluation_foundry` |
 | [`agentic_evaluation`](./src/evaluations/offline/agentic_evaluation/README.md) | **Agentic Systems** — Agent invocation accuracy, recall@k, hallucination detection | `python -m agent_evals run agentic_evaluation` |
 | [`ai_judge_evaluation_custom`](./src/evaluations/offline/ai_judge_evaluation_custom/README.md) | **Custom AI Judge** — LLM-as-Judge with prompty templates | `python -m agent_evals run ai_judge_evaluation_custom` |
 | [`pipeline_experiment_evaluation`](./src/evaluations/offline/pipeline_experiment_evaluation/README.md) | **Full Pipeline** — Data loading → Inference → Evaluation | `python -m agent_evals run pipeline_experiment_evaluation` |

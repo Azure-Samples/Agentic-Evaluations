@@ -104,6 +104,9 @@ cp .env.template .env
 #   EVAL_AZURE_OPENAI_ENDPOINT=https://<your-resource>.openai.azure.com/
 #   EVAL_AZURE_OPENAI_MODEL=<your-deployment-name>
 #   EVAL_AZURE_OPENAI_VERSION=2024-12-01-preview
+# Telemetry attribution (non-secret; can be opted out by users):
+#   ISE_ASSET_ID=acce1e78-b129-4361-ac2b-92ce367924b7
+#   AZURE_HTTP_USER_AGENT=pid-acce1e78-b129-4361-ac2b-92ce367924b7
 
 # 4. Run a sample evaluation (interactive CLI)
 python -m agent_evals run
@@ -347,6 +350,28 @@ az group delete --name <your-resource-group> --yes --no-wait
 ## Data Provenance
 
 All sample datasets included in this repository are **fully synthetic**. They use fictional entities (Northwind Health, Contoso) and simulated agent interactions (smart-home device controls, weather lookups). No real customer data, personally identifiable information, or production telemetry is included in any dataset.
+
+
+## OSS Telemetry Disclosure
+
+This project follows Microsoft OSS telemetry guidance for ISE asset attribution. For Azure Resource Manager control-plane operations, the repository configuration includes an asset attribution token via user agent metadata.
+
+Telemetry asset ID used for attribution:
+
+* `acce1e78-b129-4361-ac2b-92ce367924b7`
+* `ARM_PARTNER_ID=acce1e78-b129-4361-ac2b-92ce367924b7` (Terraform attribution)
+* `AZURE_HTTP_USER_AGENT=pid-acce1e78-b129-4361-ac2b-92ce367924b7` (CLI/SDK attribution)
+
+Opt-out options:
+
+* Azure CLI and SDK user-agent attribution: unset `AZURE_HTTP_USER_AGENT`.
+* Terraform attribution: unset `ARM_PARTNER_ID` or remove `partner_id` from provider configuration.
+
+References:
+
+* Microsoft OSS telemetry guidance: <https://docs.opensource.microsoft.com/releasing/general-guidance/telemetry/>
+* Azure CLI configuration and telemetry controls: <https://learn.microsoft.com/en-us/cli/azure/azure-cli-configuration#cli-configuration-values>
+* Terraform AzureRM provider partner ID controls: <https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs#disable_terraform_partner_id-1>
 
 ---
 

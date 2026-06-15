@@ -83,6 +83,7 @@ Before submitting a pull request, please:
    - Are easy to understand and run
    - Do not include secrets, credentials, or sensitive data
    - Use synthetic or non‑sensitive datasets only
+   - Preserve OSS telemetry disclosure and opt-out instructions documented in README
 6. Push your fork and submit a pull request to the `main` branch
 7. Be responsive to feedback during the review process
 

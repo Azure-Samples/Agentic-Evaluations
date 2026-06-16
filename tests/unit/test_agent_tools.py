@@ -1,7 +1,5 @@
 """Unit tests for the agent_tools module (device agent tools)."""
 
-import pytest
-
 from src.evaluations.offline.pipeline_multi_agent_evaluation.agent_inference.agent_tools import (
     get_ac_status, get_dishwasher_status, get_tv_status, set_ac_mode,
     set_ac_temperature, set_dishwasher_delay, set_tv_channel, set_tv_volume,

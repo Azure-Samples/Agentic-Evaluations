@@ -2,7 +2,6 @@
 
 import json
 import tempfile
-from pathlib import Path
 
 import pytest
 from src.evaluations.offline.utils.file_operations import (

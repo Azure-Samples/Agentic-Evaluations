@@ -1,6 +1,5 @@
 """Unit tests for the BaseCustomEvaluator (src/agent_evaluation/agentic_ops/base_evaluator.py)."""
 
-import os
 from unittest.mock import MagicMock, patch
 
 import pytest

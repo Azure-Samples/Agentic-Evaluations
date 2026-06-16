@@ -104,52 +104,57 @@ cp .env.template .env
 #   EVAL_AZURE_OPENAI_ENDPOINT=https://<your-resource>.openai.azure.com/
 #   EVAL_AZURE_OPENAI_MODEL=<your-deployment-name>
 #   EVAL_AZURE_OPENAI_VERSION=2024-12-01-preview
+# Telemetry attribution (non-secret; can be opted out by users):
+#   ISE_ASSET_ID=acce1e78-b129-4361-ac2b-92ce367924b7
+#   AZURE_HTTP_USER_AGENT=pid-acce1e78-b129-4361-ac2b-92ce367924b7
 
-# 4. Run a sample evaluation
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/genai_evaluation_foundry/experiment.yaml
+# 4. Run a sample evaluation (interactive CLI)
+python -m agent_evals run
 ```
 
 **Results:** `src/evaluations/offline/reports/{run_id}_{eval_dir_name}.json`
 
 ---
 
+## CLI
+
+The framework includes an interactive CLI that auto-discovers all evaluation samples. No need to remember long config paths.
+
+```bash
+# List all available samples
+python -m agent_evals list
+
+# Run interactively (shows menu, pick by number)
+python -m agent_evals run
+
+# Run by name (supports partial matching)
+python -m agent_evals run rag_evaluation_foundry
+python -m agent_evals run agentic
+
+# Run by number from the list
+python -m agent_evals run 1
+
+# Show sample details (evaluators, dataset, stages)
+python -m agent_evals info agentic_evaluation
+
+# Run all samples sequentially
+python -m agent_evals run-all
+```
+
+New samples added to `src/evaluations/offline/` are automatically discovered as long as they contain an `experiment.yaml` file.
+
+---
+
 ## Samples
 
-### [`rag_evaluation_foundry`](./src/evaluations/offline/genai_evaluation_foundry/README.md)
-**Standard GenAI/RAG** — Built-in evaluators (Relevance, Coherence, Fluency)
-```bash
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/rag_evaluation_foundry/experiment.yaml
-```
-
-### [`agentic_evaluation`](./src/evaluations/offline/agentic_evaluation/README.md)
-**Agentic Systems** — Agent invocation accuracy, recall@k, hallucination detection
-```bash
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/agentic_evaluation/experiment.yaml
-```
-
-### [`ai_judge_evaluation_custom`](./src/evaluations/offline/ai_judge_evaluation_custom/README.md)
-**Custom AI Judge** — LLM-as-Judge with prompty templates
-```bash
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/ai_judge_evaluation_custom/experiment.yaml
-```
-
-### [`pipeline_experiment_evaluation`](./src/evaluations/offline/pipeline_experiment_evaluation/README.md)
-**Full Pipeline** — Data loading → Inference → Evaluation
-```bash
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_experiment_evaluation/experiment.yaml
-```
-
-### [`pipeline_multi_agent_evaluation`](./src/evaluations/offline/pipeline_multi_agent_evaluation/README.md)
-**Multi-Agent Orchestrator** — Agent inference → Telemetry extraction → Evaluation with handoff tracking
-```bash
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_multi_agent_evaluation/experiment.yaml
-```
-
-### [`pipeline_multi_tool_agent_evaluation`](./src/evaluations/offline/pipeline_multi_tool_agent_evaluation/README.md)
-**Multi-Tool Agent** — Agent inference → Telemetry extraction → Tool call accuracy evaluation
-```bash
-python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/pipeline_multi_tool_agent_evaluation/experiment.yaml
-```
+| Sample | Description | Command |
+|--------|-------------|---------|
+| [`rag_evaluation_foundry`](./src/evaluations/offline/rag_evaluation_foundry/README.md) | **Standard GenAI/RAG** — Built-in evaluators (Relevance, Coherence, Fluency) | `python -m agent_evals run rag_evaluation_foundry` |
+| [`agentic_evaluation`](./src/evaluations/offline/agentic_evaluation/README.md) | **Agentic Systems** — Agent invocation accuracy, recall@k, hallucination detection | `python -m agent_evals run agentic_evaluation` |
+| [`ai_judge_evaluation_custom`](./src/evaluations/offline/ai_judge_evaluation_custom/README.md) | **Custom AI Judge** — LLM-as-Judge with prompty templates | `python -m agent_evals run ai_judge_evaluation_custom` |
+| [`pipeline_experiment_evaluation`](./src/evaluations/offline/pipeline_experiment_evaluation/README.md) | **Full Pipeline** — Data loading → Inference → Evaluation | `python -m agent_evals run pipeline_experiment_evaluation` |
+| [`pipeline_multi_agent_evaluation`](./src/evaluations/offline/pipeline_multi_agent_evaluation/README.md) | **Multi-Agent Orchestrator** — Inference → Telemetry extraction → Evaluation for multi-agent systems | `python -m agent_evals run pipeline_multi_agent_evaluation` |
+| [`pipeline_multi_tool_agent_evaluation`](./src/evaluations/offline/pipeline_multi_tool_agent_evaluation/README.md) | **Multi-Tool Agent** — Inference → Telemetry extraction → Evaluation for multi-tool agents | `python -m agent_evals run pipeline_multi_tool_agent_evaluation` |
 
 ---
 
@@ -345,6 +350,28 @@ az group delete --name <your-resource-group> --yes --no-wait
 ## Data Provenance
 
 All sample datasets included in this repository are **fully synthetic**. They use fictional entities (Northwind Health, Contoso) and simulated agent interactions (smart-home device controls, weather lookups). No real customer data, personally identifiable information, or production telemetry is included in any dataset.
+
+
+## OSS Telemetry Disclosure
+
+This project follows Microsoft OSS telemetry guidance for ISE asset attribution. For Azure Resource Manager control-plane operations, the repository configuration includes an asset attribution token via user agent metadata.
+
+Telemetry asset ID used for attribution:
+
+* `acce1e78-b129-4361-ac2b-92ce367924b7`
+* `ARM_PARTNER_ID=acce1e78-b129-4361-ac2b-92ce367924b7` (Terraform attribution)
+* `AZURE_HTTP_USER_AGENT=pid-acce1e78-b129-4361-ac2b-92ce367924b7` (CLI/SDK attribution)
+
+Opt-out options:
+
+* Azure CLI and SDK user-agent attribution: unset `AZURE_HTTP_USER_AGENT`.
+* Terraform attribution: unset `ARM_PARTNER_ID` or remove `partner_id` from provider configuration.
+
+References:
+
+* Microsoft OSS telemetry guidance: <https://docs.opensource.microsoft.com/releasing/general-guidance/telemetry/>
+* Azure CLI configuration and telemetry controls: <https://learn.microsoft.com/en-us/cli/azure/azure-cli-configuration#cli-configuration-values>
+* Terraform AzureRM provider partner ID controls: <https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs#disable_terraform_partner_id-1>
 
 ---
 

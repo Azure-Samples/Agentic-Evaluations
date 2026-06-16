@@ -74,13 +74,13 @@ Your evaluation dataset should be in JSONL format:
 
 ### Run with Sample Data
 
-**Run Directly:**
+**Using the CLI (recommended):**
 ```bash
-# Activate virtual environment
-.venv\Scripts\activate  # Windows
-source .venv/bin/activate  # Linux/macOS
+python -m agent_evals run ai_judge_evaluation_custom
+```
 
-# Run evaluation with sample data
+**Alternatively, run directly:**
+```bash
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/ai_judge_evaluation_custom/experiment.yaml
 ```
 
@@ -250,6 +250,11 @@ evaluation:
 
 From the repository root:
 
+```bash
+python -m agent_evals run ai_judge_evaluation_custom
+```
+
+Or directly:
 ```bash
 python -m src.agent_evaluation.agentic_ops.runner --config_file src/evaluations/offline/ai_judge_evaluation_custom/experiment.yaml
 ```

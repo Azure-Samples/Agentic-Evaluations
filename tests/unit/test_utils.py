@@ -1,9 +1,7 @@
 """Unit tests for utility modules (file_operations, constants, trace_to_jsonl)."""
 
 import json
-import tempfile
 
-import pytest
 from src.evaluations.offline.utils.constants import EVAL_NAME
 from src.evaluations.offline.utils.file_operations import (
     append_to_jsonl, get_next_run_id, load_queries_from_jsonl, save_to_jsonl)

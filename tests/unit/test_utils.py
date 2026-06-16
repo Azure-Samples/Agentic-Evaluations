@@ -1,7 +1,6 @@
 """Unit tests for utility modules (file_operations, constants, trace_to_jsonl)."""
 
 import json
-import os
 import tempfile
 from pathlib import Path
 

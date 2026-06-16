@@ -1,6 +1,5 @@
 """Unit tests for the LLM Client (src/agent_evaluation/agentic_ops/client.py)."""
 
-import json
 from unittest.mock import MagicMock, patch
 
 import pytest

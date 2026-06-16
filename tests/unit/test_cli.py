@@ -6,10 +6,10 @@ from unittest.mock import MagicMock, mock_open, patch
 import pytest
 import yaml
 
-from src.agent_evaluation.cli import (EXCLUDE_DIRS, SAMPLES_DIR, cmd_info,
-                                      cmd_list, cmd_run, cmd_run_all,
-                                      discover_samples, interactive_select,
-                                      main, print_samples_table, run_sample)
+from src.agent_evaluation.cli import (EXCLUDE_DIRS, cmd_info, cmd_list,
+                                      cmd_run, cmd_run_all, discover_samples,
+                                      interactive_select, main,
+                                      print_samples_table, run_sample)
 
 # ---------------------------------------------------------------------------
 # Fixtures

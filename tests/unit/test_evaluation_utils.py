@@ -3,10 +3,7 @@
 import pytest
 
 from src.evaluations.offline.pipeline_multi_agent_evaluation.evaluator.evaluator_repo.eval_utils.evaluation_utils import (
-    agent_invoked_accuracy,
-    calculate_match_percentage,
-)
-
+    agent_invoked_accuracy, calculate_match_percentage)
 
 # ---------------------------------------------------------------------------
 # agent_invoked_accuracy
@@ -91,9 +88,8 @@ class TestCalculateMatchPercentage:
 class TestEvaluateAgentsInvoked:
     @pytest.fixture
     def evaluator(self):
-        from src.evaluations.offline.pipeline_multi_agent_evaluation.evaluator.evaluator_repo.evaluate_agent_invoked import (
-            EvaluateAgentsInvoked,
-        )
+        from src.evaluations.offline.pipeline_multi_agent_evaluation.evaluator.evaluator_repo.evaluate_agent_invoked import \
+            EvaluateAgentsInvoked
         return EvaluateAgentsInvoked()
 
     def test_exact_match_returns_accuracy_1(self, evaluator):

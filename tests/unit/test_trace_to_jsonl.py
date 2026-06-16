@@ -1,16 +1,13 @@
 """Unit tests for trace_to_jsonl shared module."""
 
 import json
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 from src.evaluations.offline.utils.trace_to_jsonl import (
-    extract_tool_definitions,
-    merge_tool_definitions,
-    extract_tool_call_from_span,
-)
-
+    extract_tool_call_from_span, extract_tool_definitions,
+    merge_tool_definitions)
 
 # ---------------------------------------------------------------------------
 # extract_tool_definitions

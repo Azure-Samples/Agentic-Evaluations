@@ -1,8 +1,10 @@
 """Tool functions for the Multi-Tool Agent."""
 
-from typing import Annotated
-from pydantic import Field
 from random import randint
+from typing import Annotated
+
+from pydantic import Field
+
 
 def get_weather(
     location: Annotated[str, Field(description="The location to get the weather for.")],

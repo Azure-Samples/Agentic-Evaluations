@@ -2,25 +2,15 @@
 
 import argparse
 from pathlib import Path
-from unittest.mock import patch, mock_open, MagicMock
+from unittest.mock import MagicMock, mock_open, patch
 
 import pytest
 import yaml
 
-from src.agent_evaluation.cli import (
-    discover_samples,
-    print_samples_table,
-    run_sample,
-    interactive_select,
-    cmd_list,
-    cmd_run,
-    cmd_run_all,
-    cmd_info,
-    main,
-    SAMPLES_DIR,
-    EXCLUDE_DIRS,
-)
-
+from src.agent_evaluation.cli import (EXCLUDE_DIRS, SAMPLES_DIR, cmd_info,
+                                      cmd_list, cmd_run, cmd_run_all,
+                                      discover_samples, interactive_select,
+                                      main, print_samples_table, run_sample)
 
 # ---------------------------------------------------------------------------
 # Fixtures

@@ -3,13 +3,12 @@
 import argparse
 import sys
 from pathlib import Path
-from unittest.mock import patch, MagicMock, mock_open
+from unittest.mock import MagicMock, mock_open, patch
 
 import pytest
 import yaml
 
 from src.agent_evaluation.agentic_ops.runner import load_config, parse_args
-
 
 # ---------------------------------------------------------------------------
 # load_config

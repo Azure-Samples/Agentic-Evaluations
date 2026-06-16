@@ -1,8 +1,12 @@
-from azure.ai.evaluation import RelevanceEvaluator,  TaskAdherenceEvaluator, ToolCallAccuracyEvaluator
-from .evaluator.evaluator_repo.evaluate_agent_invoked import EvaluateAgentsInvoked
-
-import os
 import logging
+import os
+
+from azure.ai.evaluation import (RelevanceEvaluator, TaskAdherenceEvaluator,
+                                 ToolCallAccuracyEvaluator)
+
+from .evaluator.evaluator_repo.evaluate_agent_invoked import \
+    EvaluateAgentsInvoked
+
 
 def get_logger(name: str):
     level = os.environ.get("LOG_LEVEL", "INFO").upper()

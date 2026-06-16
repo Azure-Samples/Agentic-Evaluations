@@ -1,12 +1,12 @@
 """Unit tests for run_eval module (src/agent_evaluation/agentic_ops/run_eval.py)."""
 
 import inspect
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.agent_evaluation.agentic_ops.run_eval import should_pass_config, setup_evaluation
-
+from src.agent_evaluation.agentic_ops.run_eval import (setup_evaluation,
+                                                       should_pass_config)
 
 # ---------------------------------------------------------------------------
 # should_pass_config

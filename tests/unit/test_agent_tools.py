@@ -3,22 +3,10 @@
 import pytest
 
 from src.evaluations.offline.pipeline_multi_agent_evaluation.agent_inference.agent_tools import (
-    set_ac_temperature,
-    turn_ac_on,
-    turn_ac_off,
-    set_ac_mode,
-    get_ac_status,
-    turn_tv_on,
-    turn_tv_off,
-    set_tv_channel,
-    set_tv_volume,
-    get_tv_status,
-    start_dishwasher,
-    stop_dishwasher,
-    get_dishwasher_status,
-    set_dishwasher_delay,
-)
-
+    get_ac_status, get_dishwasher_status, get_tv_status, set_ac_mode,
+    set_ac_temperature, set_dishwasher_delay, set_tv_channel, set_tv_volume,
+    start_dishwasher, stop_dishwasher, turn_ac_off, turn_ac_on, turn_tv_off,
+    turn_tv_on)
 
 # ---------------------------------------------------------------------------
 # AC Tools

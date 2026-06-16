@@ -1,12 +1,11 @@
 """Unit tests for the LLM Client (src/agent_evaluation/agentic_ops/client.py)."""
 
 import json
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 from src.agent_evaluation.agentic_ops.client import LLMClient
-
 
 # ---------------------------------------------------------------------------
 # LLMClient._validate_messages

@@ -1,12 +1,14 @@
 import argparse
 import importlib
+import logging
+import os
 import sys
 import time
 from pathlib import Path
-from typing import Optional, Any, Dict
+from typing import Any, Dict, Optional
+
 import yaml
-import os
-import logging
+
 
 def get_logger(name: str):
     level = os.environ.get("LOG_LEVEL", "INFO").upper()

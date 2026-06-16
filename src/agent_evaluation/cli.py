@@ -9,10 +9,9 @@ samples without remembering long command paths.
 import argparse
 import sys
 from pathlib import Path
-from typing import List, Dict, Optional
+from typing import Dict, List, Optional
 
 import yaml
-
 
 # Root of the project (two levels up from this file)
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -74,7 +73,8 @@ def print_samples_table(samples: List[Dict[str, str]]) -> None:
 
 def run_sample(sample: Dict[str, str], extra_args: Optional[List[str]] = None) -> int:
     """Run a selected evaluation sample."""
-    from src.agent_evaluation.agentic_ops.runner import run_pipeline, parse_args
+    from src.agent_evaluation.agentic_ops.runner import (parse_args,
+                                                         run_pipeline)
 
     config_path = sample["config_path"]
     print(f"\n{'='*70}")

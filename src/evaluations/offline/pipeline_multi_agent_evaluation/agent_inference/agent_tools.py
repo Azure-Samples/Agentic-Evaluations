@@ -1,9 +1,10 @@
 """Tool functions for the device agents in the Multi-Agent system."""
 
+from random import choice, randint
 from typing import Annotated
-from pydantic import Field
-from random import randint, choice
+
 from agent_framework import tool
+from pydantic import Field
 
 
 # =============================================================================

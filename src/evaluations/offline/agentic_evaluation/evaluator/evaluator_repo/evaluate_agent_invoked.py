@@ -1,5 +1,6 @@
 from .eval_utils.evaluation_utils import agent_invoked_accuracy, compute_recall
 
+
 class EvaluateAgentsInvoked:
     def __init__(self):
         pass

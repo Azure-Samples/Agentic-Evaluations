@@ -8,11 +8,12 @@ and response parsing.
 
 import json
 import logging
-from openai import AzureOpenAI
-from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 import os
-from dotenv import load_dotenv
 import time
+
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+from dotenv import load_dotenv
+from openai import AzureOpenAI
 
 load_dotenv()
 

@@ -4,11 +4,13 @@ Trace enrichment for multi-tool agent evaluation pipeline.
 
 Delegates to the shared trace_to_jsonl module in utils/.
 """
-from src.evaluations.offline.utils.trace_to_jsonl import get_trace_main  # noqa: F401
+from src.evaluations.offline.utils.trace_to_jsonl import \
+    get_trace_main  # noqa: F401
 
 if __name__ == "__main__":
-    import yaml
     from pathlib import Path
+
+    import yaml
 
     script_dir = Path(__file__).parent
     config_path = script_dir.parent / "experiment.yaml"

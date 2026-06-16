@@ -9,12 +9,7 @@ import pytest
 
 from src.evaluations.offline.utils.constants import EVAL_NAME
 from src.evaluations.offline.utils.file_operations import (
-    load_queries_from_jsonl,
-    save_to_jsonl,
-    append_to_jsonl,
-    get_next_run_id,
-)
-
+    append_to_jsonl, get_next_run_id, load_queries_from_jsonl, save_to_jsonl)
 
 # ---------------------------------------------------------------------------
 # constants

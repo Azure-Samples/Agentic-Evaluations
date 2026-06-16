@@ -9,44 +9,31 @@ outputs responses to a JSONL file for evaluation.
 """
 import asyncio
 import json
-import os
 import logging
+import os
 from datetime import datetime
 from pathlib import Path
+
 from agent_framework import Agent, ChatOptions
 from agent_framework.observability import enable_instrumentation, get_tracer
+from agent_framework.openai import OpenAIChatClient
+from azure.identity import AzureCliCredential
 from azure.monitor.opentelemetry import configure_azure_monitor
 from opentelemetry import context as otel_context
 from opentelemetry.trace import SpanKind
 from opentelemetry.trace.span import format_trace_id
-from agent_framework.openai import OpenAIChatClient
-from azure.identity import AzureCliCredential
 
 # Handle both standalone and package execution
 try:
     # When run as part of pipeline (package import)
-    from .agent_tools import (
-        get_current_datetime,
-        calculate_sum,
-        calculate_product,
-        convert_temperature,
-        count_words,
-        generate_uuid,
-        format_json,
-        get_weather
-    )
+    from .agent_tools import (calculate_product, calculate_sum,
+                              convert_temperature, count_words, format_json,
+                              generate_uuid, get_current_datetime, get_weather)
 except ImportError:
     # When run standalone
-    from agent_tools import (
-        get_current_datetime,
-        calculate_sum,
-        calculate_product,
-        convert_temperature,
-        count_words,
-        generate_uuid,
-        format_json,
-        get_weather
-    )
+    from agent_tools import (calculate_product, calculate_sum,
+                             convert_temperature, count_words, format_json,
+                             generate_uuid, get_current_datetime, get_weather)
 
 try:
     from src.evaluations.offline.utils.file_operations import append_to_jsonl
@@ -57,6 +44,7 @@ except ImportError:
     from src.evaluations.offline.utils.file_operations import append_to_jsonl
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 
@@ -193,7 +181,8 @@ async def run_inference_async(config: dict) -> None:
         # agent_framework's own spans, so disabling just this instrumentor
         # is safe.
         try:
-            from azure.ai.projects.telemetry._responses_instrumentor import ResponsesInstrumentor
+            from azure.ai.projects.telemetry._responses_instrumentor import \
+                ResponsesInstrumentor
             if ResponsesInstrumentor().is_instrumented():
                 ResponsesInstrumentor().uninstrument()
                 logger.info("[AGENT] Disabled azure-ai-projects ResponsesInstrumentor (parallel-tool-call bug workaround)")
@@ -275,7 +264,7 @@ def inference_main(config: dict, args=None) -> None:
 # =============================================================================
 if __name__ == "__main__":
     import yaml
-    
+
     # Get config path relative to this file
     script_dir = Path(__file__).parent
     config_path = script_dir.parent / "experiment.yaml"

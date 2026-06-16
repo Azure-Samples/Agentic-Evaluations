@@ -1,7 +1,6 @@
 """Unit tests for the CLI module (src/agent_evaluation/cli.py)."""
 
 import argparse
-from pathlib import Path
 from unittest.mock import MagicMock, mock_open, patch
 
 import pytest

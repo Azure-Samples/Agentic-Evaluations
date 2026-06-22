@@ -1,6 +1,5 @@
 """Unit tests for run_eval module (src/agent_evaluation/agentic_ops/run_eval.py)."""
 
-import inspect
 from unittest.mock import MagicMock, patch
 
 import pytest

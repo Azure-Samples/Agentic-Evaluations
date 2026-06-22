@@ -1,8 +1,6 @@
 """Unit tests for the pipeline runner (src/agent_evaluation/agentic_ops/runner.py)."""
 
 import argparse
-import sys
-from pathlib import Path
 from unittest.mock import MagicMock, mock_open, patch
 
 import pytest

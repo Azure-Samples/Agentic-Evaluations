@@ -2,8 +2,6 @@
 
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from src.agent_evaluation.agentic_ops.run_eval import (setup_evaluation,
                                                        should_pass_config)
 

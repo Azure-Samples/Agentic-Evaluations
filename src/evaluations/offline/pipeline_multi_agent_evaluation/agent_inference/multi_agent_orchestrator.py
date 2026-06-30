@@ -22,60 +22,36 @@ and outputs responses to a JSONL file for evaluation.
 """
 import asyncio
 import json
-import os
 import logging
-from typing import Annotated
+import os
 from pathlib import Path
+from typing import Annotated
+
 from agent_framework import Agent, tool
 from agent_framework.observability import enable_instrumentation, get_tracer
+from agent_framework.openai import OpenAIChatClient
+from azure.identity import AzureCliCredential
 from azure.monitor.opentelemetry import configure_azure_monitor
 from opentelemetry import context as otel_context
 from opentelemetry.trace import SpanKind
 from opentelemetry.trace.span import format_trace_id
-from agent_framework.openai import OpenAIChatClient
-from azure.identity import AzureCliCredential
 from pydantic import Field
 
 # Handle both standalone and package execution
 try:
     # When run as part of pipeline (package import)
-    from .agent_tools import (
-        # AC tools
-        set_ac_temperature,
-        turn_ac_on,
-        turn_ac_off,
-        set_ac_mode,
-        get_ac_status,
-        # TV tools
-        turn_tv_on,
-        turn_tv_off,
-        set_tv_channel,
-        set_tv_volume,
-        get_tv_status,
-        # Dishwasher tools
-        start_dishwasher,
-        stop_dishwasher,
-        get_dishwasher_status,
-        set_dishwasher_delay,
-    )
+    from .agent_tools import (  # AC tools; TV tools; Dishwasher tools
+        get_ac_status, get_dishwasher_status, get_tv_status, set_ac_mode,
+        set_ac_temperature, set_dishwasher_delay, set_tv_channel,
+        set_tv_volume, start_dishwasher, stop_dishwasher, turn_ac_off,
+        turn_ac_on, turn_tv_off, turn_tv_on)
 except ImportError:
     # When run standalone
-    from agent_tools import (
-        set_ac_temperature,
-        turn_ac_on,
-        turn_ac_off,
-        set_ac_mode,
-        get_ac_status,
-        turn_tv_on,
-        turn_tv_off,
-        set_tv_channel,
-        set_tv_volume,
-        get_tv_status,
-        start_dishwasher,
-        stop_dishwasher,
-        get_dishwasher_status,
-        set_dishwasher_delay,
-    )
+    from agent_tools import (get_ac_status, get_dishwasher_status,
+                             get_tv_status, set_ac_mode, set_ac_temperature,
+                             set_dishwasher_delay, set_tv_channel,
+                             set_tv_volume, start_dishwasher, stop_dishwasher,
+                             turn_ac_off, turn_ac_on, turn_tv_off, turn_tv_on)
 
 try:
     from src.evaluations.offline.utils.file_operations import append_to_jsonl
@@ -86,6 +62,7 @@ except ImportError:
     from src.evaluations.offline.utils.file_operations import append_to_jsonl
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 

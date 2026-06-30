@@ -1,11 +1,13 @@
-from azure.ai.evaluation import RelevanceEvaluator, CoherenceEvaluator
+import logging
+import os
+
+from azure.ai.evaluation import CoherenceEvaluator, RelevanceEvaluator
+
 from .evaluator.evaluator_repo.coherence import CoherenceEvaluatorCustom
-from .evaluator.evaluator_repo.relevance import RelevanceEvaluatorCustom
 from .evaluator.evaluator_repo.fluency import FluencyEvaluatorCustom
+from .evaluator.evaluator_repo.relevance import RelevanceEvaluatorCustom
 from .evaluator.evaluator_repo.similarity import SimilarityEvaluatorCustom
 
-import os
-import logging
 
 def get_logger(name: str):
     level = os.environ.get("LOG_LEVEL", "INFO").upper()

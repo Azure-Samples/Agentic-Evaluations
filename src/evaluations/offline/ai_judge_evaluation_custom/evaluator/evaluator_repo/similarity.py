@@ -2,7 +2,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # ---------------------------------------------------------
 from typing import Dict, Union
-from ......agent_evaluation.agentic_ops.base_evaluator import BaseCustomEvaluator
+
+from ......agent_evaluation.agentic_ops.base_evaluator import \
+    BaseCustomEvaluator
 
 
 class SimilarityEvaluatorCustom(BaseCustomEvaluator):

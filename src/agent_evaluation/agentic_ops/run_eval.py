@@ -1,11 +1,13 @@
-import os
 import inspect
+import logging
+import os
 import uuid
-from dotenv import load_dotenv
+
 from azure.ai.evaluation import evaluate
 from azure.ai.projects import AIProjectClient
-import logging
 from azure.identity import DefaultAzureCredential
+from dotenv import load_dotenv
+
 
 def get_logger(name: str):
     level = os.environ.get("LOG_LEVEL", "INFO").upper()

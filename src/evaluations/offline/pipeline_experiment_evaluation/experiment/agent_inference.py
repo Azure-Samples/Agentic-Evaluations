@@ -11,11 +11,14 @@ HOW TO USE:
 FLOW:
     Load Queries → Run Inference → Save Responses
 """
-import os
 import logging
+import os
 import random
 from pathlib import Path
-from src.evaluations.offline.utils.file_operations import load_queries_from_jsonl
+
+from src.evaluations.offline.utils.file_operations import \
+    load_queries_from_jsonl
+
 from .experiment_utils import get_file_paths, prepare_output_file, save_result
 
 
@@ -101,7 +104,7 @@ def inference_main(config: dict, args=None) -> None:
 if __name__ == "__main__":
     # For standalone execution, load config from experiment.yaml
     import yaml
-    
+
     # Get project root (go up 5 levels from this file)
     current_file = Path(__file__)  # .../experiment/agent_inference.py
     project_root = current_file.parent.parent.parent.parent.parent.parent  # Go up to project root

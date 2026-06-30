@@ -1,11 +1,12 @@
+import logging
 import os
 from pathlib import Path
+
 from src.agent_evaluation.agentic_ops.run_eval import execute_eval
-import logging
 from src.evaluations.offline.utils.constants import EVAL_NAME
 from src.evaluations.offline.utils.file_operations import get_next_run_id
-from ..eval_factory import EvaluatorFactory
 
+from ..eval_factory import EvaluatorFactory
 
 
 def get_logger(name: str):

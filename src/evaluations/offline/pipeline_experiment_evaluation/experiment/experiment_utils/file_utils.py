@@ -3,11 +3,11 @@ File Utilities
 ==============
 Helper functions for file management in inference pipelines.
 """
-import os
 import logging
+import os
 from pathlib import Path
-from src.evaluations.offline.utils.file_operations import append_to_jsonl
 
+from src.evaluations.offline.utils.file_operations import append_to_jsonl
 
 logger = logging.getLogger(__name__)
 

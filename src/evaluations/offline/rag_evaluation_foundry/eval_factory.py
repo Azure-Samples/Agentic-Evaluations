@@ -1,7 +1,8 @@
+import logging
+import os
+
 from azure.ai.evaluation import RelevanceEvaluator
 
-import os
-import logging
 
 def get_logger(name: str):
     level = os.environ.get("LOG_LEVEL", "INFO").upper()

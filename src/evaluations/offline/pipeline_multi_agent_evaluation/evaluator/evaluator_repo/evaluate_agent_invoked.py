@@ -1,4 +1,6 @@
-from .eval_utils.evaluation_utils import agent_invoked_accuracy, calculate_match_percentage
+from .eval_utils.evaluation_utils import (agent_invoked_accuracy,
+                                          calculate_match_percentage)
+
 
 class EvaluateAgentsInvoked:
     def __init__(self):
